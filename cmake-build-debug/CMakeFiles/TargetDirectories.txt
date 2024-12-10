@@ -1,0 +1,14 @@
+D:/Projects/theBidingOfOri/cmake-build-debug/CMakeFiles/main.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/CMakeFiles/list_install_components.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/CMakeFiles/install.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/CMakeFiles/install/local.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/CMakeFiles/install/strip.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/_deps/fmt-build/CMakeFiles/fmt.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/_deps/fmt-build/CMakeFiles/edit_cache.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/_deps/fmt-build/CMakeFiles/rebuild_cache.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/_deps/fmt-build/CMakeFiles/list_install_components.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/_deps/fmt-build/CMakeFiles/install.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/_deps/fmt-build/CMakeFiles/install/local.dir
+D:/Projects/theBidingOfOri/cmake-build-debug/_deps/fmt-build/CMakeFiles/install/strip.dir

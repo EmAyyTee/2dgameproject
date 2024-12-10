@@ -1,0 +1,7 @@
+# ninja log v6
+48	433	7555534857186790	CMakeFiles/main.dir/engine.cpp.obj	16ac388bf6117144
+32	2207	7555534857037199	CMakeFiles/main.dir/main.cpp.obj	540db05cfbf259d3
+18	4395	7555534856897584	_deps/fmt-build/CMakeFiles/fmt.dir/src/os.cc.obj	c0387be1ce0076a1
+2	5994	7555534856737979	_deps/fmt-build/CMakeFiles/fmt.dir/src/format.cc.obj	40b01036fd833ba8
+5994	7171	7555534916656412	_deps/fmt-build/libfmtd.a	60a16a4d25aa4b31
+7171	7670	7555534928423769	main.exe	e162caf4962a0a75
