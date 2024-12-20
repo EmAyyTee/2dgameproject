@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "Player.h"
 #include "SFML/Window/Event.hpp"
 
 Engine::Engine(MainWindow& windowRef)
@@ -10,12 +11,16 @@ void Engine::run() {
 
     while (renderWindow.isOpen()) {
         sf::Event event;
+        Player player;
+
         while (renderWindow.pollEvent(event)) {
             if(event.type == sf::Event::Closed) {
                 renderWindow.close();
             }
         }
+
         renderWindow.clear();
+        renderWindow.draw(player.sprite);
         renderWindow.display();
     }
 }
