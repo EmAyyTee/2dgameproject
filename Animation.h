@@ -1,7 +1,10 @@
 #pragma once
+#include "SFML/Graphics/Rect.hpp"
+#include "SFML/Graphics/Texture.hpp"
+
 class Animation {
     static constexpr int nFrames = 8;
-    sttic constexpr  float holdTime = 0.1f;
+    static constexpr  float holdTime = 0.1f;
     sf::Texture texture;
     sf::IntRect frames[nFrames];
     int Iframe = 0;

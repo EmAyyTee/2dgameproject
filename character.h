@@ -10,5 +10,7 @@ class character {
     sf::Vector2f position;
     sf::Vector2f velocity;
     int x = 0, y = 0;
+
+    character();
 };
 
