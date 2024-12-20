@@ -1,7 +1,12 @@
 #include <iostream>
+#include "Engine.h"
+#include "MainWindow.h"
 
-int main()
-{
-    std::cout << "Szymon line" << std::endl;
+int main(){
+    MainWindow main_window;
+    Engine engine( main_window);
+    engine.run();
+
+
     return 0;
 }

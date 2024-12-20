@@ -3,6 +3,8 @@ project(theBidingOfOri)
 
 set(CMAKE_CXX_STANDARD 20)
 
+set(BUILD_SHARED_LIBS FALSE)
+
 include(FetchContent)
 
 FetchContent_Declare(
@@ -10,11 +12,30 @@ FetchContent_Declare(
         GIT_REPOSITORY https://github.com/fmtlib/fmt.git
         GIT_TAG        10.1.0
 )
+FetchContent_Declare(
+        SFML
+        GIT_REPOSITORY  https://github.com/SFML/SFML
+        GIT_TAG         2.6.1
+)
 
-FetchContent_Makeavailable(fmt)
+FetchContent_Makeavailable(fmt SFML)
 
 
 add_executable(main main.cpp
-        engine.cpp
-        engine.h)
-target_link_libraries(main fmt::fmt)
+        MainWindow.cpp
+        Engine.cpp
+        Engine.h
+        MainWindow.h
+        character.h
+        character.cpp
+        Player.h
+        Player.cpp
+)
+target_link_libraries(main
+        fmt::fmt
+        sfml-system
+        sfml-window
+        sfml-graphics
+        sfml-audio
+        sfml-network
+)

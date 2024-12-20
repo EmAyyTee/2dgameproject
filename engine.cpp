@@ -1,5 +1,21 @@
-//
-// Created by HanzoSwitch on 12/10/2024.
-//
+#include "Engine.h"
+#include "SFML/Window/Event.hpp"
 
-#include "engine.h"
+Engine::Engine(MainWindow& windowRef)
+    : window(windowRef) {
+}
+
+void Engine::run() {
+    sf::RenderWindow& renderWindow = window.getWindow();
+
+    while (renderWindow.isOpen()) {
+        sf::Event event;
+        while (renderWindow.pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {
+                renderWindow.close();
+            }
+        }
+        renderWindow.clear();
+        renderWindow.display();
+    }
+}
