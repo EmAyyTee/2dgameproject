@@ -5,7 +5,8 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 
 Player::Player() {
-    texture.loadFromFile("PlayerCharacter/Archer/Idle1.png");
+    texture.loadFromFile("PlayerCharacter/Archer/IdleNoCelling.png");
+    sprite.setTextureRect(sf::IntRect(x, y, 128, 74));
     sprite.setTexture(texture);
 }
 
