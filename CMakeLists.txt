@@ -30,6 +30,8 @@ add_executable(main main.cpp
         character.cpp
         Player.h
         Player.cpp
+        Animation.h
+        Animation.cpp
 )
 target_link_libraries(main
         fmt::fmt
