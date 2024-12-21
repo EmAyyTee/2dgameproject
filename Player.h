@@ -1,9 +1,9 @@
 #pragma once
+#include "Animation.h"
 #include "character.h"
 
 class Player : public character{
+    Animation walkRight;
 public:
-
-    Player();
-    void idleAnimation(int row, float deltaTime);
+    Player(const sf::Vector2f& position);
 };
