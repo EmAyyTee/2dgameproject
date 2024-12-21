@@ -6,13 +6,13 @@
 #include "SFML/Graphics/Texture.hpp"
 
 class Animation {
-    static constexpr int nFrames = 6;
+    int nFrames = 8;
     static constexpr  float holdTime = 0.1f;
 
     int iFrame = 0, currentAnimation;
     float time = 0.0f;
     std::map<int, sf::Texture> textures;
-    sf::IntRect frames[nFrames];
+    sf::IntRect frames[8];
 
     void Advance();
 

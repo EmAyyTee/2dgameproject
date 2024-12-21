@@ -7,7 +7,7 @@ Animation::Animation(int x, int y, int width, int height)
     : currentAnimation(0){
     textures[0].loadFromFile("PlayerCharacter/Archer/IdleNoCelling.png");
     textures[1].loadFromFile("PlayerCharacter/Archer/WalkRightNoCelling.png");
-    textures[2].loadFromFile("PlayerCharacter/Archer/WalkRightNoCelling.png");
+    textures[2].loadFromFile("PlayerCharacter/Archer/WalkLeftNoCelling.png");
 
     for (int i = 0; i < nFrames; i++) {
         frames[i] = {x + i * width, y, width, height };
@@ -22,6 +22,12 @@ void Animation::Update(float deltaTime, int animationType) {
         currentAnimation = animationType;
         iFrame = 0;
         time = 0.0f;
+        if (currentAnimation == 0) {
+            nFrames = 6;
+        }
+        else {
+            nFrames = 8;
+        }
     }
     time += deltaTime;
     while (time >= holdTime) {
