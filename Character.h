@@ -1,5 +1,5 @@
 #pragma once
-#include "Animation.h"
+#include "Animator.h"
 #include "SFML/Graphics/Sprite.hpp"
 
 
@@ -20,6 +20,6 @@ public:
     virtual void setDirection(const sf::Vector2f& direction);
     virtual void update(float deltaTime);
 
-    Animation animation;
+    Animator animation;
 };
 

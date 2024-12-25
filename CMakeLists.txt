@@ -30,8 +30,8 @@ add_executable(main main.cpp
         Character.cpp
         Player.h
         Player.cpp
-        Animation.h
-        Animation.cpp
+        Animator.h
+        Animator.cpp
         TextureLoader.h
         TextureLoader.cpp
 )

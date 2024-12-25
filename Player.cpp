@@ -1,6 +1,6 @@
 #include "Player.h"
 
-#include "Animation.h"
+#include "Animator.h"
 #include "SFML/Window/Keyboard.hpp"
 
 
@@ -13,8 +13,7 @@ Player::Player(const sf::Vector2f& position)
 void Player::update(float deltaTime) {
     playerGetInput();
     Character::update(deltaTime);
-    animation.Update(deltaTime, static_cast<int>(playerState));
-    animation.applyToSprite(sprite);
+    animation.Update(deltaTime, static_cast<int>(playerState), sprite);
 }
 
 void Player::playerGetInput() {

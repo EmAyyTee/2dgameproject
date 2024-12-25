@@ -5,11 +5,13 @@
 
 class TextureLoader {
 public:
-     std::vector<sf::Texture> textures;
 
-     sf::Texture playerIdleTexture;
-     sf::Texture playerWalkLeft;
-     sf::Texture playerWalkRight;
+    //int represents the number of frames that the texture has
+    std::vector<std::pair <int, sf::Texture>> textures;
+
+    sf::Texture playerIdleTexture;
+    sf::Texture playerWalkLeft;
+    sf::Texture playerWalkRight;
 
     TextureLoader();
 

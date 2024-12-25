@@ -1,5 +1,4 @@
 #include "Character.h"
-#include "Player.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 
 Character::Character(const sf::Vector2f& position)
