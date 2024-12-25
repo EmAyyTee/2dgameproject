@@ -3,7 +3,6 @@
 #include "TextureLoader.h"
 #include "SFML/Graphics/Sprite.hpp"
 
-TextureLoader textureLoader;
 
 Animator::Animator(int x, int y, int width, int height)
     : currentAnimationType(0){
@@ -13,20 +12,20 @@ Animator::Animator(int x, int y, int width, int height)
     }
 }
 
-void Animator::applyToSprite( sf::Sprite& sprite) {
-    sprite.setTexture(textureLoader.textures[currentAnimationType].second);
+void Animator::applyToSprite(sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures) {
+    sprite.setTexture(textures -> at(currentAnimationType).second);
     sprite.setTextureRect(frames[iFrame]);
 }
 
-void Animator::Update(float deltaTime, int animationType, sf::Sprite& sprite) {
+void Animator::Update(float deltaTime, int animationType, sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures) {
 
-    applyToSprite( sprite);
+    applyToSprite( sprite,textures);
 
     if (currentAnimationType != animationType) {
         currentAnimationType = animationType;
         iFrame = 0;
         time = 0.0f;
-        nFrames = textureLoader.textures[currentAnimationType].first;
+        nFrames = textures -> at(currentAnimationType).first;
     }
     time += deltaTime;
     while (time >= holdTime) {

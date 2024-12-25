@@ -13,7 +13,7 @@ void Engine::run() {
     sf::RenderWindow& renderWindow = window.getWindow();
     sf::Event event;
     TextureLoader texture_loader;
-    Player player({100.0f, 100.0f});
+    Player player({100.0f, 100.0f}, &texture_loader.playerTextures);
 
     while (renderWindow.isOpen()) {
         while (renderWindow.pollEvent(event)) {

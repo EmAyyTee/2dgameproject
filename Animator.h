@@ -21,6 +21,8 @@ class Animator {
 
 public:
     Animator(int x, int y, int width, int height);
-    void applyToSprite( sf::Sprite& sprite);
-    void Update(float deltaTime, int animationType, sf::Sprite& sprite);
+
+    void applyToSprite(sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures);
+
+    void Update(float deltaTime, int animationType, sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures);
 };

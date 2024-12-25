@@ -4,8 +4,9 @@
 #include "SFML/Window/Keyboard.hpp"
 
 
-Player::Player(const sf::Vector2f& position)
+Player::Player(const sf::Vector2f& position, std::vector<std::pair <int, sf::Texture>> *playerTexturesPointer)
     : Character(position) {
+    this -> playerTexturesPointer = playerTexturesPointer;
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
 }
@@ -13,7 +14,7 @@ Player::Player(const sf::Vector2f& position)
 void Player::update(float deltaTime) {
     playerGetInput();
     Character::update(deltaTime);
-    animation.Update(deltaTime, static_cast<int>(playerState), sprite);
+    animation.Update(deltaTime, static_cast<int>(playerState), sprite, playerTexturesPointer);
 }
 
 void Player::playerGetInput() {
