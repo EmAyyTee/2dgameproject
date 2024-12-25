@@ -134,3 +134,9 @@
 56	2740	7568560521980580	CMakeFiles/main.dir/Character.cpp.obj	c9193c2fda45b475
 47	2933	7568560521900785	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
 2933	3957	7568560550748207	main.exe	b0f43b32c16c7f14
+56	2214	7568587968863317	CMakeFiles/main.dir/Player.cpp.obj	2e32d41b2b64c101
+62	2349	7568587968913188	CMakeFiles/main.dir/Animator.cpp.obj	cfaadf178bfad9a1
+51	2550	7568587968813445	CMakeFiles/main.dir/Character.cpp.obj	c9193c2fda45b475
+69	2608	7568587968992968	CMakeFiles/main.dir/TextureLoader.cpp.obj	98548f5a0e410e3d
+44	2833	7568587968743631	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+2833	3866	7568587996626715	main.exe	b0f43b32c16c7f14
