@@ -1,6 +1,9 @@
 #include "Engine.h"
 #include "Player.h"
+#include "TextureLoader.h"
 #include "SFML/Window/Event.hpp"
+
+
 
 Engine::Engine(MainWindow& windowRef)
     : window(windowRef) {
@@ -9,6 +12,7 @@ Engine::Engine(MainWindow& windowRef)
 void Engine::run() {
     sf::RenderWindow& renderWindow = window.getWindow();
     sf::Event event;
+    TextureLoader texture_loader;
     Player player({100.0f, 100.0f});
 
     while (renderWindow.isOpen()) {
@@ -19,7 +23,7 @@ void Engine::run() {
         }
 
         sf::Vector2f direction = {0.0f, 0.0f};
-        character::AnimationType animationType = character::AnimationType::Idle;
+        character::AnimationType animationType = character::AnimationType::PlayerIdle;
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             direction.y -= 1.0f;
@@ -28,11 +32,11 @@ void Engine::run() {
             direction.y += 1.0f;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            animationType = character::AnimationType::WalkingLeft;
+            animationType = character::AnimationType::PlayerWalkingLeft;
             direction.x -= 1.0f;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            animationType = character::AnimationType::WalkingRight;
+            animationType = character::AnimationType::PlayerWalkingRight;
             direction.x += 1.0f;
         }
 

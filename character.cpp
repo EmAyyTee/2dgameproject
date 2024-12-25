@@ -1,4 +1,5 @@
 #include "character.h"
+#include "Player.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 
 character::character(const sf::Vector2f& position)
@@ -11,11 +12,10 @@ void character::draw(sf::RenderTarget& renderTarget) {
 void character::setDirection(const sf::Vector2f &direction) {
     velocity = direction*speed;
 }
-void character::update(float deltaTime, AnimationType animationType) {
+void character::update(float deltaTime) {
     position += velocity*deltaTime;
     sprite.setPosition(position);
-    animation.Update(deltaTime, static_cast<int>(animationType));
-    animation.applyToSpite(sprite);
+
 }
 
 

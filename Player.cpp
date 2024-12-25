@@ -4,7 +4,14 @@
 
 
 Player::Player(const sf::Vector2f& position)
-    : character(position), walkRight(0, 0, 128, 74) {}
+    : character(position) {}
+
+void Player::update(float deltaTime) {
+    character::update(deltaTime);
+    animation.Update(deltaTime, static_cast<int>(playerState));
+    animation.applyToSprite(sprite);
+}
+
 
 
 

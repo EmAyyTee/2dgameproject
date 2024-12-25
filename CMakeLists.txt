@@ -32,6 +32,8 @@ add_executable(main main.cpp
         Player.cpp
         Animation.h
         Animation.cpp
+        TextureLoader.h
+        TextureLoader.cpp
 )
 target_link_libraries(main
         fmt::fmt

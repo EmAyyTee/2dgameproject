@@ -6,11 +6,14 @@
 #include "SFML/Graphics/Texture.hpp"
 
 class Animation {
-    int nFrames = 8;
+    int nFrames = 6;
     static constexpr  float holdTime = 0.1f;
 
-    int iFrame = 0, currentAnimation;
+    int iFrame = 0, currentAnimationType;
     float time = 0.0f;
+
+    // int is representing the number of sprites in the animation
+
     std::map<int, sf::Texture> textures;
     sf::IntRect frames[8];
 
@@ -18,6 +21,6 @@ class Animation {
 
 public:
     Animation(int x, int y, int width, int height);
-    void applyToSpite( sf::Sprite& sprite);
+    void applyToSprite( sf::Sprite& sprite);
     void Update(float deltaTime, int animationType);
 };

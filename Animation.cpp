@@ -1,28 +1,28 @@
 #include "Animation.h"
 
 #include "character.h"
+#include "TextureLoader.h"
 #include "SFML/Graphics/Sprite.hpp"
 
-Animation::Animation(int x, int y, int width, int height)
-    : currentAnimation(0){
-    textures[0].loadFromFile("PlayerCharacter/Archer/IdleNoCelling.png");
-    textures[1].loadFromFile("PlayerCharacter/Archer/WalkRightNoCelling.png");
-    textures[2].loadFromFile("PlayerCharacter/Archer/WalkLeftNoCelling.png");
+TextureLoader textureLoader;
 
-    for (int i = 0; i < nFrames; i++) {
+Animation::Animation(int x, int y, int width, int height)
+    : currentAnimationType(0){
+
+    for (int i = 0; i < 8; i++) {
         frames[i] = {x + i * width, y, width, height };
     }
 }
-void Animation::applyToSpite( sf::Sprite& sprite) {
-    sprite.setTexture(textures[currentAnimation]);
+void Animation::applyToSprite( sf::Sprite& sprite) {
+    sprite.setTexture(textureLoader.textures[currentAnimationType]);
     sprite.setTextureRect(frames[iFrame]);
 }
 void Animation::Update(float deltaTime, int animationType) {
-    if (currentAnimation != animationType) {
-        currentAnimation = animationType;
+    if (currentAnimationType != animationType) {
+        currentAnimationType = animationType;
         iFrame = 0;
         time = 0.0f;
-        if (currentAnimation == 0) {
+        if (currentAnimationType == 0) {
             nFrames = 6;
         }
         else {
