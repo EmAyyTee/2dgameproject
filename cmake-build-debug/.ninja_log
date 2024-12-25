@@ -134,9 +134,39 @@
 56	2740	7568560521980580	CMakeFiles/main.dir/Character.cpp.obj	c9193c2fda45b475
 47	2933	7568560521900785	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
 2933	3957	7568560550748207	main.exe	b0f43b32c16c7f14
+<<<<<<< Updated upstream
 56	2214	7568587968863317	CMakeFiles/main.dir/Player.cpp.obj	2e32d41b2b64c101
 62	2349	7568587968913188	CMakeFiles/main.dir/Animator.cpp.obj	cfaadf178bfad9a1
 51	2550	7568587968813445	CMakeFiles/main.dir/Character.cpp.obj	c9193c2fda45b475
 69	2608	7568587968992968	CMakeFiles/main.dir/TextureLoader.cpp.obj	98548f5a0e410e3d
 44	2833	7568587968743631	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
 2833	3866	7568587996626715	main.exe	b0f43b32c16c7f14
+=======
+44	1308	7568563276753158	CMakeFiles/main.dir/Animator.cpp.obj	cfaadf178bfad9a1
+48	1579	7568563276793047	CMakeFiles/main.dir/TextureLoader.cpp.obj	98548f5a0e410e3d
+38	1775	7568563276693305	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+1775	2812	7568563294058565	main.exe	b0f43b32c16c7f14
+56	1936	7568566816376046	CMakeFiles/main.dir/Animator.cpp.obj	cfaadf178bfad9a1
+47	2241	7568566816286295	CMakeFiles/main.dir/Character.cpp.obj	c9193c2fda45b475
+40	2473	7568566816216480	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+51	1777	7568573545870231	CMakeFiles/main.dir/Animator.cpp.obj	cfaadf178bfad9a1
+40	2420	7568573545760538	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+42	1535	7568573979005005	CMakeFiles/main.dir/Player.cpp.obj	2e32d41b2b64c101
+1536	2522	7568573993946856	main.exe	b0f43b32c16c7f14
+28	1473	7568575891132682	CMakeFiles/main.dir/Player.cpp.obj	2e32d41b2b64c101
+1474	2455	7568575905589738	main.exe	b0f43b32c16c7f14
+57	2169	7568580978964209	CMakeFiles/main.dir/Character.cpp.obj	c9193c2fda45b475
+62	2205	7568580979014076	CMakeFiles/main.dir/Player.cpp.obj	2e32d41b2b64c101
+49	2469	7568580978884431	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+64	2018	7568583926519599	CMakeFiles/main.dir/Animator.cpp.obj	cfaadf178bfad9a1
+52	2520	7568583926399909	CMakeFiles/main.dir/Character.cpp.obj	c9193c2fda45b475
+57	2533	7568583926459754	CMakeFiles/main.dir/Player.cpp.obj	2e32d41b2b64c101
+45	2704	7568583926330103	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+2704	3784	7568583952928478	main.exe	b0f43b32c16c7f14
+42	1560	7568585855216535	CMakeFiles/main.dir/Player.cpp.obj	2e32d41b2b64c101
+37	1841	7568585855156709	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+1841	2822	7568585873200394	main.exe	b0f43b32c16c7f14
+66	1723	7568587123858992	CMakeFiles/main.dir/Player.cpp.obj	2e32d41b2b64c101
+58	2020	7568587123789182	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+2020	3039	7568587143400675	main.exe	b0f43b32c16c7f14
+>>>>>>> Stashed changes
