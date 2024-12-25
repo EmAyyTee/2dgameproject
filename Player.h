@@ -1,8 +1,8 @@
 #pragma once
-#include "Animation.h"
 #include "character.h"
 
 class Player : public character{
+
 public:
     enum class PlayerState {
         PlayerIdle = 0,
@@ -10,6 +10,9 @@ public:
         PlayerWalkingLeft = 2,
     };
     Player(const sf::Vector2f& position);
-   void update(float deltaTime) override;
+    void update(float deltaTime) override;
+    void playerGetInput();
+private:
+    PlayerState playerState;
 
 };

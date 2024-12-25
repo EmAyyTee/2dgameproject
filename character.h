@@ -5,6 +5,8 @@
 
 
 class character {
+protected:
+    sf::Vector2f direction = sf::Vector2f(0.0f, 0.0f);
 public:
 
     static constexpr float speed = 100.0f;

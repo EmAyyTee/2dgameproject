@@ -22,26 +22,7 @@ void Engine::run() {
             }
         }
 
-        sf::Vector2f direction = {0.0f, 0.0f};
-        character::AnimationType animationType = character::AnimationType::PlayerIdle;
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            direction.y -= 1.0f;
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            direction.y += 1.0f;
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            animationType = character::AnimationType::PlayerWalkingLeft;
-            direction.x -= 1.0f;
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            animationType = character::AnimationType::PlayerWalkingRight;
-            direction.x += 1.0f;
-        }
-
-        player.setDirection(direction);
-        player.update(1.0f/ 60.0f, animationType);
+        player.update(1.0f/ 60.0f);
 
         renderWindow.clear();
         player.draw(renderWindow);

@@ -13,9 +13,9 @@ void character::setDirection(const sf::Vector2f &direction) {
     velocity = direction*speed;
 }
 void character::update(float deltaTime) {
+    setDirection(direction);
     position += velocity*deltaTime;
     sprite.setPosition(position);
-
 }
 
 

@@ -1,6 +1,5 @@
 #include "Animation.h"
 
-#include "character.h"
 #include "TextureLoader.h"
 #include "SFML/Graphics/Sprite.hpp"
 
