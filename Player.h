@@ -1,7 +1,7 @@
 #pragma once
-#include "character.h"
+#include "Character.h"
 
-class Player : public character{
+class Player : public Character{
 
 public:
     enum class PlayerState {

@@ -5,14 +5,14 @@
 
 
 Player::Player(const sf::Vector2f& position)
-    : character(position) {
+    : Character(position) {
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
 }
 
 void Player::update(float deltaTime) {
     playerGetInput();
-    character::update(deltaTime);
+    Character::update(deltaTime);
     animation.Update(deltaTime, static_cast<int>(playerState));
     animation.applyToSprite(sprite);
 }
@@ -24,9 +24,11 @@ void Player::playerGetInput() {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         direction.y -= 1.0f;
+        playerState = PlayerState::PlayerWalkingRight;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         direction.y += 1.0f;
+        playerState = PlayerState::PlayerWalkingRight;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         playerState = PlayerState::PlayerWalkingLeft;
