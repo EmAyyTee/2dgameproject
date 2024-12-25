@@ -1,9 +1,18 @@
 #pragma once
-#include "Animation.h"
-#include "character.h"
+#include "Character.h"
 
-class Player : public character{
-    Animation walkRight;
+class Player : public Character{
+
 public:
+    enum class PlayerState {
+        PlayerIdle = 0,
+        PlayerWalkingRight = 1,
+        PlayerWalkingLeft = 2,
+    };
     Player(const sf::Vector2f& position);
+    void update(float deltaTime) override;
+    void playerGetInput();
+private:
+    PlayerState playerState;
+
 };

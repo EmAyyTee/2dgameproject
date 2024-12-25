@@ -26,12 +26,14 @@ add_executable(main main.cpp
         Engine.cpp
         Engine.h
         MainWindow.h
-        character.h
-        character.cpp
+        Character.h
+        Character.cpp
         Player.h
         Player.cpp
-        Animation.h
-        Animation.cpp
+        Animator.h
+        Animator.cpp
+        TextureLoader.h
+        TextureLoader.cpp
 )
 target_link_libraries(main
         fmt::fmt
