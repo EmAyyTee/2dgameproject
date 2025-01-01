@@ -34,6 +34,8 @@ add_executable(main main.cpp
         Animator.cpp
         TextureLoader.h
         TextureLoader.cpp
+        GreenSlime.h
+        GreenSlime.cpp
 )
 target_link_libraries(main
         fmt::fmt

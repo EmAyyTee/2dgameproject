@@ -2,7 +2,7 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 
 Character::Character(const sf::Vector2f& position)
-    : animation(0, 0, 128, 74), position(position) {
+    : position(position) {
 }
 
 void Character::draw(sf::RenderTarget& renderTarget) {

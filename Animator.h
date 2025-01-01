@@ -15,12 +15,14 @@ class Animator {
     // int is representing the number of sprites in the animation
 
     std::map<int, sf::Texture> textures;
-    sf::IntRect frames[8];
+    sf::IntRect frames[13];
 
     void Advance();
 
 public:
-    Animator(int x, int y, int width, int height);
+    Animator();
+
+    void calculateTheFrames(int x, int y, int width, int height);
 
     void applyToSprite(sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures);
 

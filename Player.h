@@ -12,7 +12,10 @@ public:
         PlayerWalkingRight = 1,
         PlayerWalkingLeft = 2,
     };
-    Player(const sf::Vector2f& position, std::vector<std::pair <int, sf::Texture>> *playerTexturesPointer);
+
+
+
+    Player(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer);
 
     void update(float deltaTime) override;
 
@@ -20,5 +23,5 @@ public:
 
 private:
     PlayerState playerState;
-    std::vector<std::pair <int, sf::Texture>>* playerTexturesPointer;
+    std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer;
 };
