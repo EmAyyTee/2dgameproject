@@ -39,7 +39,7 @@ void Animator::Advance() {
 
 void Animator::calculateTheFrames(int x, int y, int width, int height) {
     for (int i = 0; i < 13; i++) {
-        frames[i] = {x + i * width, y, width, height };
+        frames[i] = {x + i * width, y * height, width, height };
     }
 }
 

@@ -31,31 +31,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e836d945-1c4f-4c19-900b-05a900db8fe3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Animator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Animator.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Animator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Animator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Character.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Character.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Character.h" beforeDir="false" afterPath="$PROJECT_DIR$/Character.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/Player.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GreenSlime.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GreenSlime.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GreenSlime.h" beforeDir="false" afterPath="$PROJECT_DIR$/GreenSlime.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TextureLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/TextureLoader.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TextureLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/TextureLoader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-08074c7ae7371d367a68.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-12-25T18-26-13-0182.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-main-Debug-208a234c473e9994581f.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/Player.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/Player.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/TextureLoader.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/TextureLoader.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/character.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/character.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/engine.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/engine.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/fmt-subbuild/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/fmt-subbuild/.ninja_log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/Graphics/Font.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/Graphics/Font.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/Graphics/Glyph.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/Graphics/Glyph.hpp" afterDir="false" />
@@ -65,10 +53,7 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/System/Utf.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/System/Utf.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/System/Utf.inl" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/System/Utf.inl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/Window/Event.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/Window/Event.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-subbuild/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-subbuild/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/main.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine.h" beforeDir="false" afterPath="$PROJECT_DIR$/engine.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +194,7 @@
       <workItem from="1735049034647" duration="2513000" />
       <workItem from="1735140238821" duration="15097000" />
       <workItem from="1735168750754" duration="1900000" />
-      <workItem from="1735757598194" duration="5176000" />
+      <workItem from="1735757598194" duration="13649000" />
     </task>
     <servers />
   </component>

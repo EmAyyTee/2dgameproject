@@ -10,6 +10,13 @@ protected:
 public:
     virtual ~Character() = default;
 
+    enum class RawOfSprite {
+        First = 0,
+        Second = 1,
+        Third = 2,
+        Fourth = 3
+    };
+
     static constexpr float speed = 100.0f;
 
     sf::Sprite sprite;

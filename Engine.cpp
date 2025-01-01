@@ -15,7 +15,7 @@ void Engine::run() {
     sf::Event event;
     auto textureLoader = std::make_shared<TextureLoader>();
     Player player({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> playerTextures));
-    GreenSlime greenSlime({200.0f, 200.0f}, std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> greenSlimeTextures));
+    GreenSlime greenSlime({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> greenSlimeTextures));
 
     while (renderWindow.isOpen()) {
         while (renderWindow.pollEvent(event)) {
@@ -25,11 +25,11 @@ void Engine::run() {
         }
 
         player.update(1.0f/ 60.0f);
-        greenSlime.update(1.0f/ 60.0f);
+        greenSlime.update(1.0f/ 60.0f, player);
 
         renderWindow.clear();
-        player.draw(renderWindow);
         greenSlime.draw(renderWindow);
+        player.draw(renderWindow);
         renderWindow.display();
     }
 }

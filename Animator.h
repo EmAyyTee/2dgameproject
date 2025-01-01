@@ -27,4 +27,5 @@ public:
     void applyToSprite(sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures);
 
     void Update(float deltaTime, int animationType, sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures);
+
 };
