@@ -15,7 +15,7 @@ public:
 
 
 
-    Player(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer);
+    Player(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer, sf::RenderWindow* renderTarget);
 
     void update(float deltaTime) override;
 

@@ -1,8 +1,8 @@
 #include "Character.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 
-Character::Character(const sf::Vector2f& position)
-    : position(position) {
+Character::Character(const sf::Vector2f& position, sf::RenderWindow* target)
+    : position(position), renderTarget(target) {
 }
 
 void Character::draw(sf::RenderTarget& renderTarget) {

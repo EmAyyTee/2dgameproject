@@ -4,8 +4,8 @@
 #include "SFML/Window/Keyboard.hpp"
 
 
-Player::Player(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer)
-    : Character(position), playerTexturesPointer(std::move(playerTexturesPointer)){
+Player::Player(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer, sf::RenderWindow* renderTarget)
+    : Character(position, renderTarget), playerTexturesPointer(std::move(playerTexturesPointer)){
 
     animation.calculateTheFrames(0, 0, 128, 74);
     direction = {0.0f, 0.0f};
