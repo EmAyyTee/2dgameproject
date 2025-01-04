@@ -22,6 +22,11 @@ public:
     sf::Texture greenSlimeIdleTexture;
     sf::Texture greenSlimeWalkingTexture;
 
+    //MainMenuTextures
+    //int represents the number of frames that the texture has
+    std::vector<std::pair <int, sf::Texture>> mainMenuTextures;
+
+    sf::Texture playButton;
 
     TextureLoader();
 

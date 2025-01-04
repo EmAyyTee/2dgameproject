@@ -5,6 +5,14 @@
 
 TextureLoader::TextureLoader() {
 
+    //Loading Main Menu textures
+
+    if (playButton.loadFromFile("MainMenuTextures/png/Buttons/Rect-Medium/PlayText/Default.png")){
+        mainMenuTextures.emplace_back(1,playButton);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load texture from file\n";
+    }
+
     //Loading player textures
 
     if (playerIdleTexture.loadFromFile("PlayerCharacter/Archer/IdleNoCelling.png")){
