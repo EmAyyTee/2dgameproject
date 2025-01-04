@@ -14,7 +14,7 @@ void Engine::run() {
     sf::RenderWindow& renderWindow = window.getWindow();
     sf::Event event;
     auto textureLoader = std::make_shared<TextureLoader>();
-    Player player({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> playerTextures), &renderWindow);
+    Player player({static_cast<float>(renderWindow.getSize().x/2) -64,static_cast<float>(renderWindow.getSize().y/2) - 64 }, std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> playerTextures), &renderWindow);
     GreenSlime greenSlime({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow);
 
     while (renderWindow.isOpen()) {

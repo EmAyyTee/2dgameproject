@@ -7,24 +7,28 @@
 
 GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer, sf::RenderWindow* target)
     : Character(position, target), greenSlimeTexturesPointer(std::move(greenSlimeTexturesPointer)) {
-
     animation.calculateTheFrames(0,0,64,64);
     direction = {0.0f, 0.0f};
-    green_slime_state = GreenSlimeState::SlimeIdle;
+    green_slime_animation = GreenSlimeAnimation::SlimeIdle;
 
-    hitBox.setSize(sf::Vector2f{50, 50});
-    hitBox.setOutlineColor(sf::Color::Red);
-    hitBox.setOutlineThickness(5.0f);
-    hitBox.setFillColor(sf::Color::Transparent);
-    hitBox.setPosition(position);
+    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Red, position, hitBox);
+    Character::setHitbox(sf::Vector2f{264.0f,264.0f}, sf::Color::Green, position, detectionHitBox);
 }
 
 void GreenSlime::update(float deltaTime, Player &player) {
-    updateHitbox();
+    checkForThePlayer(player);
     moveTowardsPlayer(player, deltaTime);
     Character::update(deltaTime);
-    animation.Update(deltaTime, static_cast<int>(green_slime_state), sprite, greenSlimeTexturesPointer.get());
+    Character::updateHitBox(detectionHitBox, position - sf::Vector2f{100.0f, 100.0f});
+    animation.Update(deltaTime, static_cast<int>(green_slime_animation), sprite, greenSlimeTexturesPointer.get());
 }
+
+void GreenSlime::checkForThePlayer(Player &player) {
+    if (player.getHitBox().getGlobalBounds().intersects(detectionHitBox.getGlobalBounds())) {
+        green_slime_detection = GreenSlimeDetection::PlayerDetected;
+    }
+}
+
 
 void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
     directionalVector = player.position - position;
@@ -36,46 +40,44 @@ void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
     directionalVector.x = directionalVector.x / magnitude;
     directionalVector.y = directionalVector.y / magnitude;
 
-    chooseAnimation();
+    if (green_slime_detection == GreenSlimeDetection::PlayerDetected){
+        chooseAnimation();
 
 
-    if (!player.sprite.getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
-        position += directionalVector * speed * deltaTime;
+        if (!player.getHitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
+            position += directionalVector * speed * deltaTime;
+        }
+        else {
+            green_slime_animation = GreenSlimeAnimation::SlimeIdle;
+        }
     }
-    else {
-        green_slime_state = GreenSlimeState::SlimeIdle;
-    }
-}
-void GreenSlime::updateHitbox() {
-    slimeHitBox = sprite.getGlobalBounds();
-    hitBox.setPosition(position);
-}
 
-void GreenSlime::draw(sf::RenderTarget &renderTarget){
-    Character::draw(renderTarget);
-    this -> renderTarget -> draw(hitBox);
 }
 
 void GreenSlime::chooseAnimation() {
     if (fabs(directionalVector.x) > fabs(directionalVector.y)) {
         if (directionalVector.x > 0.0f) {
-            green_slime_state = GreenSlimeState::SlimeWalkRight;
+            green_slime_animation = GreenSlimeAnimation::SlimeWalkRight;
             animation.calculateTheFrames(0,3,64,64);
         }
         else {
-            green_slime_state = GreenSlimeState::SlimeWalkLeft;
+            green_slime_animation = GreenSlimeAnimation::SlimeWalkLeft;
             animation.calculateTheFrames(0,2,64,64);
         }
     }
     else {
         if (directionalVector.y > 0.0f) {
-            green_slime_state = GreenSlimeState::SlimeWalkDown;
+            green_slime_animation = GreenSlimeAnimation::SlimeWalkDown;
             animation.calculateTheFrames(0,0,64,64);
         }
         else {
-            green_slime_state = GreenSlimeState::SlimeWalkUp;
+            green_slime_animation = GreenSlimeAnimation::SlimeWalkUp;
             animation.calculateTheFrames(0,1,64,64);
         }
     }
 }
 
+void GreenSlime::draw(sf::RenderTarget &renderTarget) {
+    Character::draw(renderTarget);
+    renderTarget.draw(detectionHitBox);
+}

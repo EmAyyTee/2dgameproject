@@ -7,19 +7,21 @@
 
 class GreenSlime : public Character{
 
-    sf::Vector2f playerPosition;
-    sf::Rect<float> slimeHitBox = sprite.getGlobalBounds();
-    sf::RectangleShape hitBox;
     sf::Vector2f directionalVector;
     float magnitude;
+    sf::RectangleShape detectionHitBox;
 
 public:
-    enum class GreenSlimeState{
+    enum class GreenSlimeAnimation{
         SlimeIdle = 0,
         SlimeWalkRight = 1,
         SlimeWalkLeft = 2,
         SlimeWalkDown = 3,
         SlimeWalkUp = 4
+    };
+    enum class GreenSlimeDetection {
+        PlayerNotDetected = 0,
+        PlayerDetected = 1
     };
 
 
@@ -29,14 +31,15 @@ public:
 
     void moveTowardsPlayer(Player &player, float deltaTime);
 
-    void updateHitbox();
-
-    void draw(sf::RenderTarget& renderTarget);
-
     void chooseAnimation();
 
+    void checkForThePlayer(Player &player);
+
+    void draw(sf::RenderTarget &renderTarget) override;
+
 private:
-    GreenSlimeState green_slime_state;
+    GreenSlimeAnimation green_slime_animation;
+    GreenSlimeDetection green_slime_detection;
     std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer;
 };
 
