@@ -4,12 +4,8 @@
 #include "SFML/Graphics/Sprite.hpp"
 
 
-Animator::Animator(int x, int y, int width, int height)
+Animator::Animator()
     : currentAnimationType(0){
-
-    for (int i = 0; i < 13; i++) {
-        frames[i] = {x + i * width, y, width, height };
-    }
 }
 
 void Animator::applyToSprite(sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures) {
@@ -40,3 +36,10 @@ void Animator::Advance() {
         iFrame = 0;
     }
 }
+
+void Animator::calculateTheFrames(int x, int y, int width, int height) {
+    for (int i = 0; i < 13; i++) {
+        frames[i] = {x + i * width, y * height, width, height };
+    }
+}
+
