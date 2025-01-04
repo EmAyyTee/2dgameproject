@@ -2,7 +2,6 @@
 #include "MainWindow.h"
 #include <fstream>
 
-#include "MainMenuWindow.h"
 
 class Engine{
     MainWindow* window = nullptr;
@@ -19,7 +18,7 @@ public:
     };
 
     Engine();
-    void run(MainWindow& windowRef, MainMenuWindow &mainMenuWindowRef);
+    void run(MainWindow& windowRef);
 
 private:
     GameState gameState;

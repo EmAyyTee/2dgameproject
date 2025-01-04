@@ -1,21 +1,37 @@
 #include "Engine.h"
 
+#include "Button.h"
 #include "Player.h"
 #include "TextureLoader.h"
 #include "GreenSlime.h"
-#include "MainMenuWindow.h"
 #include "SFML/Window/Event.hpp"
 
-auto textureLoader = std::make_shared<TextureLoader>();
+
 
 Engine::Engine()
     : gameState(GameState::MainMenu) {
     initKeys();
 
 }
-void Engine::run(MainWindow& windowRef, MainMenuWindow &mainMenuWindowRef) {
-    if (gameState == GameState::MainMenu) {
+void Engine::run(MainWindow& windowRef) {
+    auto textureLoader = std::make_shared<TextureLoader>();
 
+    if (gameState == GameState::MainMenu) {
+        sf::RenderWindow& renderWindow = windowRef.getWindow();
+        sf::Event event;
+
+        Button playButton;
+
+        while (renderWindow.isOpen()) {
+            while (renderWindow.pollEvent(event)) {
+                if(event.type == sf::Event::Closed) {
+                    renderWindow.close();
+                }
+            }
+            renderWindow.clear();
+            playButton.buttonDraw(renderWindow);
+            renderWindow.display();
+        }
     }
     else if (gameState == GameState::Running) {
         sf::RenderWindow& renderWindow = windowRef.getWindow();

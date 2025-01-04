@@ -36,8 +36,6 @@ add_executable(main main.cpp
         TextureLoader.cpp
         GreenSlime.h
         GreenSlime.cpp
-        MainMenuWindow.h
-        MainMenuWindow.cpp
         Button.h
         Button.cpp
 )
