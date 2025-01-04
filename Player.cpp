@@ -10,6 +10,8 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pa
     animation.calculateTheFrames(0, 0, 128, 74);
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
+
+    Character::setHitbox(sf::Vector2f{128,74}, sf::Color::Blue, position,hitBox);
 }
 
 void Player::update(float deltaTime) {

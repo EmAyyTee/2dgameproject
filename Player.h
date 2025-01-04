@@ -3,6 +3,7 @@
 
 #include "Character.h"
 #include "TextureLoader.h"
+#include "SFML/Graphics/RectangleShape.hpp"
 
 class Player : public Character{
 
