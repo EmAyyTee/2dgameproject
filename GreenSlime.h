@@ -10,6 +10,8 @@ class GreenSlime : public Character{
     sf::Vector2f playerPosition;
     sf::Rect<float> slimeHitBox = sprite.getGlobalBounds();
     sf::RectangleShape hitBox;
+    sf::Vector2f directionalVector;
+    float magnitude;
 
 public:
     enum class GreenSlimeState{
@@ -25,11 +27,13 @@ public:
 
     void update(float deltaTime, Player &player);
 
-    void moveTowardsPlayer(Player &player);
+    void moveTowardsPlayer(Player &player, float deltaTime);
 
     void updateHitbox();
 
     void draw(sf::RenderTarget& renderTarget);
+
+    void chooseAnimation();
 
 private:
     GreenSlimeState green_slime_state;

@@ -21,38 +21,28 @@ GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector
 
 void GreenSlime::update(float deltaTime, Player &player) {
     updateHitbox();
-    moveTowardsPlayer(player);
+    moveTowardsPlayer(player, deltaTime);
     Character::update(deltaTime);
-    std::cout << "The slime's state is: " << static_cast<int>(green_slime_state) << "\n";
     animation.Update(deltaTime, static_cast<int>(green_slime_state), sprite, greenSlimeTexturesPointer.get());
 }
 
-void GreenSlime::moveTowardsPlayer(Player &player) {
-    playerPosition = player.position;
+void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
+    directionalVector = player.position - position;
     direction = {0.0f, 0.0f};
 
+    //Vector normalisation formula
+
+    magnitude = sqrt(directionalVector.x * directionalVector.x + directionalVector.y * directionalVector.y);
+    directionalVector.x = directionalVector.x / magnitude;
+    directionalVector.y = directionalVector.y / magnitude;
+
+    chooseAnimation();
+
+
     if (!player.sprite.getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
-        if (position.x < playerPosition.x+32 && (position.y < playerPosition.y+64 || position.y > playerPosition.y-64)) {
-            // green_slime_state = GreenSlimeState::SlimeWalkRight;
-            direction.x += 0.5f;
-            animation.calculateTheFrames(0,3,64,64);
-        }
-        if (position.x > playerPosition.x+32){
-            // green_slime_state = GreenSlimeState::SlimeWalkLeft;
-            direction.x -= 0.5f;
-            animation.calculateTheFrames(0,2,64,64);
-        }
-        if (position.y > playerPosition.y+14) {
-            // green_slime_state = GreenSlimeState::SlimeWalkUp;
-            direction.y -= 0.5f;
-            animation.calculateTheFrames(0,1,64,64);
-        }
-        if (position.y < playerPosition.y+14) {
-            // green_slime_state = GreenSlimeState::SlimeWalkDown;
-            direction.y += 0.5f;
-            animation.calculateTheFrames(0,0,64,64);
-        }
-    } else {
+        position += directionalVector * speed * deltaTime;
+    }
+    else {
         green_slime_state = GreenSlimeState::SlimeIdle;
     }
 }
@@ -65,3 +55,27 @@ void GreenSlime::draw(sf::RenderTarget &renderTarget){
     Character::draw(renderTarget);
     this -> renderTarget -> draw(hitBox);
 }
+
+void GreenSlime::chooseAnimation() {
+    if (fabs(directionalVector.x) > fabs(directionalVector.y)) {
+        if (directionalVector.x > 0.0f) {
+            green_slime_state = GreenSlimeState::SlimeWalkRight;
+            animation.calculateTheFrames(0,3,64,64);
+        }
+        else {
+            green_slime_state = GreenSlimeState::SlimeWalkLeft;
+            animation.calculateTheFrames(0,2,64,64);
+        }
+    }
+    else {
+        if (directionalVector.y > 0.0f) {
+            green_slime_state = GreenSlimeState::SlimeWalkDown;
+            animation.calculateTheFrames(0,0,64,64);
+        }
+        else {
+            green_slime_state = GreenSlimeState::SlimeWalkUp;
+            animation.calculateTheFrames(0,1,64,64);
+        }
+    }
+}
+
