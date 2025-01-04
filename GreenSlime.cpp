@@ -42,8 +42,6 @@ void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
 
     if (green_slime_detection == GreenSlimeDetection::PlayerDetected){
         chooseAnimation();
-
-
         if (!player.getHitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
             position += directionalVector * speed * deltaTime;
         }
@@ -51,7 +49,6 @@ void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
             green_slime_animation = GreenSlimeAnimation::SlimeIdle;
         }
     }
-
 }
 
 void GreenSlime::chooseAnimation() {
