@@ -24,9 +24,10 @@ public:
 
     //MainMenuTextures
     //int represents the number of frames that the texture has
-    std::vector<std::pair <int, sf::Texture>> mainMenuTextures;
+    std::vector<std::pair <int, sf::Texture>> mainMenuPlayButtonTextures;
 
     sf::Texture playButton;
+    sf::Texture playButtonHover;
 
     TextureLoader();
 

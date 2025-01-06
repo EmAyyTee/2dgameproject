@@ -1,5 +1,6 @@
 #pragma once
 #include "MainWindow.h"
+#include "GameState.h"
 #include <fstream>
 
 
@@ -12,10 +13,7 @@ class Engine{
     void initKeys();
 
 public:
-    enum class GameState{
-        MainMenu = 0,
-        Running = 1
-    };
+
 
     Engine();
     void run(MainWindow& windowRef);

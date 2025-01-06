@@ -1,5 +1,4 @@
 #include "GreenSlime.h"
-
 #include <iostream>
 #include <bits/fs_fwd.h>
 

@@ -38,6 +38,8 @@ add_executable(main main.cpp
         GreenSlime.cpp
         Button.h
         Button.cpp
+        PlayButton.h
+        PlayButton.cpp
 )
 target_link_libraries(main
         fmt::fmt
