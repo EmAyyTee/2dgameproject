@@ -67,10 +67,12 @@ TextureLoader::TextureLoader() {
 
     //Loading GreenSlime textures
 
+    //Loading Ilde textures
+
     if (greenSlimeIdleTexture.loadFromFile("EnemiesTextures/GreenSlime/Idle/Slime1_Idle_full.png")){
         greenSlimeTextures.emplace_back(6, greenSlimeIdleTexture);
     } else {
-        std::cout << "TextureLoader::TextureLoader: Failed to load \"EnemiesTextures/GreenSlime/Idle/Slime1_Idle_full.png\" texture from file\n";
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"EnemiesTextures/GreenSlime/Hurt/Slime1_Idle_full.png\" texture from file\n";
     }
     if (greenSlimeWalkingTexture.loadFromFile("EnemiesTextures/GreenSlime/Walk/Slime1_Walk_full.png")){
 
@@ -83,5 +85,12 @@ TextureLoader::TextureLoader() {
     } else {
         std::cout << "TextureLoader::TextureLoader: Failed to load \"EnemiesTextures/GreenSlime/Walk/Slime1_Walk_full.png\" texture from file\n";
     }
-    
+
+    // Loading Hurt Textures
+
+    if (greenSlimeHurtTexture.loadFromFile("EnemiesTextures/GreenSlime/Hurt/Slime1_Hurt_full.png")){
+        greenSlimeTextures.emplace_back(5, greenSlimeHurtTexture);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"EnemiesTextures/GreenSlime/Hurt/Slime1_Hurt_full.png\" texture from file\n";
+    }
 }

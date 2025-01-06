@@ -25,7 +25,7 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::strin
 void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {
     this -> arrows = &arrows;
     playerGetInput();
-    Character::update(deltaTime);
+    Character::update(deltaTime, {0,0});
     animation.Update(deltaTime, static_cast<int>(playerState), sprite, &playerTexturesPointer->at("playerTextures"));
 }
 
@@ -50,11 +50,13 @@ void Player::playerGetInput() {
         playerState = PlayerState::PlayerWalkingRight;
         direction.x += 1.0f;
     }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left ) && shotClock.getElapsedTime().asSeconds() > cooldownTimeForShootingAnArrow) {
         mousePosition = renderTarget->mapPixelToCoords(
        sf::Mouse::getPosition(*renderTarget)
    );
-        arrows->push_back(PlayerArrow ({position.x+62, position.y +37}, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget));
+        std::cout << mousePosition.x << ", " << mousePosition.y << std::endl;
+        arrows->push_back(PlayerArrow ({position.x, position.y}, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget));
+        shotClock.restart();
     }
 }
 

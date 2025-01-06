@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "Animator.h"
+#include "Character.h"
 #include "GameObject.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 
@@ -26,11 +27,18 @@ public:
 
     void chooseAnimation();
 
-    void update(float deltaTime);
+    void update(float deltaTime, sf::Vector2f shiftOfHitBoxPos ) override;
+
+    bool checkArrowLifeTime();
+
+    sf::RectangleShape& getArrowHitBox();
 
     Animator animator;
 private:
+    float maxLifetime = 5.0f;
     ArrowDirection directionAnimation;
     sf::Vector2f target;
+    sf::Vector2f hitBoxPosition;
+    sf::Clock arrowClock;
 };
 

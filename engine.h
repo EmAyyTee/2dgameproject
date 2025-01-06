@@ -22,4 +22,5 @@ private:
     GameState gameState;
     bool shouldTheGameClose = false;
     std::vector<PlayerArrow> arrows;
+    std::vector<PlayerArrow> remainingArrows;
 };

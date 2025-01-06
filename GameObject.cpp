@@ -22,8 +22,8 @@ void GameObject::setDirection(const sf::Vector2f &direction) {
     velocity = direction*speed;
 }
 
-void GameObject::update(float deltaTime) {
-    updateHitBox(hitBox, position);
+void GameObject::update(float deltaTime,sf::Vector2f shiftOfHitBoxPos ) {
+    updateHitBox(hitBox, position+shiftOfHitBoxPos);
     setDirection(direction);
     position += velocity*deltaTime;
     sprite.setPosition(position);

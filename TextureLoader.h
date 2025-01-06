@@ -32,6 +32,7 @@ public:
     std::vector<std::pair <int, sf::Texture>> greenSlimeTextures;
 
     sf::Texture greenSlimeIdleTexture;
+    sf::Texture greenSlimeHurtTexture;
     sf::Texture greenSlimeWalkingTexture;
 
     //MainMenuTextures

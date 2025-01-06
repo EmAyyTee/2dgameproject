@@ -69,11 +69,18 @@ void Engine::run(MainWindow& windowRef) {
                 renderWindow.clear();
                 player.draw(renderWindow);
                 greenSlime.draw(renderWindow);
-                for (PlayerArrow &arrow: arrows) {
-                    arrow.update(1.0f/60.0f);
+
+                for (PlayerArrow &arrow : arrows) {
+                    arrow.update(1.0f / 60.0f, {0,0});
                     arrow.draw(renderWindow);
+
+                    if (!arrow.checkArrowLifeTime()) {
+                        remainingArrows.push_back(std::move(arrow));
+                    }
                 }
+                arrows = std::move(remainingArrows);
                 renderWindow.display();
+
                 if (gameState != GameState::Running) {
                     break;
                 }
