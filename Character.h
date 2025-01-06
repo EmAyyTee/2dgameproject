@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #include "Animator.h"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"

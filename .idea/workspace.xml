@@ -33,20 +33,9 @@
     <list default="true" id="e836d945-1c4f-4c19-900b-05a900db8fe3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Character.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Character.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Character.h" beforeDir="false" afterPath="$PROJECT_DIR$/Character.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GreenSlime.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GreenSlime.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GreenSlime.h" beforeDir="false" afterPath="$PROJECT_DIR$/GreenSlime.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/Player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextureLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/TextureLoader.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/GreenSlime.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/GreenSlime.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/Player.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/Player.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/character.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/character.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/engine.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/main.dir/engine.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/Graphics/Font.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/sfml-src/include/SFML/Graphics/Font.hpp" afterDir="false" />
@@ -108,7 +97,7 @@
     &quot;cf.advertisement.text.has.clang-format&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;developement&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;windows&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/Projects/theBidingOfOri/CMakeLists.txt&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -200,6 +189,7 @@
       <workItem from="1735772524208" duration="51000" />
       <workItem from="1735813159099" duration="12566000" />
       <workItem from="1735849945099" duration="1135000" />
+      <workItem from="1736108023716" duration="386000" />
     </task>
     <servers />
   </component>

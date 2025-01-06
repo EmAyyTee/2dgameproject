@@ -6,7 +6,7 @@
 #include "SFML/Graphics/Texture.hpp"
 
 class Animator {
-    int nFrames = 6;
+    int nFrames = 1;
     static constexpr  float holdTime = 0.1f;
 
     int iFrame = 0, currentAnimationType;
