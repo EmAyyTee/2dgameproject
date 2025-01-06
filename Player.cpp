@@ -45,6 +45,9 @@ void Player::playerGetInput() {
     }
 }
 
+sf::Vector2f Player::getPosition() {
+    return position;
+}
 
 
 

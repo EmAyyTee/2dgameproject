@@ -24,6 +24,8 @@ public:
 
     void playerGetInput();
 
+    sf::Vector2f getPosition();
+
 private:
     PlayerState playerState;
     std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer;

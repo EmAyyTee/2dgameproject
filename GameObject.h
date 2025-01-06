@@ -4,8 +4,20 @@
 
 class GameObject {
 protected:
+
+    static constexpr float speed = 200.0f;
     sf::RectangleShape hitBox;
+    sf::Vector2f position;
+
+    GameObject(const sf::Vector2f& position);
+
 public:
+    virtual ~GameObject() = default;
+
+    sf::Vector2f velocity;
+
     sf::Sprite sprite;
+
+    virtual void draw(sf::RenderTarget& renderTarget);
 };
 

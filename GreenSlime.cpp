@@ -31,7 +31,7 @@ void GreenSlime::checkForThePlayer(Player &player) {
 
 
 void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
-    directionalVector = player.position - position;
+    directionalVector = player.getPosition() - position;
     direction = {0.0f, 0.0f};
 
     //Vector normalisation formula

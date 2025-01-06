@@ -42,6 +42,8 @@ add_executable(main main.cpp
         PlayButton.cpp
         GameObject.h
         GameObject.cpp
+        PlayerArrow.h
+        PlayerArrow.cpp
 )
 target_link_libraries(main
         fmt::fmt

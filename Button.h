@@ -5,15 +5,14 @@
 #include "Animator.h"
 #include "GameObject.h"
 #include "SFML/Graphics/RenderWindow.hpp"
-#include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
 
-class Button : public GameObject{
+class Button {
 protected:
     sf::Texture playButton;
     sf::RenderWindow* renderTarget = nullptr;
     sf::Vector2f position;
-
+    sf::Sprite sprite;
 public:
     Button(const sf::Vector2f& position, sf::RenderWindow* target);
     void buttonDraw(sf::RenderTarget& renderTarget) const;
