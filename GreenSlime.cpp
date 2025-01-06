@@ -7,6 +7,7 @@
 GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer, sf::RenderWindow* target)
     : Character(position, target), greenSlimeTexturesPointer(std::move(greenSlimeTexturesPointer)) {
     animation.calculateTheFrames(0,0,64,64);
+    animation.setNumberOfFrames(6);
     direction = {0.0f, 0.0f};
     green_slime_animation = GreenSlimeAnimation::SlimeIdle;
 

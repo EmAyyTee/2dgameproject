@@ -13,9 +13,7 @@ class Engine{
     void initKeys();
 
 public:
-
-
-    Engine();
+    Engine(MainWindow& windowRef);
     void run(MainWindow& windowRef);
 
 private:

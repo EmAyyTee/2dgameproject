@@ -9,6 +9,7 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pa
     : Character(position, renderTarget), playerTexturesPointer(std::move(playerTexturesPointer)), supportedKeys(supportedKeys){
 
     animation.calculateTheFrames(0, 0, 128, 74);
+    animation.setNumberOfFrames(6);
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
 

@@ -7,6 +7,7 @@ PlayButton::PlayButton(const sf::Vector2f& position, std::shared_ptr<std::vector
                        sf::RenderWindow* renderTarget)
         : Button(position, renderTarget), playButtonTexturesPointer(std::move(playButtonTexturesPointer)){
     animator.calculateTheFrames(0, 0, 168, 88);
+    animator.setNumberOfFrames(1);
     buttonState = ButtonState::NotHovered;
 }
 

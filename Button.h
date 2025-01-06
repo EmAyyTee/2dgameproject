@@ -3,13 +3,13 @@
 #include <vector>
 
 #include "Animator.h"
+#include "GameObject.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
 
-class Button {
+class Button : public GameObject{
 protected:
-    sf::Sprite sprite;
     sf::Texture playButton;
     sf::RenderWindow* renderTarget = nullptr;
     sf::Vector2f position;

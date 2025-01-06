@@ -1,15 +1,15 @@
 #pragma once
 
 #include "Animator.h"
+#include "GameObject.h"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 
 
 
-class Character {
+class Character : public GameObject{
 protected:
-    sf::RectangleShape hitBox;
     sf::Vector2f direction = sf::Vector2f(0.0f, 0.0f);
 public:
     virtual ~Character() = default;
@@ -22,8 +22,7 @@ public:
     };
 
     static constexpr float speed = 200.0f;
-
-    sf::Sprite sprite;
+    
     sf::Vector2f position = {0.0f, 0.0f};
     sf::Vector2f velocity;
 

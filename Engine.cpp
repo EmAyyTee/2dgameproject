@@ -9,9 +9,10 @@
 
 
 
-Engine::Engine()
+Engine::Engine(MainWindow& windowRef)
     : gameState(GameState::MainMenu) {
     initKeys();
+    run(windowRef);
 
 }
 void Engine::run(MainWindow& windowRef) {
@@ -31,6 +32,7 @@ void Engine::run(MainWindow& windowRef) {
                 while (renderWindow.pollEvent(event)) {
                     if(event.type == sf::Event::Closed) {
                         renderWindow.close();
+                        shouldTheGameClose = true;
                     }
                 }
 

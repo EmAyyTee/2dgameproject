@@ -19,8 +19,11 @@ class Animator {
 
     void Advance();
 
+
 public:
     Animator();
+
+    void setNumberOfFrames(int nFrames);
 
     void calculateTheFrames(int x, int y, int width, int height);
 
