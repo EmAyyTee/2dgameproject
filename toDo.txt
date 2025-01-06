@@ -1,0 +1,12 @@
+Add spawning mechanics for enemies (or at least the  green slime).
+
+Add obstacles to map.
+
+Add pathfinding and remember A* (that is an algorithm for path finding and one of the best at that).
+
+Add more enemies types.
+
+Refactor calculateTheFrames so that they are being calculated for the state.
+
+Create a player hitbox. Or even two hitboxes (one for movement and one for damage).
+

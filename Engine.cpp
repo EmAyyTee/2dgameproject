@@ -16,43 +16,62 @@ Engine::Engine()
 }
 void Engine::run(MainWindow& windowRef) {
     auto textureLoader = std::make_shared<TextureLoader>();
-    sf::RenderWindow& renderWindow = windowRef.getWindow();
+
     sf::Event event;
 
-    Player player({static_cast<float>(renderWindow.getSize().x/2) -64,static_cast<float>(renderWindow.getSize().y/2) - 64 },
-                std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> playerTextures),
-                &renderWindow, &supportedKeys);
+    while (!shouldTheGameClose){
+        if (gameState == GameState::MainMenu) {
+            sf::RenderWindow& renderWindow = windowRef.getWindow();
 
-    GreenSlime greenSlime({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
-        sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow);
+            PlayButton playButton({static_cast<float>(renderWindow.getSize().x/2) -64,static_cast<float>(renderWindow.getSize().y/2) - 64 },
+                std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> mainMenuPlayButtonTextures),
+                &renderWindow);
 
-    PlayButton playButton({static_cast<float>(renderWindow.getSize().x/2) -64,static_cast<float>(renderWindow.getSize().y/2) - 64 },
-            std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> mainMenuPlayButtonTextures),
-            &renderWindow);
+            while (renderWindow.isOpen()) {
+                while (renderWindow.pollEvent(event)) {
+                    if(event.type == sf::Event::Closed) {
+                        renderWindow.close();
+                    }
+                }
 
-    while (renderWindow.isOpen()) {
-        while (renderWindow.pollEvent(event)) {
-            if(event.type == sf::Event::Closed) {
-                renderWindow.close();
+                playButton.update(1.0f/60.0f, gameState);
+                renderWindow.clear();
+                playButton.buttonDraw(renderWindow);
+                renderWindow.display();
+                if (gameState != GameState::MainMenu) {
+                    break;
+                }
             }
-        }
-    if (gameState == GameState::MainMenu) {
-
-
-            playButton.update(1.0f/60.0f, gameState);
-            renderWindow.clear();
-            playButton.buttonDraw(renderWindow);
-            renderWindow.display();
 
         } else if (gameState == GameState::Running) {
 
-            player.update(1.0f/ 60.0f);
-            greenSlime.update(1.0f/ 60.0f, player);
+            sf::RenderWindow& renderWindow = windowRef.getWindow();
 
-            renderWindow.clear();
-            player.draw(renderWindow);
-            greenSlime.draw(renderWindow);
-            renderWindow.display();
+            Player player({static_cast<float>(renderWindow.getSize().x/2) -64,static_cast<float>(renderWindow.getSize().y/2) - 64 },
+                std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> playerTextures),
+                &renderWindow, &supportedKeys);
+
+            GreenSlime greenSlime({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
+                sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow);
+
+            while (renderWindow.isOpen()) {
+                while (renderWindow.pollEvent(event)) {
+                    if(event.type == sf::Event::Closed) {
+                        renderWindow.close();
+                        shouldTheGameClose = true;
+                    }
+                }
+                player.update(1.0f/ 60.0f);
+                greenSlime.update(1.0f/ 60.0f, player);
+
+                renderWindow.clear();
+                player.draw(renderWindow);
+                greenSlime.draw(renderWindow);
+                renderWindow.display();
+                if (gameState != GameState::Running) {
+                    break;
+                }
+            }
         }
     }
 }
