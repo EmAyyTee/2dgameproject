@@ -3,6 +3,8 @@
 #include "GameState.h"
 #include <fstream>
 
+#include "PlayerArrow.h"
+
 
 class Engine{
     MainWindow* window = nullptr;
@@ -19,4 +21,5 @@ public:
 private:
     GameState gameState;
     bool shouldTheGameClose = false;
+    std::vector<PlayerArrow> arrows;
 };

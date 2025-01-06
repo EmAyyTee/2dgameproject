@@ -1,9 +1,11 @@
 #include "Player.h"
 
 #include <cmath>
+#include <iostream>
 
 #include "Animator.h"
 #include "PlayerArrow.h"
+#include "fmt/core.h"
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/Keyboard.hpp"
 
@@ -20,7 +22,8 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::strin
     Character::setHitbox(sf::Vector2f{128,74}, sf::Color::Blue, position,hitBox);
 }
 
-void Player::update(float deltaTime) {
+void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {
+    this -> arrows = &arrows;
     playerGetInput();
     Character::update(deltaTime);
     animation.Update(deltaTime, static_cast<int>(playerState), sprite, &playerTexturesPointer->at("playerTextures"));
@@ -48,14 +51,10 @@ void Player::playerGetInput() {
         direction.x += 1.0f;
     }
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        directionalVector = sf::Vector2f(renderTarget->mapPixelToCoords(sf::Mouse::getPosition(*renderTarget))) - position;
-
-        magnitude = std::sqrt(directionalVector.x * directionalVector.x + directionalVector.y * directionalVector.y);
-        directionalVector.x = directionalVector.x / magnitude;
-        directionalVector.y = directionalVector.y / magnitude;
-
-        PlayerArrow arrow(position, directionalVector,&playerTexturesPointer->at("arrowTextures"), renderTarget);
-
+        mousePosition = renderTarget->mapPixelToCoords(
+       sf::Mouse::getPosition(*renderTarget)
+   );
+        arrows->push_back(PlayerArrow ({position.x+62, position.y +37}, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget));
     }
 }
 

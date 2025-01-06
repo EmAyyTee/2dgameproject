@@ -2,12 +2,15 @@
 #include <memory>
 
 #include "Character.h"
+#include "PlayerArrow.h"
 #include "TextureLoader.h"
 #include "SFML/Window/Keyboard.hpp"
 
 class Player : public Character{
-    sf::Vector2f directionalVector;
-    float magnitude;
+
+    sf::Vector2f mousePosition;
+    std::vector<PlayerArrow> *arrows;
+
 
 public:
     enum class PlayerState {
@@ -21,7 +24,7 @@ public:
     Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer,
         sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key> *supportedKeys);
 
-    void update(float deltaTime) override;
+    void update(float deltaTime,std::vector<PlayerArrow> &arrows);
 
     void playerGetInput();
 

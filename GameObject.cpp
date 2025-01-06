@@ -17,3 +17,18 @@ void GameObject::setHitbox(sf::Vector2f size, sf::Color color, sf::Vector2f posi
     hitBox.setFillColor(sf::Color::Transparent);
     hitBox.setPosition(position);
 }
+
+void GameObject::setDirection(const sf::Vector2f &direction) {
+    velocity = direction*speed;
+}
+
+void GameObject::update(float deltaTime) {
+    updateHitBox(hitBox, position);
+    setDirection(direction);
+    position += velocity*deltaTime;
+    sprite.setPosition(position);
+}
+
+void GameObject::updateHitBox(sf::RectangleShape &hitBox, sf::Vector2f position) {
+    hitBox.setPosition(position);
+}

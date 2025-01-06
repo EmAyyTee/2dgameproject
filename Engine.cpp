@@ -63,12 +63,16 @@ void Engine::run(MainWindow& windowRef) {
                         shouldTheGameClose = true;
                     }
                 }
-                player.update(1.0f/ 60.0f);
+                player.update(1.0f/ 60.0f, arrows);
                 greenSlime.update(1.0f/ 60.0f, player);
 
                 renderWindow.clear();
                 player.draw(renderWindow);
                 greenSlime.draw(renderWindow);
+                for (PlayerArrow &arrow: arrows) {
+                    arrow.update(1.0f/60.0f);
+                    arrow.draw(renderWindow);
+                }
                 renderWindow.display();
                 if (gameState != GameState::Running) {
                     break;

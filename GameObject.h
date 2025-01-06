@@ -4,7 +4,7 @@
 
 class GameObject {
 protected:
-
+    sf::Vector2f direction = sf::Vector2f(0.0f, 0.0f);
     static constexpr float speed = 200.0f;
     sf::RectangleShape hitBox;
     sf::Vector2f position;
@@ -21,5 +21,13 @@ public:
     virtual void draw(sf::RenderTarget& renderTarget);
 
     virtual void setHitbox(sf::Vector2f size, sf::Color color, sf::Vector2f position, sf::RectangleShape &hitBox);
+
+    virtual void setDirection(const sf::Vector2f& direction);
+
+    virtual void update(float deltaTime);
+
+    virtual void updateHitBox(sf::RectangleShape &hitBox, sf::Vector2f position);
+
 };
+
 
