@@ -1,5 +1,4 @@
 #include "GreenSlime.h"
-
 #include <iostream>
 #include <bits/fs_fwd.h>
 
@@ -8,20 +7,25 @@
 GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer, sf::RenderWindow* target)
     : Character(position, target), greenSlimeTexturesPointer(std::move(greenSlimeTexturesPointer)) {
     animation.calculateTheFrames(0,0,64,64);
+    animation.setNumberOfFrames(6);
     direction = {0.0f, 0.0f};
     green_slime_animation = GreenSlimeAnimation::SlimeIdle;
 
-    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Red, position, hitBox);
-    Character::setHitbox(sf::Vector2f{264.0f,264.0f}, sf::Color::Green, position, detectionHitBox);
+    Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Red, position, hitBox);
+    Character::setHitbox(sf::Vector2f{464.0f,464.0f}, sf::Color::Green, position, detectionHitBox);
+    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Magenta, position, attackHitbox);
 }
 
 void GreenSlime::update(float deltaTime, Player &player) {
     checkForThePlayer(player);
     moveTowardsPlayer(player, deltaTime);
-    Character::update(deltaTime);
-    Character::updateHitBox(detectionHitBox, position - sf::Vector2f{100.0f, 100.0f});
+    checkForTheDamage(player);
+    Character::update(deltaTime, {sprite.getGlobalBounds().width/2 - 8.5f, sprite.getGlobalBounds().height/2 - 7.5f});
+    Character::updateHitBox(detectionHitBox, position - sf::Vector2f{208.8f, 207.5f});
+    Character::updateHitBox(attackHitbox, {position.x - sprite.getGlobalBounds().width/2+32, position.y - sprite.getGlobalBounds().height/2+32});
     animation.Update(deltaTime, static_cast<int>(green_slime_animation), sprite, greenSlimeTexturesPointer.get());
 }
+
 
 void GreenSlime::checkForThePlayer(Player &player) {
     if (player.getHitBox().getGlobalBounds().intersects(detectionHitBox.getGlobalBounds())) {
@@ -29,9 +33,16 @@ void GreenSlime::checkForThePlayer(Player &player) {
     }
 }
 
+void GreenSlime::checkForTheDamage(Player &player) {
+    for (PlayerArrow &arrow : *player.arrows) {
+        if (arrow.getArrowHitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
+            green_slime_animation = GreenSlimeAnimation::SlimeHurt;
+        }
+    }
+}
 
 void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
-    directionalVector = player.position - position;
+    directionalVector = player.getPosition() - position;
     direction = {0.0f, 0.0f};
 
     //Vector normalisation formula
@@ -42,16 +53,15 @@ void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
 
     if (green_slime_detection == GreenSlimeDetection::PlayerDetected){
         chooseAnimation();
-
-
-        if (!player.getHitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
+        if (!player.getHitBox().getGlobalBounds().intersects(attackHitbox.getGlobalBounds())) {
             position += directionalVector * speed * deltaTime;
         }
         else {
             green_slime_animation = GreenSlimeAnimation::SlimeIdle;
         }
+    } else if (!triggerHurtState()) {
+        green_slime_animation = GreenSlimeAnimation::SlimeIdle;
     }
-
 }
 
 void GreenSlime::chooseAnimation() {
@@ -80,4 +90,5 @@ void GreenSlime::chooseAnimation() {
 void GreenSlime::draw(sf::RenderTarget &renderTarget) {
     Character::draw(renderTarget);
     renderTarget.draw(detectionHitBox);
+    renderTarget.draw(attackHitbox);
 }

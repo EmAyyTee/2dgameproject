@@ -10,6 +10,7 @@ class GreenSlime : public Character{
     sf::Vector2f directionalVector;
     float magnitude;
     sf::RectangleShape detectionHitBox;
+    sf::RectangleShape attackHitbox;
 
 public:
     enum class GreenSlimeAnimation{
@@ -17,7 +18,8 @@ public:
         SlimeWalkRight = 1,
         SlimeWalkLeft = 2,
         SlimeWalkDown = 3,
-        SlimeWalkUp = 4
+        SlimeWalkUp = 4,
+        SlimeHurt = 5
     };
     enum class GreenSlimeDetection {
         PlayerNotDetected = 0,
@@ -34,6 +36,8 @@ public:
     void chooseAnimation();
 
     void checkForThePlayer(Player &player);
+
+    void checkForTheDamage(Player &player);
 
     void draw(sf::RenderTarget &renderTarget) override;
 

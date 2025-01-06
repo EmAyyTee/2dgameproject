@@ -5,7 +5,7 @@
 
 
 Animator::Animator()
-    : currentAnimationType(0){
+    : currentAnimationType(0), nFrames(nFrames){
 }
 
 void Animator::applyToSprite(sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures) {
@@ -43,3 +43,6 @@ void Animator::calculateTheFrames(int x, int y, int width, int height) {
     }
 }
 
+void Animator::setNumberOfFrames(int nFrames) {
+    this -> nFrames = nFrames;
+}

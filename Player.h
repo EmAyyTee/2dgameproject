@@ -2,8 +2,9 @@
 #include <memory>
 
 #include "Character.h"
+#include "PlayerArrow.h"
 #include "TextureLoader.h"
-#include "SFML/Graphics/RectangleShape.hpp"
+#include "SFML/Window/Keyboard.hpp"
 
 class Player : public Character{
 
@@ -13,16 +14,22 @@ public:
         PlayerWalkingRight = 1,
         PlayerWalkingLeft = 2,
     };
+    sf::Vector2f mousePosition;
+    std::vector<PlayerArrow> *arrows;
 
+    Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer,
+        sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key> *supportedKeys);
 
-
-    Player(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer, sf::RenderWindow* renderTarget);
-
-    void update(float deltaTime) override;
+    void update(float deltaTime,std::vector<PlayerArrow> &arrows);
 
     void playerGetInput();
 
+    sf::Vector2f getPosition();
+
 private:
     PlayerState playerState;
-    std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer;
+    std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer;
+    std::map<std::string, sf::Keyboard::Key>* supportedKeys;
+    sf::Clock shotClock;
+    float cooldownTimeForShootingAnArrow = 0.5f;
 };
