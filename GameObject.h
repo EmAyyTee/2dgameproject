@@ -19,5 +19,7 @@ public:
     sf::Sprite sprite;
 
     virtual void draw(sf::RenderTarget& renderTarget);
+
+    virtual void setHitbox(sf::Vector2f size, sf::Color color, sf::Vector2f position, sf::RectangleShape &hitBox);
 };
 

@@ -38,6 +38,33 @@ TextureLoader::TextureLoader() {
         std::cout << "TextureLoader::TextureLoader: Failed to load \"PlayerCharacter/Archer/WalkLeftNoCelling.png\" texture from file\n";
     }
 
+    allPlayerTextures.emplace("playerTextures", playerTextures);
+
+    //Loading Player arrow textures
+
+    if (arrowUpTexture.loadFromFile("PlayerCharacter/Archer/ArrowUp.png")){
+        arrowTextures.emplace_back(1, arrowUpTexture);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"PlayerCharacter/Archer/ArrowUp.png\" texture from file\n";
+    }
+    if (arrowDownTexture.loadFromFile("PlayerCharacter/Archer/ArrowDown.png")){
+        arrowTextures.emplace_back(1, arrowDownTexture);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"PlayerCharacter/Archer/ArrowUp.png\" texture from file\n";
+    }
+    if (arrowLeftTexture.loadFromFile("PlayerCharacter/Archer/ArrowLeft.png")){
+        arrowTextures.emplace_back(1, arrowLeftTexture);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"PlayerCharacter/Archer/ArrowUp.png\" texture from file\n";
+    }
+    if (arrowRightTexture.loadFromFile("PlayerCharacter/Archer/ArrowRight.png")){
+        arrowTextures.emplace_back(1, arrowRightTexture);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"PlayerCharacter/Archer/ArrowUp.png\" texture from file\n";
+    }
+
+    allPlayerTextures.emplace("arrowTextures", arrowTextures);
+
     //Loading GreenSlime textures
 
     if (greenSlimeIdleTexture.loadFromFile("EnemiesTextures/GreenSlime/Idle/Slime1_Idle_full.png")){

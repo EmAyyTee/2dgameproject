@@ -3,10 +3,11 @@
 
 #include "Character.h"
 #include "TextureLoader.h"
-#include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Window/Keyboard.hpp"
 
 class Player : public Character{
+    sf::Vector2f directionalVector;
+    float magnitude;
 
 public:
     enum class PlayerState {
@@ -17,7 +18,7 @@ public:
 
 
 
-    Player(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer,
+    Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer,
         sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key> *supportedKeys);
 
     void update(float deltaTime) override;
@@ -28,6 +29,6 @@ public:
 
 private:
     PlayerState playerState;
-    std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer;
+    std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer;
     std::map<std::string, sf::Keyboard::Key>* supportedKeys;
 };

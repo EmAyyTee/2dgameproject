@@ -16,7 +16,7 @@ public:
 
     virtual void update(float deltaTime);
 
-    virtual void setHitbox(sf::Vector2f size, sf::Color color, sf::Vector2f position, sf::RectangleShape &hitBox);
+
 
     virtual void updateHitBox(sf::RectangleShape &hitBox, sf::Vector2f position);
 

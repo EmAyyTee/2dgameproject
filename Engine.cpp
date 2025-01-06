@@ -50,7 +50,7 @@ void Engine::run(MainWindow& windowRef) {
             sf::RenderWindow& renderWindow = windowRef.getWindow();
 
             Player player({static_cast<float>(renderWindow.getSize().x/2) -64,static_cast<float>(renderWindow.getSize().y/2) - 64 },
-                std::make_shared<std::vector<std::pair<int, sf::Texture>>>(textureLoader -> playerTextures),
+                std::make_shared<std::map<std::string, std::vector<std::pair<int, sf::Texture>>>>(textureLoader -> allPlayerTextures),
                 &renderWindow, &supportedKeys);
 
             GreenSlime greenSlime({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
