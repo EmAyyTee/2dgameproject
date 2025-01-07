@@ -6,8 +6,8 @@
 #include "GameObject.h"
 
 PlayerArrow::PlayerArrow(sf::Vector2f position, sf::Vector2f target, std::vector<std::pair <int, sf::Texture>> *playerTexturesPointer,
-                         sf::RenderWindow *renderTarget)
-        :GameObject(position), renderTarget(renderTarget), arrowTextures(playerTexturesPointer), target(target) {
+                         sf::RenderWindow *renderTarget, int damage)
+        :GameObject(position), renderTarget(renderTarget), arrowTextures(playerTexturesPointer), target(target), damage(damage) {
 
 // Normalisation of a vector
 

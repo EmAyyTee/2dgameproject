@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include <fstream>
 
+#include "GreenSlime.h"
 #include "PlayerArrow.h"
 
 
@@ -23,4 +24,5 @@ private:
     bool shouldTheGameClose = false;
     std::vector<PlayerArrow> arrows;
     std::vector<PlayerArrow> remainingArrows;
+    std::vector<GreenSlime> greenSlimes;
 };

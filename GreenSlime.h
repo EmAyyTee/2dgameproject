@@ -15,11 +15,8 @@ class GreenSlime : public Character{
 public:
     enum class GreenSlimeAnimation{
         SlimeIdle = 0,
-        SlimeWalkRight = 1,
-        SlimeWalkLeft = 2,
-        SlimeWalkDown = 3,
-        SlimeWalkUp = 4,
-        SlimeHurt = 5
+        SlimeWalk = 1,
+        SlimeHurt = 2
     };
     enum class GreenSlimeDetection {
         PlayerNotDetected = 0,

@@ -26,6 +26,13 @@ public:
     sf::Texture arrowLeftTexture;
     sf::Texture arrowRightTexture;
 
+    //All Player Textures functions
+
+    void loadPlayerTextures();
+    void loadArrowTextures();
+    void loadPlayerWalkingTextures();
+
+
 
     //GreenSlimeTextures
     //int represents the number of frames that the texture has
@@ -35,12 +42,20 @@ public:
     sf::Texture greenSlimeHurtTexture;
     sf::Texture greenSlimeWalkingTexture;
 
+    //All GreenSlime textures functions
+
+    void loadGreenSlimeTextures();
+
     //MainMenuTextures
     //int represents the number of frames that the texture has
     std::vector<std::pair <int, sf::Texture>> mainMenuPlayButtonTextures;
 
     sf::Texture playButton;
     sf::Texture playButtonHover;
+
+    //All MainMenu Textures functions
+
+    void loadMainMenuTextures();
 
     TextureLoader();
 

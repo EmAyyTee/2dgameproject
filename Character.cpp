@@ -2,7 +2,7 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 
 Character::Character(const sf::Vector2f& position, sf::RenderWindow* target)
-    : GameObject(position), renderTarget(target) {
+    : GameObject(position), renderTarget(target), hitPoints(1), isAlive(true) {
     animationClock.restart();
 }
 

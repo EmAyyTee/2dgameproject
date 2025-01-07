@@ -1,6 +1,5 @@
 #include "Player.h"
 
-#include <cmath>
 #include <iostream>
 
 #include "Animator.h"
@@ -12,7 +11,7 @@
 
 Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer,
     sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key>* supportedKeys)
-    : Character(position, renderTarget), playerTexturesPointer(std::move(playerTexturesPointer)), supportedKeys(supportedKeys){
+    : Character(position, renderTarget), playerTexturesPointer(std::move(playerTexturesPointer)), supportedKeys(supportedKeys), currentDamage(1){
 
     animation.calculateTheFrames(0, 0, 128, 74);
     animation.setNumberOfFrames(6);
@@ -55,7 +54,7 @@ void Player::playerGetInput() {
        sf::Mouse::getPosition(*renderTarget)
    );
         std::cout << mousePosition.x << ", " << mousePosition.y << std::endl;
-        arrows->push_back(PlayerArrow ({position.x, position.y}, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget));
+        arrows->push_back(PlayerArrow (position, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget, currentDamage));
         shotClock.restart();
     }
 }

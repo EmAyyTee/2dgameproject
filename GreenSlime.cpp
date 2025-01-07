@@ -5,6 +5,7 @@
 
 GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer, sf::RenderWindow* target)
     : Character(position, target), greenSlimeTexturesPointer(std::move(greenSlimeTexturesPointer)) {
+    hitPoints = 5;
     animation.calculateTheFrames(0,0,64,64);
     animation.setNumberOfFrames(6);
     direction = {0.0f, 0.0f};
@@ -16,6 +17,10 @@ GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector
 }
 
 void GreenSlime::update(float deltaTime, Player &player) {
+    if (hitPoints <= 0) {
+        isAlive = false;
+        return;
+    }
     checkForThePlayer(player);
     moveTowardsPlayer(player, deltaTime);
     checkForTheDamage(player);
@@ -35,6 +40,7 @@ void GreenSlime::checkForThePlayer(Player &player) {
 void GreenSlime::checkForTheDamage(Player &player) {
     for (PlayerArrow &arrow : *player.arrows) {
         if (arrow.getArrowHitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
+            hitPoints -= player.currentDamage;
             if (green_slime_animation != GreenSlimeAnimation::SlimeHurt) {
                 green_slime_animation = GreenSlimeAnimation::SlimeHurt;
                 isAnimationPlaying = true;
@@ -43,7 +49,6 @@ void GreenSlime::checkForTheDamage(Player &player) {
         }
     }
     if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > 0.5f) {
-        std::cout << "This is true" << std::endl;
         green_slime_animation = GreenSlimeAnimation::SlimeIdle;
         isAnimationPlaying = false;
         animationClock.restart();
@@ -79,21 +84,21 @@ void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
 void GreenSlime::chooseAnimation() {
     if (fabs(directionalVector.x) > fabs(directionalVector.y)) {
         if (directionalVector.x > 0.0f) {
-            green_slime_animation = GreenSlimeAnimation::SlimeWalkRight;
+            green_slime_animation = GreenSlimeAnimation::SlimeWalk;
             animation.calculateTheFrames(0,3,64,64);
         }
         else {
-            green_slime_animation = GreenSlimeAnimation::SlimeWalkLeft;
+            green_slime_animation = GreenSlimeAnimation::SlimeWalk;
             animation.calculateTheFrames(0,2,64,64);
         }
     }
     else {
         if (directionalVector.y > 0.0f) {
-            green_slime_animation = GreenSlimeAnimation::SlimeWalkDown;
+            green_slime_animation = GreenSlimeAnimation::SlimeWalk;
             animation.calculateTheFrames(0,0,64,64);
         }
         else {
-            green_slime_animation = GreenSlimeAnimation::SlimeWalkUp;
+            green_slime_animation = GreenSlimeAnimation::SlimeWalk;
             animation.calculateTheFrames(0,1,64,64);
         }
     }

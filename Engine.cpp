@@ -53,8 +53,8 @@ void Engine::run(MainWindow& windowRef) {
                 std::make_shared<std::map<std::string, std::vector<std::pair<int, sf::Texture>>>>(textureLoader -> allPlayerTextures),
                 &renderWindow, &supportedKeys);
 
-            GreenSlime greenSlime({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
-                sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow);
+            greenSlimes.push_back(GreenSlime ({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
+                sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
 
             while (renderWindow.isOpen()) {
                 while (renderWindow.pollEvent(event)) {
@@ -63,12 +63,20 @@ void Engine::run(MainWindow& windowRef) {
                         shouldTheGameClose = true;
                     }
                 }
-                player.update(1.0f/ 60.0f, arrows);
-                greenSlime.update(1.0f/ 60.0f, player);
 
                 renderWindow.clear();
+                player.update(1.0f/ 60.0f, arrows);
+                for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ) {
+                    slime->update(1.0f/60.0f, player);
+                    slime->draw(renderWindow);
+
+                    if (!slime->isAlive) {
+                        slime = greenSlimes.erase(slime);
+                    } else {
+                        ++slime;
+                    }
+                }
                 player.draw(renderWindow);
-                greenSlime.draw(renderWindow);
 
                 for (PlayerArrow &arrow : arrows) {
                     arrow.update(1.0f / 60.0f);

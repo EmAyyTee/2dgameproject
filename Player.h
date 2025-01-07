@@ -16,6 +16,7 @@ public:
     };
     sf::Vector2f mousePosition;
     std::vector<PlayerArrow> *arrows;
+    int currentDamage;
 
     Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer,
         sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key> *supportedKeys);

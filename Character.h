@@ -3,7 +3,6 @@
 #include "Animator.h"
 #include "BetterClock.h"
 #include "GameObject.h"
-#include "fmt/chrono.h"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
 
@@ -16,6 +15,9 @@ protected:
     bool isAnimationPlaying = false;
 
 public:
+    int hitPoints;
+
+    bool isAlive;
 
     Character(const sf::Vector2f& position, sf::RenderWindow* target);
 
