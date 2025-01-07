@@ -23,7 +23,7 @@ PlayerArrow::PlayerArrow(sf::Vector2f position, sf::Vector2f target, std::vector
     }
     directionalVector = direction / magnitude;
 
-    setHitbox({5.0f, 5.0f}, sf::Color::Red, {position.x/2, position.y/2}, hitBox);
+    setHitbox({48.0f, 5.0f}, sf::Color::Red, {position.x/2, position.y/2}, hitBox);
     animator.calculateTheFrames(0,0,48,48);
     animator.setNumberOfFrames(1);
 
@@ -35,17 +35,21 @@ void PlayerArrow::chooseAnimation() {
 
         if (directionalVector.x > 0.0f) {
             directionAnimation = ArrowDirection::Right;
+            hitBox.setRotation(0.0f);
         }
         else {
             directionAnimation = ArrowDirection::Left;
+            hitBox.setRotation(180.0f);
         }
     }
     else {
         if (directionalVector.y > 0.0f) {
             directionAnimation = ArrowDirection::Down;
+            hitBox.setRotation(90.0f);
         }
         else {
             directionAnimation = ArrowDirection::Up;
+            hitBox.setRotation(-90.0f);
         }
     }
 }
@@ -55,7 +59,7 @@ void PlayerArrow::update(float deltaTime) {
     sprite.setPosition(position);\
     chooseAnimation();
 
-    position += directionalVector * speed  * deltaTime;
+    position += directionalVector * speed * 6.0f * deltaTime;
     animator.Update(deltaTime, static_cast<int>(directionAnimation), sprite, arrowTextures);
 
     hitBoxPosition = position;
