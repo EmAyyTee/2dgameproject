@@ -27,7 +27,7 @@ public:
 
     void chooseAnimation();
 
-    void update(float deltaTime, sf::Vector2f shiftOfHitBoxPos ) override;
+    void update(float deltaTime) override;
 
     bool checkArrowLifeTime();
 

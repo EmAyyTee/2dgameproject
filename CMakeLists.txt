@@ -44,6 +44,8 @@ add_executable(main main.cpp
         GameObject.cpp
         PlayerArrow.h
         PlayerArrow.cpp
+        BetterClock.h
+        BetterClock.cpp
 )
 target_link_libraries(main
         fmt::fmt

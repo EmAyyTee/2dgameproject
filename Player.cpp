@@ -19,13 +19,13 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::strin
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
 
-    Character::setHitbox(sf::Vector2f{128,74}, sf::Color::Blue, position,hitBox);
+    Character::setHitbox(sf::Vector2f(50.0f, 50.0f), sf::Color::Blue, position,hitBox);
 }
 
 void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {
     this -> arrows = &arrows;
     playerGetInput();
-    Character::update(deltaTime, {0,0});
+    Character::update(deltaTime);
     animation.Update(deltaTime, static_cast<int>(playerState), sprite, &playerTexturesPointer->at("playerTextures"));
 }
 

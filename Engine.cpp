@@ -71,7 +71,7 @@ void Engine::run(MainWindow& windowRef) {
                 greenSlime.draw(renderWindow);
 
                 for (PlayerArrow &arrow : arrows) {
-                    arrow.update(1.0f / 60.0f, {0,0});
+                    arrow.update(1.0f / 60.0f);
                     arrow.draw(renderWindow);
 
                     if (!arrow.checkArrowLifeTime()) {

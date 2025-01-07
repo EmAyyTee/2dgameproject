@@ -3,18 +3,20 @@
 
 Character::Character(const sf::Vector2f& position, sf::RenderWindow* target)
     : GameObject(position), renderTarget(target) {
+    animationClock.restart();
 }
 
-bool Character::triggerHurtState() {
-    if(isHurt) {
-        hurtAnimationTimer += (1.0f/60.0f);
-        if (hurtAnimationTimer >= hurtAnimationDuration) {
-            isHurt = false;
-            hurtAnimationTimer = 0.0f;
+bool Character::manageAnimationCooldown(float duration) {
+    if(isAnimationPlaying) {
+        if (animationClock.getClockTime().asSeconds() >= duration) {
+            animationClock.stop();
+            isAnimationPlaying = false;
             return false;
         }
         return true;
     }
+    animationClock.start();
+    isAnimationPlaying = true;
     return true;
 }
 
