@@ -11,6 +11,9 @@ protected:
     Animator animation;
     sf::RenderWindow* renderTarget = nullptr;
 
+    sf::Vector2f directionalVector;
+    float magnitude;
+
     BetterClock animationClock;
     bool isAnimationPlaying = false;
 

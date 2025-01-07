@@ -7,8 +7,6 @@
 
 class GreenSlime : public Character{
 
-    sf::Vector2f directionalVector;
-    float magnitude;
     sf::RectangleShape detectionHitBox;
     sf::RectangleShape attackHitbox;
 

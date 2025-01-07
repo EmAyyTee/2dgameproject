@@ -53,7 +53,7 @@ void Engine::run(MainWindow& windowRef) {
                 std::make_shared<std::map<std::string, std::vector<std::pair<int, sf::Texture>>>>(textureLoader -> allPlayerTextures),
                 &renderWindow, &supportedKeys);
 
-            greenSlimes.push_back(GreenSlime ({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
+            greenSlimes.push_back(GreenSlime ({1820.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
                 sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
 
             while (renderWindow.isOpen()) {

@@ -13,6 +13,8 @@ public:
         PlayerIdle = 0,
         PlayerWalkingRight = 1,
         PlayerWalkingLeft = 2,
+        PlayerShootingRight = 3,
+        PlayerShootingLeft = 4
     };
     sf::Vector2f mousePosition;
     std::vector<PlayerArrow> *arrows;
@@ -22,6 +24,8 @@ public:
         sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key> *supportedKeys);
 
     void update(float deltaTime,std::vector<PlayerArrow> &arrows);
+
+    bool canAnimationCanChange();
 
     void playerGetInput();
 
