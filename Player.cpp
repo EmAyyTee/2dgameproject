@@ -134,6 +134,7 @@ bool Player::canAnimationCanChange() {
 }
 
 
+
 sf::Vector2f Player::getPosition() {
     return position;
 }

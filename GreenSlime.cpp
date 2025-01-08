@@ -12,7 +12,7 @@ GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector
     green_slime_animation = GreenSlimeAnimation::SlimeIdle;
 
     Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Red, position, hitBox);
-    Character::setHitbox(sf::Vector2f{464.0f,464.0f}, sf::Color::Green, position, detectionHitBox);
+    Character::setHitbox(sf::Vector2f{464.0f,464.0f}, sf::Color::White, position, detectionHitBox);
     Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Magenta, position, attackHitbox);
 }
 
@@ -25,6 +25,7 @@ void GreenSlime::update(float deltaTime, Player &player) {
     moveTowardsPlayer(player, deltaTime);
     checkForTheDamage(player);
     Character::update(deltaTime);
+    Character::updateHitBox(hitBox);
     Character::updateHitBox(detectionHitBox);
     Character::updateHitBox(attackHitbox);
     animation.Update(deltaTime, static_cast<int>(green_slime_animation), sprite, greenSlimeTexturesPointer.get());

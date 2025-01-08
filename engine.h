@@ -26,4 +26,5 @@ private:
     std::vector<PlayerArrow> arrows;
     std::vector<PlayerArrow> remainingArrows;
     std::vector<GreenSlime> greenSlimes;
+    sf::Vector2u mousePosOnGrid;
 };
