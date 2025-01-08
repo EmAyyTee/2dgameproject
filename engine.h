@@ -21,6 +21,7 @@ public:
 
 private:
     GameState gameState;
+    float gridSize;
     bool shouldTheGameClose = false;
     std::vector<PlayerArrow> arrows;
     std::vector<PlayerArrow> remainingArrows;

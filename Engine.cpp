@@ -5,12 +5,13 @@
 #include "TextureLoader.h"
 #include "GreenSlime.h"
 #include "PlayButton.h"
+#include "TileMap.h"
 #include "SFML/Window/Event.hpp"
 
 
 
 Engine::Engine(MainWindow& windowRef)
-    : gameState(GameState::MainMenu) {
+    : gameState(GameState::MainMenu), gridSize(50.0f) {
     initKeys();
     run(windowRef);
 
@@ -19,6 +20,8 @@ void Engine::run(MainWindow& windowRef) {
     auto textureLoader = std::make_shared<TextureLoader>();
 
     sf::Event event;
+
+    TileMap map;
 
     while (!shouldTheGameClose){
         if (gameState == GameState::MainMenu) {
@@ -65,6 +68,7 @@ void Engine::run(MainWindow& windowRef) {
                 }
 
                 renderWindow.clear();
+                map.draw(renderWindow);
                 player.update(1.0f/ 60.0f, arrows);
                 for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ) {
                     slime->update(1.0f/60.0f, player);

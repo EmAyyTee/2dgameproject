@@ -46,6 +46,10 @@ add_executable(main main.cpp
         PlayerArrow.cpp
         BetterClock.h
         BetterClock.cpp
+        TileMap.h
+        TileMap.cpp
+        Tile.h
+        Tile.cpp
 )
 target_link_libraries(main
         fmt::fmt

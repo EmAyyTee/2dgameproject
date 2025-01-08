@@ -1,7 +1,6 @@
 #include "Player.h"
 
 #include <cmath>
-#include <iostream>
 
 #include "Animator.h"
 #include "PlayerArrow.h"
@@ -70,31 +69,47 @@ void Player::playerGetInput() {
             }
         }
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left ) && shotClock.getElapsedTime().asSeconds() > cooldownTimeForShootingAnArrow) {
-            if(canAnimationCanChange()) {
-                directionalVector = mousePosition - position;
-                magnitude = sqrt(directionalVector.x * directionalVector.x + directionalVector.y * directionalVector.y);
-                directionalVector = directionalVector /magnitude;
+            directionalVector = mousePosition - position;
+            magnitude = sqrt(directionalVector.x * directionalVector.x + directionalVector.y * directionalVector.y);
+            directionalVector = directionalVector /magnitude;
 
+            mousePosition = renderTarget->mapPixelToCoords(sf::Mouse::getPosition(*renderTarget));
+
+            if(canAnimationCanChange()) {
                 if (playerState != PlayerState::PlayerShootingLeft || playerState != PlayerState::PlayerShootingRight) {
+                    //Logic for when I have sprites for up and down
+
                     if (fabs(directionalVector.x) > fabs(directionalVector.y)) {
                         if (directionalVector.x > 0.0f) {
                             playerState = PlayerState::PlayerShootingRight;
-                            animation.calculateTheFrames(0,0,128,74);
                         }
                         else {
                             playerState = PlayerState::PlayerShootingLeft;
-                            animation.calculateTheFrames(0,0,128,74);
                         }
                     }else {
-                        if (directionalVector.y > 0.0f) {
-                            playerState = PlayerState::PlayerShootingRight;
-                            animation.calculateTheFrames(0,0,128,74);
+                        if (directionalVector.y > 0.0f){
+                            if (playerState == PlayerState::PlayerIdle) {
+                                playerState = PlayerState::PlayerShootingRight;
+                            }else if (playerState == PlayerState::PlayerWalkingRight) {
+                                playerState = PlayerState::PlayerShootingRight;
+                            }
+                            else if ( playerState == PlayerState::PlayerWalkingLeft ) {
+                                playerState = PlayerState::PlayerShootingLeft;
+                            }
                         }
                         else {
-                            playerState = PlayerState::PlayerShootingRight;
-                            animation.calculateTheFrames(0,0,128,74);
+                            if (playerState == PlayerState::PlayerIdle) {
+                                playerState = PlayerState::PlayerShootingRight;
+                            }else if (playerState == PlayerState::PlayerWalkingRight) {
+                                playerState = PlayerState::PlayerShootingRight;
+                            }
+                            else if ( playerState == PlayerState::PlayerWalkingLeft ) {
+                                playerState = PlayerState::PlayerShootingLeft;
+                            }
                         }
+
                     }
+                    animation.calculateTheFrames(0,0,128,74);
                     isAnimationPlaying = true;
                     animationClock.start();
                 }
@@ -107,11 +122,7 @@ bool Player::canAnimationCanChange() {
         isAnimationPlaying = false;
         animationClock.restart();
 
-        mousePosition = renderTarget->mapPixelToCoords(
-          sf::Mouse::getPosition(*renderTarget));
-
-        std::cout << mousePosition.x << ", " << mousePosition.y << std::endl;
-        arrows->push_back(PlayerArrow (position, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget, currentDamage));
+        arrows->emplace_back(position, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget, currentDamage);
         shotClock.restart();
 
         return false;
