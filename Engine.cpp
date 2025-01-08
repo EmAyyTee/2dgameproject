@@ -11,7 +11,7 @@
 
 
 Engine::Engine(MainWindow& windowRef)
-    : gameState(GameState::MainMenu), gridSize(50.0f) {
+    : gameState(GameState::MainMenu), gridSize(100.0f) {
     initKeys();
     run(windowRef);
 
@@ -21,7 +21,7 @@ void Engine::run(MainWindow& windowRef) {
 
     sf::Event event;
 
-    TileMap map;
+    TileMap map(gridSize,10, 10);
 
     while (!shouldTheGameClose){
         if (gameState == GameState::MainMenu) {

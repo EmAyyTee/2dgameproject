@@ -1,5 +1,8 @@
 #include "Tile.h"
 
+#include "SFML/Graphics/RenderTarget.hpp"
+
+
 Tile::Tile(float x, float y,float gridSizeF) {
     shape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
     shape.setFillColor(sf::Color::Green);
