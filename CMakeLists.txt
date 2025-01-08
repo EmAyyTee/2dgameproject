@@ -50,6 +50,14 @@ add_executable(main main.cpp
         TileMap.cpp
         Tile.h
         Tile.cpp
+        ProceduralGeneration/ProceduralGenerationAlgorithms.h
+        ProceduralGeneration/ProceduralGenerationAlgorithms.cpp
+        ProceduralGeneration/Direction2D.h
+        ProceduralGeneration/Direction2D.cpp
+        ProceduralGeneration/RandomWalkDungeonGenerator.h
+        ProceduralGeneration/RandomWalkDungeonGenerator.cpp
+        ProceduralGeneration/Random.h
+        ProceduralGeneration/Vector2iHash.h
 )
 target_link_libraries(main
         fmt::fmt

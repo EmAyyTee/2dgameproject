@@ -6,6 +6,7 @@
 #include "GreenSlime.h"
 #include "PlayButton.h"
 #include "TileMap.h"
+#include "ProceduralGeneration/RandomWalkDungeonGenerator.h"
 #include "SFML/Window/Event.hpp"
 
 
@@ -22,6 +23,9 @@ void Engine::run(MainWindow& windowRef) {
     sf::Event event;
 
     TileMap map(gridSize,10, 10);
+
+    RandomWalkDungeonGenerator generator;
+    generator.runProceduralGeneration();
 
     while (!shouldTheGameClose){
         if (gameState == GameState::MainMenu) {
