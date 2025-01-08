@@ -23,11 +23,11 @@ public:
     };
 
     PlayerArrow(sf::Vector2f position, sf::Vector2f target, std::vector<std::pair <int, sf::Texture>> *playerTexturesPointer,
-        sf::RenderWindow* renderTarget);
+        sf::RenderWindow* renderTarget, int damage);
 
     void chooseAnimation();
 
-    void update(float deltaTime, sf::Vector2f shiftOfHitBoxPos ) override;
+    void update(float deltaTime) override;
 
     bool checkArrowLifeTime();
 
@@ -36,6 +36,7 @@ public:
     Animator animator;
 private:
     float maxLifetime = 5.0f;
+    int damage;
     ArrowDirection directionAnimation;
     sf::Vector2f target;
     sf::Vector2f hitBoxPosition;

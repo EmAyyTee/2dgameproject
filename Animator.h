@@ -15,7 +15,7 @@ class Animator {
     // int is representing the number of sprites in the animation
 
     std::map<int, sf::Texture> textures;
-    sf::IntRect frames[13];
+    sf::IntRect frames[14];
 
     void Advance();
 

@@ -5,12 +5,13 @@
 #include "TextureLoader.h"
 #include "GreenSlime.h"
 #include "PlayButton.h"
+#include "TileMap.h"
 #include "SFML/Window/Event.hpp"
 
 
 
 Engine::Engine(MainWindow& windowRef)
-    : gameState(GameState::MainMenu) {
+    : gameState(GameState::MainMenu), gridSize(50.0f) {
     initKeys();
     run(windowRef);
 
@@ -19,6 +20,8 @@ void Engine::run(MainWindow& windowRef) {
     auto textureLoader = std::make_shared<TextureLoader>();
 
     sf::Event event;
+
+    TileMap map;
 
     while (!shouldTheGameClose){
         if (gameState == GameState::MainMenu) {
@@ -53,8 +56,8 @@ void Engine::run(MainWindow& windowRef) {
                 std::make_shared<std::map<std::string, std::vector<std::pair<int, sf::Texture>>>>(textureLoader -> allPlayerTextures),
                 &renderWindow, &supportedKeys);
 
-            GreenSlime greenSlime({100.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
-                sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow);
+            greenSlimes.push_back(GreenSlime ({1820.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
+                sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
 
             while (renderWindow.isOpen()) {
                 while (renderWindow.pollEvent(event)) {
@@ -63,15 +66,24 @@ void Engine::run(MainWindow& windowRef) {
                         shouldTheGameClose = true;
                     }
                 }
-                player.update(1.0f/ 60.0f, arrows);
-                greenSlime.update(1.0f/ 60.0f, player);
 
                 renderWindow.clear();
+                map.draw(renderWindow);
+                player.update(1.0f/ 60.0f, arrows);
+                for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ) {
+                    slime->update(1.0f/60.0f, player);
+                    slime->draw(renderWindow);
+
+                    if (!slime->isAlive) {
+                        slime = greenSlimes.erase(slime);
+                    } else {
+                        ++slime;
+                    }
+                }
                 player.draw(renderWindow);
-                greenSlime.draw(renderWindow);
 
                 for (PlayerArrow &arrow : arrows) {
-                    arrow.update(1.0f / 60.0f, {0,0});
+                    arrow.update(1.0f / 60.0f);
                     arrow.draw(renderWindow);
 
                     if (!arrow.checkArrowLifeTime()) {

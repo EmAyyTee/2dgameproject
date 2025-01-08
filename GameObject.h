@@ -24,9 +24,9 @@ public:
 
     virtual void setDirection(const sf::Vector2f& direction);
 
-    virtual void update(float deltaTime,sf::Vector2f shiftOfHitBoxPos);
+    virtual void update(float deltaTime);
 
-    virtual void updateHitBox(sf::RectangleShape &hitBox, sf::Vector2f position);
+    virtual void updateHitBox(sf::RectangleShape &hitBox);
 
 };
 
