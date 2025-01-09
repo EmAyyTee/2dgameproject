@@ -12,12 +12,16 @@ class RandomWalkDungeonGenerator {
     bool startRandomlyEachIteration = true;
     std::unordered_set<sf::Vector2i> dungeon;
     std::unordered_set<sf::Vector2i> floorPositions;
+    TileMapVisualiser visualiser;
+
 
 
 public:
-    RandomWalkDungeonGenerator();
+    RandomWalkDungeonGenerator(TileMap &tilemap, Floor &tile);
 
-    void runProceduralGeneration(TileMapVisualiser& visualiser);
+    void runProceduralGeneration(TileMap &map, Floor& floorTile);
 
     std::unordered_set<sf::Vector2i> runRandomWalk();
+
+
 };

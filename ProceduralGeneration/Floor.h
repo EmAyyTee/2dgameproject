@@ -4,7 +4,7 @@
 
 class Floor {
 protected:
-    sf::RectangleShape shape;
+    sf::RectangleShape rectangle;
     sf::Sprite sprite;
     bool isBlocked;
     bool isVisible;

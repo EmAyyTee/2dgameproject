@@ -1,6 +1,6 @@
 #include "TileMapVisualiser.h"
 
-TileMapVisualiser::TileMapVisualiser(TileMap& tileMap, Floor tile)
+TileMapVisualiser::TileMapVisualiser(TileMap& tileMap, Floor &tile)
     : tileMap(tileMap), floorTile(tile) {}
 
 

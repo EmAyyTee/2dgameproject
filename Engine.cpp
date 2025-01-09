@@ -1,5 +1,7 @@
 #include "Engine.h"
 
+#include <iostream>
+
 #include "Button.h"
 #include "Player.h"
 #include "TextureLoader.h"
@@ -22,17 +24,20 @@ void Engine::run(MainWindow& windowRef) {
 
     sf::Event event;
 
+    gridSize = 32.0f;
+
     TileMap map(gridSize,20, 20);
 
     sf::Texture texture;
-    texture.loadFromFile("ProceduralGeneration/Textures/grass.png");
+    if (!texture.loadFromFile("ProceduralGeneration/Textures/grass.png")) {
+        std::cerr << "Failed to load texture!" << std::endl;
+        return;
+    }
 
-    Floor floorTile(texture, {0,0}, sf::IntRect(0,0,gridSize,gridSize));
+    Floor floorTile(texture, {0, 0}, sf::IntRect(0, 0, gridSize, gridSize));
 
-    TileMapVisualiser visualiser(map, floorTile);
-
-    RandomWalkDungeonGenerator generator;
-    generator.runProceduralGeneration(visualiser);
+    RandomWalkDungeonGenerator generator(map, floorTile);
+    generator.runProceduralGeneration(map, floorTile);
 
     while (!shouldTheGameClose){
         if (gameState == GameState::MainMenu) {

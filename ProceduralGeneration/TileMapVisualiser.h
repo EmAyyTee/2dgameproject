@@ -7,7 +7,7 @@ class TileMapVisualiser {
     std::vector<sf::Vector2i> floorPositions;
 public:
 
-    TileMapVisualiser(TileMap& tileMap, Floor tile);
+    TileMapVisualiser(TileMap& tileMap, Floor &tile);
 
     void paintFloorTiles(const std::vector<sf::Vector2i>& positions);
     void paintTiles(const std::vector<sf::Vector2i>& positions, TileMap& tileMap, const Floor& tile);

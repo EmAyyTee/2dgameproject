@@ -6,16 +6,22 @@
 #include "ProceduralGenerationAlgorithms.h"
 #include "Random.h"
 
-RandomWalkDungeonGenerator::RandomWalkDungeonGenerator() {
+RandomWalkDungeonGenerator::RandomWalkDungeonGenerator(TileMap & tilemap, Floor &tile)
+    : visualiser(tilemap, tile){
 }
 
 
-void RandomWalkDungeonGenerator::runProceduralGeneration(TileMapVisualiser& visualiser) {
-    std::unordered_set<sf::Vector2i> floorPositions = runRandomWalk();
-    std::vector<sf::Vector2i> positions(floorPositions.begin(), floorPositions.end());
+void RandomWalkDungeonGenerator::runProceduralGeneration(TileMap &map, Floor& floorTile) {
+    auto floorPositions = runRandomWalk();
+
+    std::vector positions(floorPositions.begin(), floorPositions.end());
     visualiser.paintFloorTiles(positions);
-    for (auto it : floorPositions) {
-        std::cout << it.x << ", " << it.y << std::endl;
+    sf::Vector2i offset(5, 5);
+
+    for (const auto& position : floorPositions) {
+        sf::Vector2i shiftedPosition = position + offset;
+        std::cout << "Placing tile at: (" << shiftedPosition.x << ", " << shiftedPosition.y << ")" << std::endl;
+        map.setTile(shiftedPosition.x, shiftedPosition.y, floorTile);
     }
 }
 
