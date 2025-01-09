@@ -37,14 +37,14 @@ void TileMap::setTile(int gridX, int gridY, const Floor& tile) {
 
         delete map[gridX][gridY][0];
         map[gridX][gridY][0] = new Floor(tile);
-        map[gridX][gridY][0]->setPosition({gridX * gridSizeF, gridY * gridSizeF});
+        map[gridX][gridY][0]->setPosition({gridX * gridSizeF + maxSize.x, gridY * gridSizeF + maxSize.y});
         } else {
             std::cout << "Grid position out of bounds: (" << gridX << ", " << gridY << ")" << std::endl;
         }
 }
 
 sf::Vector2i TileMap::worldToCell(const sf::Vector2i &worldPosition) {
-    int x = std::floor(worldPosition.x / gridSizeF);
-    int y = std::floor(worldPosition.y / gridSizeF);
+    int x = std::floor(1920 / gridSizeF);
+    int y = std::floor(1080 / gridSizeF);
     return sf::Vector2i(x, y);
 }

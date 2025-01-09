@@ -6,7 +6,7 @@
 #include "TileMapVisualiser.h"
 
 class RandomWalkDungeonGenerator {
-    int iterations = 1;
+    int iterations = 10;
     sf::Vector2i startPosition = {0, 0};
     int walkLength = 10;
     bool startRandomlyEachIteration = true;
