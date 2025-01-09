@@ -1,5 +1,5 @@
 # ninja log v6
-20	2401	7580815271420842	build.ninja	6eaed227a18700b7
+12	3398	7581508718251607	build.ninja	6eaed227a18700b7
 51	315	7564147216739068	_deps/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/Lock.cpp.obj	4c08eff633e75815
 65	4998	7564148789549566	_deps/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/SocketSelector.cpp.obj	2104e2a4813fdd39
 10287	12100	7564148891754617	_deps/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/SoundFileReaderFlac.cpp.obj	8713bb8ca587fc02
@@ -62,7 +62,7 @@
 19073	19704	7564147406946334	_deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Color.cpp.obj	decb34b6143e9c8e
 53	5121	7564148789429885	_deps/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/IpAddress.cpp.obj	249f34095c10bd91
 20832	22373	7564147424549416	_deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/GLCheck.cpp.obj	faabea49911ac908
-29	1845	7580811511234063	CMakeFiles/main.dir/ProceduralGeneration/RandomWalkDungeonGenerator.cpp.obj	2b04366671b4435f
+36	3128	7580818679649524	CMakeFiles/main.dir/ProceduralGeneration/RandomWalkDungeonGenerator.cpp.obj	2b04366671b4435f
 15814	22558	7564147374356496	_deps/fmt-build/CMakeFiles/fmt.dir/src/format.cc.obj	40b01036fd833ba8
 18565	22760	7564147401876588	_deps/fmt-build/CMakeFiles/fmt.dir/src/os.cc.obj	c0387be1ce0076a1
 61	4710	7564148789499702	_deps/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/Socket.cpp.obj	7204f6a674677290
@@ -118,9 +118,9 @@
 771	1585	7564149289696842	_deps/sfml-build/lib/libsfml-audio-s-d.a	b03f062e73c62973
 52	1651	7564149282500948	_deps/fmt-build/libfmtd.a	60a16a4d25aa4b31
 34	3218	7580689855702814	CMakeFiles/main.dir/main.cpp.obj	2a9d10a7acccba8e
-27	3324	7580801938027675	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+30	4372	7580818679589689	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
 59	3114	7577115889012091	CMakeFiles/main.dir/MainWindow.cpp.obj	8c5c94b3c46f37bb
-3749	5380	7580713073440969	main.exe	5bfafc26ffa7bbe4
+4373	6369	7580818723014203	main.exe	8bbb2fa9e850fc94
 50	3615	7580689855862385	CMakeFiles/main.dir/Player.cpp.obj	2e32d41b2b64c101
 59	2439	7579887195744275	CMakeFiles/main.dir/Animator.cpp.obj	cfaadf178bfad9a1
 36	1969	7579936703996257	CMakeFiles/main.dir/TextureLoader.cpp.obj	98548f5a0e410e3d
@@ -132,10 +132,21 @@
 32	1540	7580801938087227	CMakeFiles/main.dir/TileMap.cpp.obj	ddc2a4fae7cdbe3c
 40	1979	7580805805891661	CMakeFiles/main.dir/ProceduralGeneration/Random.cpp.obj	4dc51f04fd3b28fa
 34	1891	7580809326735863	CMakeFiles/main.dir/ProceduralGeneration/Direction2D.cpp.obj	9d2331b874034d9c
-28	1970	7580809326676017	CMakeFiles/main.dir/ProceduralGeneration/ProceduralGenerationAlgorithms.cpp.obj	3e15ec206f99b5a5
-12	3398	7580815271420842	build.ninja	6eaed227a18700b7
-19	1803	7580815272248617	CMakeFiles/main.dir/ProceduralGeneration/RandomWalkDungeonGenerator.cpp.obj	2b04366671b4435f
 25	1582	7580815969902707	CMakeFiles/main.dir/ProceduralGeneration/ProceduralGenerationAlgorithms.cpp.obj	3e15ec206f99b5a5
-1582	3017	7580815985471039	main.exe	8bbb2fa9e850fc94
-29	3131	7580817329603011	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
-3132	4745	7580817360630019	main.exe	8bbb2fa9e850fc94
+41	3279	7581539177450857	CMakeFiles/main.dir/ProceduralGeneration/Floor.cpp.obj	3d64a250c33c8f47
+46	3312	7581539177500728	CMakeFiles/main.dir/ProceduralGeneration/TileMapVisualiser.cpp.obj	3a8cd4478c63e517
+52	3352	7581539177560559	CMakeFiles/main.dir/ProceduralGeneration/TileMap.cpp.obj	41f53ecf9fe814d8
+35	3521	7581539390918753	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+3522	6158	7581539425788189	main.exe	a031f3943da3b6d5
+35	2882	7581541711530633	CMakeFiles/main.dir/ProceduralGeneration/RandomWalkDungeonGenerator.cpp.obj	2b04366671b4435f
+38	2566	7581546511368328	CMakeFiles/main.dir/ProceduralGeneration/RandomWalkDungeonGenerator.cpp.obj	2b04366671b4435f
+31	3613	7581546511288533	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+3613	5365	7581546547107123	main.exe	a031f3943da3b6d5
+31	3196	7581548507131299	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+3196	4884	7581548538778327	main.exe	a031f3943da3b6d5
+40	1621	7581551521004455	CMakeFiles/main.dir/ProceduralGeneration/Floor.cpp.obj	3d64a250c33c8f47
+43	2212	7581551521044337	CMakeFiles/main.dir/ProceduralGeneration/TileMapVisualiser.cpp.obj	3a8cd4478c63e517
+48	2666	7581551521084236	CMakeFiles/main.dir/ProceduralGeneration/TileMap.cpp.obj	41f53ecf9fe814d8
+35	3232	7581551520964533	CMakeFiles/main.dir/ProceduralGeneration/RandomWalkDungeonGenerator.cpp.obj	2b04366671b4435f
+29	4165	7581551520904704	CMakeFiles/main.dir/Engine.cpp.obj	7d1c9c323724b645
+4166	5864	7581551562267768	main.exe	a031f3943da3b6d5

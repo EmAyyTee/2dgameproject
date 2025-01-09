@@ -46,8 +46,6 @@ add_executable(main main.cpp
         PlayerArrow.cpp
         BetterClock.h
         BetterClock.cpp
-        TileMap.h
-        TileMap.cpp
         Tile.h
         Tile.cpp
         ProceduralGeneration/ProceduralGenerationAlgorithms.h
@@ -58,6 +56,12 @@ add_executable(main main.cpp
         ProceduralGeneration/RandomWalkDungeonGenerator.cpp
         ProceduralGeneration/Random.h
         ProceduralGeneration/Vector2iHash.h
+        ProceduralGeneration/Floor.h
+        ProceduralGeneration/Floor.cpp
+        ProceduralGeneration/TileMapVisualiser.h
+        ProceduralGeneration/TileMapVisualiser.cpp
+        ProceduralGeneration/TileMap.h
+        ProceduralGeneration/TileMap.cpp
 )
 target_link_libraries(main
         fmt::fmt

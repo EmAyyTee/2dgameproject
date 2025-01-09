@@ -5,14 +5,14 @@
 #include "TextureLoader.h"
 #include "GreenSlime.h"
 #include "PlayButton.h"
-#include "TileMap.h"
 #include "ProceduralGeneration/RandomWalkDungeonGenerator.h"
+#include "ProceduralGeneration/TileMap.h"
 #include "SFML/Window/Event.hpp"
 
 
 
 Engine::Engine(MainWindow& windowRef)
-    : gameState(GameState::MainMenu), gridSize(100.0f) {
+    : gameState(GameState::MainMenu), gridSize(20.0f) {
     initKeys();
     run(windowRef);
 
@@ -22,10 +22,17 @@ void Engine::run(MainWindow& windowRef) {
 
     sf::Event event;
 
-    TileMap map(gridSize,10, 10);
+    TileMap map(gridSize,20, 20);
+
+    sf::Texture texture;
+    texture.loadFromFile("ProceduralGeneration/Textures/grass.png");
+
+    Floor floorTile(texture, {0,0}, sf::IntRect(0,0,gridSize,gridSize));
+
+    TileMapVisualiser visualiser(map, floorTile);
 
     RandomWalkDungeonGenerator generator;
-    generator.runProceduralGeneration();
+    generator.runProceduralGeneration(visualiser);
 
     while (!shouldTheGameClose){
         if (gameState == GameState::MainMenu) {
