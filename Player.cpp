@@ -21,7 +21,7 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::strin
     playerState = PlayerState::PlayerIdle;
 
     Character::setHitbox(sf::Vector2f(40.0f, 70.0f), sf::Color::Blue, position,hitBox);
-    Character::setHitbox(sf::Vector2f(128.0f, 74.0f), sf::Color::Blue, position,detectionHitbox);
+    Character::setHitbox(sf::Vector2f(128.0f, 128.0f), sf::Color::Blue, position,detectionHitbox);
 }
 
 void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {
@@ -116,6 +116,7 @@ void Player::playerGetInput() {
                     animation.calculateTheFrames(0,0,128,74);
                     isAnimationPlaying = true;
                     animation.setHoldTime(0.05f);
+                    animationTime = 0.75f;
                     animationClock.start();
                 }
             }
@@ -123,7 +124,7 @@ void Player::playerGetInput() {
 }
 
 bool Player::canAnimationCanChange() {
-    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > 0.75f) {
+    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > animationTime) {
         isAnimationPlaying = false;
         animation.setHoldTime(0.1f);
         animationClock.restart();

@@ -12,6 +12,7 @@ class GreenSlime : public Character{
     bool isAttacking = false;
     bool isDealingDamage = true;
     sf::Vector2f attackTargetPosition;
+    sf::FloatRect targetBounds;
     int greenSlimeDamage = 1;
 
 public:
@@ -50,6 +51,8 @@ private:
     GreenSlimeDetection green_slime_detection;
     std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer;
     BetterClock damageClock;
+    sf::Clock atackCooldownClock;
     float cooldownForDealingDamage = 0.5f;
+    float cooldownForBeingAbleToAttack = 2.0f;
 };
 

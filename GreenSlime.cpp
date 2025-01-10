@@ -12,8 +12,8 @@ GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector
     green_slime_animation = GreenSlimeAnimation::SlimeIdle;
 
     Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Red, position, hitBox);
-    Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Transparent, position, detectionHitBox);
-    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Transparent, position, attackHitbox);
+    Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Red, position, detectionHitBox);
+    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Red, position, attackHitbox);
 }
 
 void GreenSlime::update(float deltaTime, Player &player) {
@@ -34,24 +34,25 @@ void GreenSlime::update(float deltaTime, Player &player) {
 
 void GreenSlime::checkForThePlayer(Player &player) {
     if (isAttacking) {
-        normaliseVector(attackTargetPosition);
         position += directionalVector * speed * 1.0f/60.0f;
-        if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > 0.5f) {
+        if (animationClock.getClockTime().asSeconds() > animationTime) {
             green_slime_animation = GreenSlimeAnimation::SlimeIdle;
             isAnimationPlaying = false;
             isAttacking = false;
             animationClock.restart();
+            atackCooldownClock.restart();
         }
     }
     if (player.getPlayerHitBox().getGlobalBounds().intersects(detectionHitBox.getGlobalBounds())) {
         green_slime_detection = GreenSlimeDetection::PlayerDetected;
     }
-    if (player.getHitBox().getGlobalBounds().intersects(attackHitbox.getGlobalBounds())) {
+    if (player.getPlayerHitBox().getGlobalBounds().intersects(attackHitbox.getGlobalBounds())) {
         attack(player);
     }
-    if (player.getHitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds()) && damageClock.getClockTime().asSeconds() > cooldownForDealingDamage && !isDealingDamage) {
+    if (player.getHitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds()) && isDealingDamage) {
         player.getDamage(greenSlimeDamage);
-        damageClock.
+        damageClock.start();
+        isDealingDamage = false;
     }
 }
 
@@ -64,13 +65,19 @@ void GreenSlime::checkForTheDamage(Player &player) {
                 green_slime_animation = GreenSlimeAnimation::SlimeHurt;
                 isAnimationPlaying = true;
                 animationClock.start();
+                animationTime = 0.5f;
+                animation.setHoldTime(0.1f);
             }
         }
     }
-    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > 0.5f) {
+    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > animationTime) {
         green_slime_animation = GreenSlimeAnimation::SlimeIdle;
         isAnimationPlaying = false;
         animationClock.restart();
+    }
+    if (!isDealingDamage && damageClock.getClockTime().asSeconds() > cooldownForDealingDamage) {
+        isDealingDamage = true;
+        damageClock.restart();
     }
 }
 
@@ -94,7 +101,7 @@ void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
         }
 
         if (!player.getHitBox().getGlobalBounds().intersects(attackHitbox.getGlobalBounds()) && !isAnimationPlaying) {
-            position += directionalVector * speed * deltaTime;
+            position += directionalVector * speed*0.75f * deltaTime;
         }
         else {
             if(!isAnimationPlaying) {
@@ -134,13 +141,20 @@ void GreenSlime::draw(sf::RenderTarget &renderTarget) {
 }
 
 void GreenSlime::attack(Player &player) {
-    if(!isAnimationPlaying) {
+    if (atackCooldownClock.getElapsedTime().asSeconds() < cooldownForBeingAbleToAttack) {
+        return;
+    }
+    if(!isAnimationPlaying && !isAttacking) {
         if (green_slime_animation != GreenSlimeAnimation::SlimeAttacking) {
             green_slime_animation = GreenSlimeAnimation::SlimeAttacking;
             isAnimationPlaying = true;
-            attackTargetPosition = player.getPosition();
+            targetBounds = player.getHitBox().getGlobalBounds();
+            attackTargetPosition = {targetBounds.left, targetBounds.top};
+            normaliseVector(attackTargetPosition);
             isAttacking = true;
             animationClock.start();
+            animationTime = 1.0f;
+            animation.setHoldTime(0.2f);
         }
 
     }
