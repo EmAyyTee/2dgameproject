@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include <cmath>
+#include <iostream>
 
 #include "Animator.h"
 #include "PlayerArrow.h"
@@ -13,17 +14,20 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::strin
     sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key>* supportedKeys)
     : Character(position, renderTarget), playerTexturesPointer(std::move(playerTexturesPointer)), supportedKeys(supportedKeys), currentDamage(1){
 
+    hitPoints = 20;
     animation.calculateTheFrames(0, 0, 128, 74);
     animation.setNumberOfFrames(6);
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
 
-    Character::setHitbox(sf::Vector2f(128.0f, 74.0f), sf::Color::Blue, position,hitBox);
+    Character::setHitbox(sf::Vector2f(40.0f, 70.0f), sf::Color::Blue, position,hitBox);
+    Character::setHitbox(sf::Vector2f(128.0f, 74.0f), sf::Color::Blue, position,detectionHitbox);
 }
 
 void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {
     this -> arrows = &arrows;
     playerGetInput();
+    GameObject::updateHitBox(detectionHitbox);
     Character::update(deltaTime);
     animation.Update(deltaTime, static_cast<int>(playerState), sprite, &playerTexturesPointer->at("playerTextures"));
 }
@@ -111,6 +115,7 @@ void Player::playerGetInput() {
                     }
                     animation.calculateTheFrames(0,0,128,74);
                     isAnimationPlaying = true;
+                    animation.setHoldTime(0.05f);
                     animationClock.start();
                 }
             }
@@ -118,8 +123,9 @@ void Player::playerGetInput() {
 }
 
 bool Player::canAnimationCanChange() {
-    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > 1.5f) {
+    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > 0.75f) {
         isAnimationPlaying = false;
+        animation.setHoldTime(0.1f);
         animationClock.restart();
 
         arrows->emplace_back(position, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget, currentDamage);
@@ -139,5 +145,16 @@ sf::Vector2f Player::getPosition() {
     return position;
 }
 
+sf::RectangleShape Player::getPlayerHitBox() {
+    return detectionHitbox;
+}
 
+void Player::draw(sf::RenderTarget &renderTarget) {
+    Character::draw(renderTarget);
+    renderTarget.draw(detectionHitbox);
+}
 
+void Player::getDamage(int damage) {
+    std::cout << "I took " << damage << " points of damage!" << "\n";
+    hitPoints -= damage;
+}

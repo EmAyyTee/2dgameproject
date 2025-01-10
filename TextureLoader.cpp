@@ -110,6 +110,14 @@ void TextureLoader::loadGreenSlimeTextures() {
     } else {
         std::cout << "TextureLoader::TextureLoader: Failed to load \"EnemiesTextures/GreenSlime/Hurt/Slime1_Hurt_full.png\" texture from file\n";
     }
+
+    // Loading attack textures
+
+    if (textureLoader.loadFromFile("EnemiesTextures/GreenSlime/Attack/Slime1_Attack_full.png")){
+        greenSlimeTextures.emplace_back(5, textureLoader);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"EnemiesTextures/GreenSlime/Attack/Slime1_Attack_full.png\" texture from file\n";
+    }
 }
 
 void TextureLoader::loadMainMenuTextures() {

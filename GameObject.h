@@ -22,6 +22,8 @@ public:
 
     virtual void setHitbox(sf::Vector2f size, sf::Color color, sf::Vector2f position, sf::RectangleShape &hitBox);
 
+    virtual void setHitbox(sf::Vector2f size, sf::Vector2f position, sf::RectangleShape &hitBox);
+
     virtual void setDirection(const sf::Vector2f& direction);
 
     virtual void update(float deltaTime);
