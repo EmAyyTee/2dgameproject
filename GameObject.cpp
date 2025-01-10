@@ -18,6 +18,12 @@ void GameObject::setHitbox(sf::Vector2f size, sf::Color color, sf::Vector2f posi
     hitBox.setOrigin(size.x / 2, size.y / 2);
     hitBox.setPosition(position.x + sprite.getGlobalBounds().width / 2.0f, position.y + sprite.getGlobalBounds().height / 2.0f);
 }
+void GameObject::setHitbox(sf::Vector2f size, sf::Vector2f position, sf::RectangleShape &hitBox) {
+    hitBox.setSize(size);
+    hitBox.setFillColor(sf::Color::Transparent);
+    hitBox.setOrigin(size.x / 2, size.y / 2);
+    hitBox.setPosition(position.x + sprite.getGlobalBounds().width / 2.0f, position.y + sprite.getGlobalBounds().height / 2.0f);
+}
 
 void GameObject::setDirection(const sf::Vector2f &direction) {
     velocity = direction*speed;

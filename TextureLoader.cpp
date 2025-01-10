@@ -62,6 +62,11 @@ void TextureLoader::loadPlayerWalkingTextures() {
     } else {
         std::cout << "TextureLoader::TextureLoader: Failed to load \"PlayerCharacter/Archer/WalkLeftNoCelling.png\" texture from file\n";
     }
+    if (textureLoader.loadFromFile("PlayerCharacter/Archer/Hurt.png")){
+        playerTextures.emplace_back(3, textureLoader);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"PlayerCharacter/Archer/Hurt.png\" texture from file\n";
+    }
     allPlayerTextures.emplace("playerTextures", playerTextures);
 }
 
@@ -109,6 +114,14 @@ void TextureLoader::loadGreenSlimeTextures() {
         greenSlimeTextures.emplace_back(5, textureLoader);
     } else {
         std::cout << "TextureLoader::TextureLoader: Failed to load \"EnemiesTextures/GreenSlime/Hurt/Slime1_Hurt_full.png\" texture from file\n";
+    }
+
+    // Loading attack textures
+
+    if (textureLoader.loadFromFile("EnemiesTextures/GreenSlime/Attack/Slime1_Attack_full.png")){
+        greenSlimeTextures.emplace_back(5, textureLoader);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"EnemiesTextures/GreenSlime/Attack/Slime1_Attack_full.png\" texture from file\n";
     }
 }
 

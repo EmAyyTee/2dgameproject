@@ -27,4 +27,8 @@ private:
     std::vector<PlayerArrow> remainingArrows;
     std::vector<GreenSlime> greenSlimes;
     sf::Vector2u mousePosOnGrid;
+    int enemiesCount = 0;
+    int aliveEnemiesCount;
 };
+
+sf::Vector2i randomSpawnPosition(sf::RenderWindow& renderWindow);

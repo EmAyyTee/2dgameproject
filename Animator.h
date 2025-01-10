@@ -7,7 +7,7 @@
 
 class Animator {
     int nFrames = 1;
-    static constexpr  float holdTime = 0.1f;
+    float holdTime = 0.1f;
 
     int iFrame = 0, currentAnimationType;
     float time = 0.0f;
@@ -30,5 +30,7 @@ public:
     void applyToSprite(sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures);
 
     void Update(float deltaTime, int animationType, sf::Sprite& sprite, std::vector<std::pair <int, sf::Texture>> *textures);
+
+    void setHoldTime(float holdTime);
 
 };

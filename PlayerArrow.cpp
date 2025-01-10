@@ -23,7 +23,7 @@ PlayerArrow::PlayerArrow(sf::Vector2f position, sf::Vector2f target, std::vector
     }
     directionalVector = direction / magnitude;
 
-    setHitbox({48.0f, 5.0f}, sf::Color::Red, {position.x/2, position.y/2}, hitBox);
+    setHitbox({48.0f, 5.0f}, sf::Color::Transparent, {position.x/2, position.y/2}, hitBox);
     animator.calculateTheFrames(0,0,48,48);
     animator.setNumberOfFrames(1);
 

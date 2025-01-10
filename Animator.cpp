@@ -46,3 +46,7 @@ void Animator::calculateTheFrames(int x, int y, int width, int height) {
 void Animator::setNumberOfFrames(int nFrames) {
     this -> nFrames = nFrames;
 }
+
+void Animator::setHoldTime(float holdTime) {
+    this -> holdTime = holdTime;
+}

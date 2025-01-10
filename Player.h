@@ -13,12 +13,14 @@ public:
         PlayerIdle = 0,
         PlayerWalkingRight = 1,
         PlayerWalkingLeft = 2,
-        PlayerShootingRight = 3,
-        PlayerShootingLeft = 4
+        PlayerHurt = 3,
+        PlayerShootingRight = 4,
+        PlayerShootingLeft = 5
     };
     sf::Vector2f mousePosition;
     std::vector<PlayerArrow> *arrows;
     int currentDamage;
+    sf::RectangleShape detectionHitbox;
 
     Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer,
         sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key> *supportedKeys);
@@ -29,7 +31,13 @@ public:
 
     void playerGetInput();
 
+    void draw(sf::RenderTarget &renderTarget);
+
     sf::Vector2f getPosition();
+
+    sf::RectangleShape getPlayerHitBox();
+
+    void getDamage(int damage);
 
 private:
     PlayerState playerState;
@@ -37,4 +45,5 @@ private:
     std::map<std::string, sf::Keyboard::Key>* supportedKeys;
     sf::Clock shotClock;
     float cooldownTimeForShootingAnArrow = 0.5f;
+    bool isHurt = false;
 };

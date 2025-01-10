@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 
 MainWindow::MainWindow()
-    : window(sf::VideoMode(1920, 1080), "theBindingOfOriOfHades", sf::Style::Default) {
+    : window(sf::VideoMode::getDesktopMode(), "theBindingOfOriOfHades", sf::Style::Fullscreen) {
     windowHandle = window.getSystemHandle();
     window.setFramerateLimit(60);
 }

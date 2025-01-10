@@ -16,6 +16,7 @@ protected:
 
     BetterClock animationClock;
     bool isAnimationPlaying = false;
+    float animationTime;
 
 public:
     int hitPoints;

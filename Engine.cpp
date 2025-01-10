@@ -1,11 +1,12 @@
 #include "Engine.h"
 
+#include <random>
+
 #include "Button.h"
 #include "Player.h"
 #include "TextureLoader.h"
 #include "GreenSlime.h"
 #include "PlayButton.h"
-#include "TileMap.h"
 #include "SFML/Window/Event.hpp"
 
 
@@ -21,7 +22,6 @@ void Engine::run(MainWindow& windowRef) {
 
     sf::Event event;
 
-    TileMap map(gridSize,10, 10);
 
     while (!shouldTheGameClose){
         if (gameState == GameState::MainMenu) {
@@ -56,10 +56,16 @@ void Engine::run(MainWindow& windowRef) {
                 std::make_shared<std::map<std::string, std::vector<std::pair<int, sf::Texture>>>>(textureLoader -> allPlayerTextures),
                 &renderWindow, &supportedKeys);
 
-            greenSlimes.push_back(GreenSlime ({1820.0f, 100.0f}, std::make_shared<std::vector<std::pair<int,
-                sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
 
             while (renderWindow.isOpen()) {
+                if (aliveEnemiesCount == 0) {
+                    enemiesCount++;
+                    for (int i = 0; i < enemiesCount; ++i) {
+                        greenSlimes.push_back(GreenSlime (static_cast<sf::Vector2f>(randomSpawnPosition(renderWindow)), std::make_shared<std::vector<std::pair<int,
+                        sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
+                    }
+                    aliveEnemiesCount = enemiesCount;
+                }
                 while (renderWindow.pollEvent(event)) {
                     if(event.type == sf::Event::Closed) {
                         renderWindow.close();
@@ -68,7 +74,6 @@ void Engine::run(MainWindow& windowRef) {
                 }
 
                 renderWindow.clear();
-                map.draw(renderWindow);
                 player.update(1.0f/ 60.0f, arrows);
                 for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ) {
                     slime->update(1.0f/60.0f, player);
@@ -76,6 +81,7 @@ void Engine::run(MainWindow& windowRef) {
 
                     if (!slime->isAlive) {
                         slime = greenSlimes.erase(slime);
+                        aliveEnemiesCount--;
                     } else {
                         ++slime;
                     }
@@ -93,6 +99,10 @@ void Engine::run(MainWindow& windowRef) {
                 arrows = std::move(remainingArrows);
                 renderWindow.display();
 
+                if (player.hitPoints == 0){
+                    gameState = GameState::MainMenu;
+                }
+
                 if (gameState != GameState::Running) {
                     break;
                 }
@@ -108,5 +118,15 @@ void Engine::initKeys() {
      supportedKeys.emplace("walkDown", sf::Keyboard::S);
 }
 
+sf::Vector2i randomSpawnPosition(sf::RenderWindow& renderWindow) {
+    static std::mt19937 rng(std::random_device{}());
+
+    std::uniform_int_distribution<int> xDist(0, renderWindow.getSize().x);
+    std::uniform_int_distribution<int> yDist(0, renderWindow.getSize().y);
+
+
+
+    return {xDist(rng), yDist(rng)};
+}
 
 
