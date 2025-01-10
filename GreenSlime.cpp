@@ -11,9 +11,9 @@ GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector
     direction = {0.0f, 0.0f};
     green_slime_animation = GreenSlimeAnimation::SlimeIdle;
 
-    Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Red, position, hitBox);
-    Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Red, position, detectionHitBox);
-    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Red, position, attackHitbox);
+    Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Transparent, position, hitBox);
+    Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Transparent, position, detectionHitBox);
+    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Transparent, position, attackHitbox);
 }
 
 void GreenSlime::update(float deltaTime, Player &player) {

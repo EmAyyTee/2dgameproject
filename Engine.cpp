@@ -61,7 +61,7 @@ void Engine::run(MainWindow& windowRef) {
                 if (aliveEnemiesCount == 0) {
                     enemiesCount++;
                     for (int i = 0; i < enemiesCount; ++i) {
-                        greenSlimes.push_back(GreenSlime (static_cast<sf::Vector2f>(randomSpawnPosition()), std::make_shared<std::vector<std::pair<int,
+                        greenSlimes.push_back(GreenSlime (static_cast<sf::Vector2f>(randomSpawnPosition(renderWindow)), std::make_shared<std::vector<std::pair<int,
                         sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
                     }
                     aliveEnemiesCount = enemiesCount;
@@ -118,11 +118,11 @@ void Engine::initKeys() {
      supportedKeys.emplace("walkDown", sf::Keyboard::S);
 }
 
-sf::Vector2i randomSpawnPosition() {
+sf::Vector2i randomSpawnPosition(sf::RenderWindow& renderWindow) {
     static std::mt19937 rng(std::random_device{}());
 
-    std::uniform_int_distribution<int> xDist(0, 1920);
-    std::uniform_int_distribution<int> yDist(0, 1080);
+    std::uniform_int_distribution<int> xDist(0, renderWindow.getSize().x);
+    std::uniform_int_distribution<int> yDist(0, renderWindow.getSize().y);
 
 
 

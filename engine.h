@@ -31,4 +31,4 @@ private:
     int aliveEnemiesCount;
 };
 
-sf::Vector2i randomSpawnPosition();
+sf::Vector2i randomSpawnPosition(sf::RenderWindow& renderWindow);

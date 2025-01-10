@@ -14,14 +14,14 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::strin
     sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key>* supportedKeys)
     : Character(position, renderTarget), playerTexturesPointer(std::move(playerTexturesPointer)), supportedKeys(supportedKeys), currentDamage(1){
 
-    hitPoints = 20;
+    hitPoints = 10;
     animation.calculateTheFrames(0, 0, 128, 74);
     animation.setNumberOfFrames(6);
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
 
-    Character::setHitbox(sf::Vector2f(40.0f, 70.0f), sf::Color::Blue, position,hitBox);
-    Character::setHitbox(sf::Vector2f(128.0f, 128.0f), sf::Color::Blue, position,detectionHitbox);
+    Character::setHitbox(sf::Vector2f(40.0f, 70.0f), sf::Color::Transparent, position,hitBox);
+    Character::setHitbox(sf::Vector2f(128.0f, 128.0f), sf::Color::Transparent, position,detectionHitbox);
 }
 
 void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {
@@ -124,7 +124,7 @@ void Player::playerGetInput() {
 }
 
 bool Player::canAnimationCanChange() {
-    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > animationTime) {
+    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > animationTime && !isHurt) {
         isAnimationPlaying = false;
         animation.setHoldTime(0.1f);
         animationClock.restart();
@@ -156,6 +156,21 @@ void Player::draw(sf::RenderTarget &renderTarget) {
 }
 
 void Player::getDamage(int damage) {
-    std::cout << "I took " << damage << " points of damage!" << "\n";
     hitPoints -= damage;
+    if(playerState != PlayerState::PlayerHurt && !isAnimationPlaying) {
+        playerState = PlayerState::PlayerHurt;
+        animation.calculateTheFrames(0,0,128,74);
+        isAnimationPlaying = true;
+        animation.setHoldTime(0.4f);
+        animationTime = 0.25f;
+        animationClock.start();
+        isHurt = true;
+    }
+    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > animationTime) {
+        isAnimationPlaying = false;
+        animation.setHoldTime(0.1f);
+        animationClock.restart();
+        std::cout << "I took " << damage << " points of damage!" << "\n";
+        isHurt = false;
+    }
 }

@@ -13,8 +13,9 @@ public:
         PlayerIdle = 0,
         PlayerWalkingRight = 1,
         PlayerWalkingLeft = 2,
-        PlayerShootingRight = 3,
-        PlayerShootingLeft = 4
+        PlayerHurt = 3,
+        PlayerShootingRight = 4,
+        PlayerShootingLeft = 5
     };
     sf::Vector2f mousePosition;
     std::vector<PlayerArrow> *arrows;
@@ -44,4 +45,5 @@ private:
     std::map<std::string, sf::Keyboard::Key>* supportedKeys;
     sf::Clock shotClock;
     float cooldownTimeForShootingAnArrow = 0.5f;
+    bool isHurt = false;
 };

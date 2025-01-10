@@ -62,6 +62,11 @@ void TextureLoader::loadPlayerWalkingTextures() {
     } else {
         std::cout << "TextureLoader::TextureLoader: Failed to load \"PlayerCharacter/Archer/WalkLeftNoCelling.png\" texture from file\n";
     }
+    if (textureLoader.loadFromFile("PlayerCharacter/Archer/Hurt.png")){
+        playerTextures.emplace_back(3, textureLoader);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"PlayerCharacter/Archer/Hurt.png\" texture from file\n";
+    }
     allPlayerTextures.emplace("playerTextures", playerTextures);
 }
 
