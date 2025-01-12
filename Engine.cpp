@@ -1,5 +1,6 @@
 #include "Engine.h"
 
+#include <iostream>
 #include <random>
 
 #include "Button.h"
@@ -7,12 +8,14 @@
 #include "TextureLoader.h"
 #include "GreenSlime.h"
 #include "PlayButton.h"
+#include "ProceduralGeneration/RandomWalkDungeonGenerator.h"
+#include "ProceduralGeneration/TileMap.h"
 #include "SFML/Window/Event.hpp"
 
 
 
 Engine::Engine(MainWindow& windowRef)
-    : gameState(GameState::MainMenu), gridSize(100.0f) {
+    : gameState(GameState::MainMenu), gridSize(100.0f), view(windowRef.getWindow().getDefaultView()), aliveEnemiesCount(0) {
     initKeys();
     run(windowRef);
 
@@ -21,6 +24,21 @@ void Engine::run(MainWindow& windowRef) {
     auto textureLoader = std::make_shared<TextureLoader>();
 
     sf::Event event;
+
+    gridSize = 300.0f;
+
+    TileMap map(gridSize,400, 400);
+
+    sf::Texture texture;
+    if (!texture.loadFromFile("ProceduralGeneration/Textures/grass.png")) {
+        std::cerr << "Failed to load texture!" << std::endl;
+        return;
+    }
+
+    Floor floorTile(texture, {0, 0}, sf::IntRect(0, 0, gridSize, gridSize));
+
+    RandomWalkDungeonGenerator generator(map, floorTile);
+    generator.runProceduralGeneration(map, floorTile);
 
 
     while (!shouldTheGameClose){
@@ -74,7 +92,11 @@ void Engine::run(MainWindow& windowRef) {
                 }
 
                 renderWindow.clear();
+                map.draw(renderWindow);
                 player.update(1.0f/ 60.0f, arrows);
+                std::cout << "Pos of Player: "<< player.getPosition().x << " " << player.getPosition().y << std::endl;
+                updateTheCamera(player, 1.0f/60.0f, renderWindow);
+                renderWindow.setView(view);
                 for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ) {
                     slime->update(1.0f/60.0f, player);
                     slime->draw(renderWindow);
@@ -128,5 +150,13 @@ sf::Vector2i randomSpawnPosition(sf::RenderWindow& renderWindow) {
 
     return {xDist(rng), yDist(rng)};
 }
+void Engine::updateTheCamera(Player &player, float deltaTime, sf::RenderTarget &target) {
+    sf::Vector2f center = view.getCenter();
 
+    sf::Vector2f offset = player.getPosition() - center;
+
+    view.setCenter(center + offset * 5.0f * deltaTime);
+
+    target.setView(view);
+}
 
