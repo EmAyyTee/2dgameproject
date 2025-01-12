@@ -7,7 +7,7 @@
 #include "Random.h"
 
 RandomWalkDungeonGenerator::RandomWalkDungeonGenerator(TileMap & tilemap, Floor &tile)
-    : visualiser(tilemap, tile), startPosition({1920/2/100,1080/2/100}) {
+    : visualiser(tilemap, tile), startPosition({1920/2/300,1080/2/300}) {
 }
 
 

@@ -6,9 +6,9 @@
 #include "TileMapVisualiser.h"
 
 class RandomWalkDungeonGenerator {
-    int iterations = 10;
+    int iterations = 30;
     sf::Vector2i startPosition;
-    int walkLength = 5;
+    int walkLength = 30;
     bool startRandomlyEachIteration = true;
     std::unordered_set<sf::Vector2i> dungeon;
     std::unordered_set<sf::Vector2i> floorPositions;

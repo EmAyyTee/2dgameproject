@@ -18,6 +18,7 @@ class Engine{
 public:
     Engine(MainWindow& windowRef);
     void run(MainWindow& windowRef);
+    void updateTheCamera(Player &player, float deltaTime, sf::RenderTarget &target);
 
 private:
     GameState gameState;
@@ -27,4 +28,5 @@ private:
     std::vector<PlayerArrow> remainingArrows;
     std::vector<GreenSlime> greenSlimes;
     sf::Vector2u mousePosOnGrid;
+    sf::View view;
 };
