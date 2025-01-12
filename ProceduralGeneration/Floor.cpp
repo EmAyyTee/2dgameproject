@@ -31,8 +31,6 @@ void Floor::draw(sf::RenderTarget &renderTarget) {
     if (isVisible) {
         if (sprite.getTexture()) {
             renderTarget.draw(sprite);
-        } else {
-            renderTarget.draw(rectangle);
         }
     }
 }

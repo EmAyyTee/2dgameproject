@@ -9,6 +9,8 @@ class TileMap {
     float gridSizeF;
     sf::Vector2u maxSize;
     std::vector<std::vector<std::vector<Floor*>>> map;
+    sf::Texture texture;
+
 
 
 public:

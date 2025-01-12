@@ -7,7 +7,7 @@
 #include "Random.h"
 
 RandomWalkDungeonGenerator::RandomWalkDungeonGenerator(TileMap & tilemap, Floor &tile)
-    : visualiser(tilemap, tile){
+    : visualiser(tilemap, tile), startPosition({1920/2/100,1080/2/100}) {
 }
 
 
@@ -16,12 +16,10 @@ void RandomWalkDungeonGenerator::runProceduralGeneration(TileMap &map, Floor& fl
 
     std::vector positions(floorPositions.begin(), floorPositions.end());
     visualiser.paintFloorTiles(positions);
-    sf::Vector2i offset(5, 5);
 
     for (const auto& position : floorPositions) {
-        sf::Vector2i shiftedPosition = position + offset;
-        std::cout << "Placing tile at: (" << shiftedPosition.x << ", " << shiftedPosition.y << ")" << std::endl;
-        map.setTile(shiftedPosition.x, shiftedPosition.y, floorTile);
+        std::cout << "Placing tile at: (" << position.x << ", " << position.y << ")" << std::endl;
+        map.setTile(position.x, position.y, floorTile);
     }
 }
 

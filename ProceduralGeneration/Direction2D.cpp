@@ -1,4 +1,7 @@
 #include "Direction2D.h"
+
+#include <iostream>
+
 #include "Vector2iHash.h"
 
 sf::Vector2i Direction2D::getRandomCardinalDirection() {

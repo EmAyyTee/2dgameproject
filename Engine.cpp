@@ -25,9 +25,9 @@ void Engine::run(MainWindow& windowRef) {
     sf::Event event;
 
 
-    gridSize = 32.0f;
+    gridSize = 100.0f;
 
-    TileMap map(400,400, 400);
+    TileMap map(gridSize,400, 400);
 
     sf::Texture texture;
     if (!texture.loadFromFile("ProceduralGeneration/Textures/grass.png")) {
