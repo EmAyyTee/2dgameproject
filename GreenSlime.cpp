@@ -1,4 +1,6 @@
 #include "GreenSlime.h"
+
+#include <fstream>
 #include <iostream>
 
 #include "fmt/format.h"
@@ -15,6 +17,9 @@ GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector
     Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Transparent, position, detectionHitBox);
     Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Transparent, position, attackHitbox);
 }
+
+
+
 
 void GreenSlime::update(float deltaTime, Player &player) {
     if (hitPoints <= 0) {
@@ -158,5 +163,30 @@ void GreenSlime::attack(Player &player) {
         }
 
     }
+
+}
+
+void GreenSlime::saveToFile(std::ofstream &file) const{
+
+    //Saving pos
+
+    file.write(reinterpret_cast<const char*>(&position.x), sizeof(position.x));
+    file.write(reinterpret_cast<const char*>(&position.y), sizeof(position.y));
+
+    //Saving current hp
+
+    file.write(reinterpret_cast<const char*>(&hitPoints), sizeof(hitPoints));
+}
+
+void GreenSlime::loadFromFile(std::ifstream &file) {
+
+    //Loading pos
+
+    file.read(reinterpret_cast<char*>(&position.x), sizeof(position.x));
+    file.read(reinterpret_cast<char*>(&position.y), sizeof(position.y));
+
+    //Loading hp
+
+    file.read(reinterpret_cast<char*>(&hitPoints), sizeof(hitPoints));
 
 }

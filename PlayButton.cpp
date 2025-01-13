@@ -18,6 +18,15 @@ void PlayButton::update(float deltaTime,GameState &game_state) {
 
     animator.Update(deltaTime, static_cast<int>(buttonState), sprite, playButtonTexturesPointer.get());
 }
+
+void PlayButton::update(float deltaTime, GameState &game_state, Player &player) {
+
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+    position.x = player.getPosition().x - bounds.width /3;
+    position.y = player.getPosition().y - bounds.height/3;
+    update(deltaTime, game_state);
+}
+
 void PlayButton::checkIfMouseIsHovered() {
     sf::Vector2i mousePosition = sf::Mouse::getPosition(*renderTarget);
     sf::Vector2f worldPosition = renderTarget->mapPixelToCoords(mousePosition);

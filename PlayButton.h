@@ -4,6 +4,7 @@
 
 #include "Button.h"
 #include "GameState.h"
+#include "Player.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Texture.hpp"
 
@@ -16,7 +17,10 @@ class PlayButton : public Button{
     PlayButton(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer,
     sf::RenderWindow* renderTarget);
 
+
     void update(float deltaTime,GameState &game_state);
+
+    void update(float deltaTime,GameState &game_state, Player &player);
 
     void checkIfMouseIsHovered();
 

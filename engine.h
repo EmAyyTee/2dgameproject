@@ -4,7 +4,10 @@
 #include <fstream>
 
 #include "GreenSlime.h"
+#include "PlayButton.h"
 #include "PlayerArrow.h"
+#include "ProceduralGeneration/Floor.h"
+#include "ProceduralGeneration/TileMap.h"
 
 
 class Engine{
@@ -19,6 +22,8 @@ public:
     Engine(MainWindow& windowRef);
     void run(MainWindow& windowRef);
     void updateTheCamera(Player &player, float deltaTime, sf::RenderTarget &target);
+    void saveGame(const std::string &fileName, Player &player);
+    void loadGame(const std::string &fileName, Player &player);
 
 private:
     GameState gameState;
@@ -31,6 +36,14 @@ private:
     sf::View view;
     int enemiesCount = 0;
     int aliveEnemiesCount;
+    bool isGameSaved;
+    Floor floorTile;
+    PlayButton playButton;
+    Player player;
+    TileMap map;
+    sf::Texture texture;
+    std::shared_ptr<TextureLoader> textureLoader;
+
 };
 
 sf::Vector2i randomSpawnPosition(sf::RenderWindow& renderWindow);
