@@ -42,6 +42,7 @@ private:
     int aliveEnemiesCount;
     bool isGameSaved;
     bool shouldTheGameSave;
+    bool justPause = false;
     Floor floorTile;
     PlayButton playButton;
     Player player;

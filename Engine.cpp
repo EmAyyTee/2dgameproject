@@ -24,15 +24,6 @@ Engine::Engine(MainWindow& windowRef)
     map = TileMap(gridSize, 400, 400);
 
     loadSaveFlagForSaves("isTheGameSaved.dat");
-    if (isGameSaved) {
-        loadEnemiesCountAndAlive("enemisCountAndAlive.dat");
-        std::cout << "enemiesCount: " << enemiesCount << " alive: " << aliveEnemiesCount << std::endl;
-        // for (int i = 0; i < aliveEnemiesCount; ++i) {
-        //     greenSlimes.push_back(GreenSlime (static_cast<sf::Vector2f>(randomSpawnPosition(windowRef.getWindow())), std::make_shared<std::vector<std::pair<int,
-        //     sf::Texture>>>(textureLoader -> greenSlimeTextures), &windowRef.getWindow()));
-        // }
-        isGameSaved = false;
-    }
 
     if (!texture.loadFromFile("ProceduralGeneration/Textures/grass.png")) {
         std::cerr << "Failed to load texture!" << std::endl;
@@ -69,8 +60,11 @@ void Engine::run(MainWindow& windowRef) {
 
     sf::RenderWindow& renderWindow = windowRef.getWindow();
 
+
     while (!shouldTheGameClose){
+
         if (gameState == GameState::MainMenu) {
+            player.shotClock.restart();
 
             PlayButton quitButton({static_cast<float>(windowRef.getWindow().getSize().x / 2 - 32),
         static_cast<float>(windowRef.getWindow().getSize().y / 2 + 64)},
@@ -88,8 +82,8 @@ void Engine::run(MainWindow& windowRef) {
                     }
                 }
 
-                playButton.update(1.0f/60.0f, gameState, GameState::Running);
-                quitButton.update(1.0f/60.0f, gameState, GameState::Quitting);
+                playButton.update(1.0f/60.0f, gameState,player ,GameState::Running);
+                quitButton.update(1.0f/60.0f, gameState, player,GameState::Quitting, true);
                 renderWindow.clear();
                 playButton.buttonDraw(renderWindow);
                 quitButton.buttonDraw(renderWindow);
@@ -100,9 +94,15 @@ void Engine::run(MainWindow& windowRef) {
             }
 
         } else if (gameState == GameState::Running) {
-
+            if (isGameSaved) {
+                loadGame("saveFile.dat", player);
+                std::cout << "Im loading the game and changing is game saved to false!\n";
+                isGameSaved = false;
+            }
+            // std::cout << "After loading, slime array has size of: "<< greenSlimes.size() << "\n";
 
             while (renderWindow.isOpen()) {
+
                 if (aliveEnemiesCount == 0) {
                     enemiesCount++;
                     for (int i = 0; i < enemiesCount; ++i) {
@@ -110,12 +110,9 @@ void Engine::run(MainWindow& windowRef) {
                         sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
                     }
                     aliveEnemiesCount = enemiesCount;
-                    if (isGameSaved) {
-                        loadGame("saveFile.dat", player);
-                        isGameSaved = false;
-                    } else {
-                        shouldTheGameSave = true;
-                    }
+
+                    shouldTheGameSave = true;
+
                 }
                 while (renderWindow.pollEvent(event)) {
                     if(event.type == sf::Event::Closed) {
@@ -126,15 +123,13 @@ void Engine::run(MainWindow& windowRef) {
                         shouldTheGameClose = true;
                     }
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                    gameState =  GameState::Paused;
-                }
 
                 renderWindow.clear();
                 map.draw(renderWindow);
                 player.update(1.0f/ 60.0f, arrows);
                 updateTheCamera(player, 1.0f/60.0f, renderWindow);
                 renderWindow.setView(view);
+
                 for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ) {
                     slime->update(1.0f/60.0f, player);
                     slime->draw(renderWindow);
@@ -159,17 +154,21 @@ void Engine::run(MainWindow& windowRef) {
                 arrows = std::move(remainingArrows);
                 renderWindow.display();
 
-                if (player.hitPoints == 0){
+                if (player.hitPoints <= 0){
                     gameState = GameState::MainMenu;
+                    aliveEnemiesCount = 0;
+                    enemiesCount = 0;
+                    greenSlimes.clear();
+                    shouldTheGameSave = false;
+                    player.hitPoints = 10;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                    justPause = true;
+
                 }
 
-                if (gameState == GameState::Quitting) {
-                    renderWindow.close();
-                    saveGame("saveFile.dat", player);
-                    saveFlagForSaves("isTheGameSaved.dat");
-                    saveEnemiesCountAndAlive("enemisCountAndAlive.dat");
-                    shouldTheGameClose = true;
-                } else if (gameState != GameState::Paused) {
+                if (gameState != GameState::Running || justPause) {
+                    gameState = GameState::Paused;
                     break;
                 }
             }
@@ -208,6 +207,17 @@ void Engine::run(MainWindow& windowRef) {
                     break;
                 }
             }
+        }
+        if (gameState == GameState::Quitting && shouldTheGameSave) {
+            renderWindow.close();
+            saveGame("saveFile.dat", player);
+            saveFlagForSaves("isTheGameSaved.dat");
+            saveEnemiesCountAndAlive("enemisCountAndAlive.dat");
+            shouldTheGameClose = true;
+        }
+        else if (gameState == GameState::Quitting) {
+            renderWindow.close();
+            shouldTheGameClose = true;
         }
 
     }
@@ -249,11 +259,11 @@ void Engine::saveGame(const std::string &fileName, Player &player) {
     }
 
     player.saveToFile(file);
+    std::cout << "I save the player!\n";
 
-    size_t slimeCount = greenSlimes.size();
-    file.write(reinterpret_cast<const char*>(&slimeCount), sizeof(slimeCount));
     for (const auto& slime : greenSlimes) {
         slime.saveToFile(file);
+        std::cout << "I save a slime!\n";
     }
 
     file.close();
@@ -266,13 +276,25 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
         std::cerr << "Can't load the game! Access denied\n";
         return;
     }
+    loadEnemiesCountAndAlive("enemisCountAndAlive.dat");
     player.loadFromFile(file);
+    std::cout << "I load the player!\n";
 
-    size_t slimeCount;
-    file.read(reinterpret_cast<char*>(&slimeCount), sizeof(slimeCount));
-    greenSlimes.resize(slimeCount);
-    for (auto& slime : greenSlimes) {
-        slime.loadFromFile(file);
+    std::cout << "After loading enemies count is: " << aliveEnemiesCount;
+
+    greenSlimes.clear();
+    std::cout << "Slime array has size of: " << greenSlimes.size() << "\n";
+    std::cout << "Alive enemies count is: " << aliveEnemiesCount << "\n";
+
+    for (int i = 0; i < aliveEnemiesCount; i++) {
+        std::cout << "I try loading a slime!\n";
+
+        GreenSlime temporarySlime (sf::Vector2f{0,0}, std::make_shared<std::vector<std::pair<int,
+                        sf::Texture>>>(textureLoader -> greenSlimeTextures), &window->getWindow());
+        temporarySlime.loadFromFile(file);
+
+        std::cout << "Loaded slime has: " << temporarySlime.hitPoints << " \n";
+        greenSlimes.push_back(temporarySlime);
     }
 
     file.close();

@@ -30,5 +30,7 @@ public:
     bool manageAnimationCooldown(float duration);
 
     virtual sf::RectangleShape getHitBox();
+
+    virtual void setHp(int hp);
 };
 

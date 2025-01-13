@@ -1,5 +1,7 @@
 #include "PlayButton.h"
 
+#include <iostream>
+
 #include "Button.h"
 #include "SFML/Window/Mouse.hpp"
 
@@ -58,6 +60,7 @@ void PlayButton::getInput(GameState &game_state, GameState toChangeGameState) {
     if (buttonState == ButtonState::Hovered) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             game_state = toChangeGameState;
+            std::cout << "I change the game state to: " << static_cast<int>(toChangeGameState) << "\n";
         }
     }
 }

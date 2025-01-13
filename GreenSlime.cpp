@@ -35,6 +35,7 @@ void GreenSlime::update(float deltaTime, Player &player) {
     Character::updateHitBox(detectionHitBox);
     Character::updateHitBox(attackHitbox);
     animation.Update(deltaTime, static_cast<int>(green_slime_animation), sprite, greenSlimeTexturesPointer.get());
+    // std::cout << "Slime positions is: " << position.x << " " << position.y << "\n";
 }
 
 
@@ -180,6 +181,5 @@ void GreenSlime::loadFromFile(std::ifstream &file) {
     file.read(reinterpret_cast<char*>(&position.x), sizeof(position.x));
     file.read(reinterpret_cast<char*>(&position.y), sizeof(position.y));
     file.read(reinterpret_cast<char*>(&hitPoints), sizeof(hitPoints));
-
 
 }
