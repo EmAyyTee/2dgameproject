@@ -26,6 +26,8 @@ public:
     void loadGame(const std::string &fileName, Player &player);
     void saveFlagForSaves(const std::string &fileName);
     void loadSaveFlagForSaves(const std::string &fileName);
+    void saveEnemiesCountAndAlive(const std::string &fileName);
+    void loadEnemiesCountAndAlive(const std::string &fileName);
 
 private:
     GameState gameState;

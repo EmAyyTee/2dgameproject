@@ -169,25 +169,17 @@ void GreenSlime::attack(Player &player) {
 
 void GreenSlime::saveToFile(std::ofstream &file) const{
 
-    //Saving pos
-
     file.write(reinterpret_cast<const char*>(&position.x), sizeof(position.x));
     file.write(reinterpret_cast<const char*>(&position.y), sizeof(position.y));
-
-    //Saving current hp
-
     file.write(reinterpret_cast<const char*>(&hitPoints), sizeof(hitPoints));
+
 }
 
 void GreenSlime::loadFromFile(std::ifstream &file) {
 
-    //Loading pos
-
     file.read(reinterpret_cast<char*>(&position.x), sizeof(position.x));
     file.read(reinterpret_cast<char*>(&position.y), sizeof(position.y));
-
-    //Loading hp
-
     file.read(reinterpret_cast<char*>(&hitPoints), sizeof(hitPoints));
+
 
 }
