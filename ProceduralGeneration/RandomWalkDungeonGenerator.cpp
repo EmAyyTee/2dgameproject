@@ -18,7 +18,8 @@ void RandomWalkDungeonGenerator::runProceduralGeneration(TileMap &map, Floor& fl
     visualiser.paintFloorTiles(positions);
 
     for (const auto& position : floorPositions) {
-        std::cout << "Placing tile at: (" << position.x << ", " << position.y << ")" << std::endl;
+        //Use for debug if something goes wrong with the gen
+        // std::cout << "Placing tile at: (" << position.x << ", " << position.y << ")" << std::endl;
         map.setTile(position.x, position.y, floorTile);
     }
 }

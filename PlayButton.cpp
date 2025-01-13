@@ -11,20 +11,35 @@ PlayButton::PlayButton(const sf::Vector2f& position, std::shared_ptr<std::vector
     buttonState = ButtonState::NotHovered;
 }
 
-void PlayButton::update(float deltaTime,GameState &game_state) {
+void PlayButton::update(float deltaTime,GameState &game_state, GameState toChangeGameState) {
     Button::update();
     checkIfMouseIsHovered();
-    getInput(game_state);
+    getInput(game_state, toChangeGameState);
 
     animator.Update(deltaTime, static_cast<int>(buttonState), sprite, playButtonTexturesPointer.get());
 }
 
-void PlayButton::update(float deltaTime, GameState &game_state, Player &player) {
+void PlayButton::update(float deltaTime, GameState &game_state, Player &player, GameState toChangeGameState) {
 
     sf::FloatRect bounds = sprite.getGlobalBounds();
     position.x = player.getPosition().x - bounds.width /3;
     position.y = player.getPosition().y - bounds.height/3;
-    update(deltaTime, game_state);
+    update(deltaTime, game_state, toChangeGameState);
+}
+
+void PlayButton::update(float deltaTime, GameState &game_state, Player &player, GameState toChangeGameState, bool isThatTheQuitButton) {
+    if(!isThatTheQuitButton) {
+        sf::FloatRect bounds = sprite.getGlobalBounds();
+        position.x = player.getPosition().x - bounds.width /3;
+        position.y = player.getPosition().y - bounds.height/3;
+        update(deltaTime, game_state, toChangeGameState);
+    }
+    else {
+        sf::FloatRect bounds = sprite.getGlobalBounds();
+        position.x = player.getPosition().x - bounds.width /3 + 33;
+        position.y = player.getPosition().y - bounds.height/3 + 146;
+        update(deltaTime, game_state, toChangeGameState);
+    }
 }
 
 void PlayButton::checkIfMouseIsHovered() {
@@ -39,11 +54,15 @@ void PlayButton::checkIfMouseIsHovered() {
     }
 }
 
-void PlayButton::getInput(GameState &game_state) {
+void PlayButton::getInput(GameState &game_state, GameState toChangeGameState) {
     if (buttonState == ButtonState::Hovered) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            game_state = GameState::Running;
+            game_state = toChangeGameState;
         }
     }
+}
+
+void PlayButton::setTheFrames(int x, int y, int width, int height) {
+    animator.calculateTheFrames(x,y,width,height);
 }
 

@@ -16,6 +16,7 @@ GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector
     Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Transparent, position, hitBox);
     Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Transparent, position, detectionHitBox);
     Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Transparent, position, attackHitbox);
+    sprite.setScale(1.5f,1.5f);
 }
 
 

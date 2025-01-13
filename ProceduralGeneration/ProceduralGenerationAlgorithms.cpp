@@ -15,17 +15,19 @@ std::unordered_set<sf::Vector2i> ProceduralGenerationAlgorithms::simpleRandomWal
 
     previousPos = startPosition;
     path.emplace(startPosition);
-    std::cout << "StartPosx in PGA: " << startPosition.x<< " ";
-    std::cout << "StartPosy in PGA: " << startPosition.y << std::endl;
+//Use for debug if something goes wrong with the gen
+
+    // std::cout << "StartPosx in PGA: " << startPosition.x<< " ";
+    // std::cout << "StartPosy in PGA: " << startPosition.y << std::endl;
 
 
-    std::cout << "previous pos in PGA: " << previousPos.x << ", " << previousPos.y << std::endl;
+    // std::cout << "previous pos in PGA: " << previousPos.x << ", " << previousPos.y << std::endl;
 
     for (int i = 0; i < walkLength; i++) {
         sf::Vector2i newPos = previousPos + Direction2D::getRandomCardinalDirection();
         path.emplace(newPos);
         previousPos = newPos;
-        std::cout << previousPos.x << ", " << previousPos.y << std::endl;
+        // std::cout << previousPos.x << ", " << previousPos.y << std::endl;
     }
     return path;
 }

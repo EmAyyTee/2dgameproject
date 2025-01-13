@@ -33,16 +33,22 @@ void TileMap::draw(sf::RenderTarget& target) {
 void TileMap::setTile(int gridX, int gridY, const Floor& tile) {
     if (gridX >= 0 && gridX < static_cast<int>(maxSize.x) &&
         gridY >= 0 && gridY < static_cast<int>(maxSize.y)) {
+
+        //Use for debug if something goes wrong with the gen
+
         // std::cout << "Setting tile at grid (" << gridX << ", " << gridY << ") with position ("
         //           << gridX * gridSizeF << ", " << gridY * gridSizeF << ")" << std::endl;
         // delete map[gridX][gridY][0];
 
+
+        //Use for debug if something goes wrong with the gen
+
         map[gridX][gridY][0] = new Floor(texture,{0,0}, sf::IntRect(0,0, gridSizeF,gridSizeF));
-        std::cout << "Creted a new floor! " << std::endl;
+        // std::cout << "Creted a new floor! " << std::endl;
         map[gridX][gridY][0]->setPosition({gridX * gridSizeF, gridY * gridSizeF});
-        std::cout << "Pos of the floor: " << gridX * gridSizeF << "\n" << gridY * gridSizeF << "\n";
+        // std::cout << "Pos of the floor: " << gridX * gridSizeF << "\n" << gridY * gridSizeF << "\n";
         } else {
-            std::cout << "Grid position out of bounds: (" << gridX << ", " << gridY << ")" << std::endl;
+            // std::cout << "Grid position out of bounds: (" << gridX << ", " << gridY << ")" << std::endl;
         }
 }
 

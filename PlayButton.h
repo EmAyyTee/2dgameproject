@@ -14,21 +14,29 @@ class PlayButton : public Button{
         NotHovered = 0,
         Hovered = 1
     };
+
+    ButtonState buttonState;
+    std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playButtonTexturesPointer;
+
+
     PlayButton(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer,
     sf::RenderWindow* renderTarget);
 
 
-    void update(float deltaTime,GameState &game_state);
+    virtual void update(float deltaTime,GameState &game_state, GameState toChangeGameState);
 
-    void update(float deltaTime,GameState &game_state, Player &player);
+    virtual void update(float deltaTime,GameState &game_state, Player &player, GameState toChangeGameState);
 
-    void checkIfMouseIsHovered();
+    virtual void update(float deltaTime,GameState &game_state, Player &player, GameState toChangeGameState, bool isThatTheQuitButton);
 
-    void getInput(GameState &game_state);
 
-private:
-    ButtonState buttonState;
-    std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playButtonTexturesPointer;
+    virtual void checkIfMouseIsHovered();
+
+    virtual void getInput(GameState &game_state, GameState toChangeGameState);
+
+    virtual void setTheFrames(int x, int y, int width, int height);
+
+
 };
 
 

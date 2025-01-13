@@ -54,8 +54,6 @@ add_executable(main main.cpp
         ProceduralGeneration/RandomWalkDungeonGenerator.cpp
         ProceduralGeneration/TileMap.cpp
         ProceduralGeneration/TileMapVisualiser.cpp
-        QuitButton.h
-        QuitButton.cpp
 )
 target_link_libraries(main
         fmt::fmt

@@ -24,6 +24,8 @@ public:
     void updateTheCamera(Player &player, float deltaTime, sf::RenderTarget &target);
     void saveGame(const std::string &fileName, Player &player);
     void loadGame(const std::string &fileName, Player &player);
+    void saveFlagForSaves(const std::string &fileName);
+    void loadSaveFlagForSaves(const std::string &fileName);
 
 private:
     GameState gameState;
@@ -37,6 +39,7 @@ private:
     int enemiesCount = 0;
     int aliveEnemiesCount;
     bool isGameSaved;
+    bool shouldTheGameSave;
     Floor floorTile;
     PlayButton playButton;
     Player player;
