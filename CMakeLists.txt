@@ -54,6 +54,8 @@ add_executable(main main.cpp
         ProceduralGeneration/RandomWalkDungeonGenerator.cpp
         ProceduralGeneration/TileMap.cpp
         ProceduralGeneration/TileMapVisualiser.cpp
+        ProceduralGeneration/WallGenerator.h
+        ProceduralGeneration/WallGenerator.cpp
 )
 target_link_libraries(main
         fmt::fmt
