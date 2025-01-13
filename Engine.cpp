@@ -163,12 +163,14 @@ void Engine::run(MainWindow& windowRef) {
                     player.hitPoints = 10;
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                    justPause = true;
-
+                    if (pauseClock.getElapsedTime().asSeconds() > 0.2f) {
+                        pauseClock.restart();
+                        gameState = GameState::Paused;
+                    }
                 }
 
-                if (gameState != GameState::Running || justPause) {
-                    gameState = GameState::Paused;
+                if (gameState != GameState::Running) {
+
                     break;
                 }
             }
@@ -195,7 +197,7 @@ void Engine::run(MainWindow& windowRef) {
 
                 player.draw(renderWindow);
 
-                for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ) {
+                for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ++slime) {
                     slime->draw(renderWindow);
                 }
 

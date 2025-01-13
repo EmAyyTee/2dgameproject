@@ -42,9 +42,10 @@ private:
     int aliveEnemiesCount;
     bool isGameSaved;
     bool shouldTheGameSave;
-    bool justPause = false;
+    sf::Clock pauseClock;
     Floor floorTile;
     PlayButton playButton;
+
     Player player;
     TileMap map;
     sf::Texture texture;
