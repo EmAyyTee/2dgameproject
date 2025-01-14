@@ -7,6 +7,7 @@
 #include "GreenSlime.h"
 #include "PlayButton.h"
 #include "PlayerArrow.h"
+#include "PlayerHud.h"
 #include "ProceduralGeneration/Floor.h"
 #include "ProceduralGeneration/TileMap.h"
 
@@ -49,6 +50,7 @@ private:
     CollisionHandler enemyCollisionHandler;
 
     Player player;
+    PlayerHud playerHud;
     TileMap map;
     sf::Texture texture;
     std::shared_ptr<TextureLoader> textureLoader;

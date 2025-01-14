@@ -60,6 +60,7 @@ private:
     std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer;
     BetterClock damageClock;
     sf::Clock atackCooldownClock;
+    sf::Clock attentionClock;
     float cooldownForDealingDamage = 0.5f;
     float cooldownForBeingAbleToAttack = 2.0f;
 };

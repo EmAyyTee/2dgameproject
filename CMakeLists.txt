@@ -56,6 +56,8 @@ add_executable(main main.cpp
         ProceduralGeneration/TileMapVisualiser.cpp
         CollisionHandler.h
         CollisionHandler.cpp
+        PlayerHud.cpp
+        PlayerHud.h
 )
 target_link_libraries(main
         fmt::fmt

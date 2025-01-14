@@ -50,7 +50,7 @@ void GreenSlime::checkForThePlayer(Player &player) {
             atackCooldownClock.restart();
         }
     }
-    if (player.getPlayerHitBox().getGlobalBounds().intersects(detectionHitBox.getGlobalBounds())) {
+    if (player.getPlayerHitBox().getGlobalBounds().intersects(detectionHitBox.getGlobalBounds())|| attentionClock.getElapsedTime().asSeconds() > 10.0f) {
         green_slime_detection = GreenSlimeDetection::PlayerDetected;
     }
     if (player.getPlayerHitBox().getGlobalBounds().intersects(attackHitbox.getGlobalBounds())) {

@@ -13,7 +13,7 @@ class GreenSlime;
 TileMap::TileMap(float gridSize, unsigned width, unsigned height)
     : gridSizeF(gridSize), maxSize(width, height) {
     map.resize(maxSize.x, std::vector(maxSize.y, std::vector<Floor*>(1, nullptr)));
-    texture.loadFromFile("ProceduralGeneration/Textures/grass.png");
+    texture.loadFromFile("ProceduralGeneration/Textures/grass2.png");
 }
 
 
@@ -138,11 +138,12 @@ void TileMap::spawnEnemies(int &enemiesCount, int &aliveEnemiesCount, sf::Render
         int x = distX(gen);
         int y = distY(gen);
 
-        if (map[x][y][0] != nullptr && enemiesCount > 0) {
+        if (map[x][y][0] != nullptr && enemiesCount > 0 && map[x][y][0]->canISpawnHere.getElapsedTime().asSeconds() > 10.0f) {
             map[x][y][0]->spawnAnEnemy(enemiesCount,renderWindow, greenSlimes, textureLoader);
             std::cout << "I'm spawning an enemy on the map!\n";
             aliveEnemiesCount++;
             i++;
+            map[x][y][0]->canISpawnHere.restart();
         }
     }
 }

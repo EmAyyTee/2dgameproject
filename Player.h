@@ -5,6 +5,7 @@
 #include "GameState.h"
 #include "PlayerArrow.h"
 #include "TextureLoader.h"
+#include "SFML/Graphics/Text.hpp"
 #include "SFML/Window/Keyboard.hpp"
 
 class Player : public Character{
@@ -23,6 +24,8 @@ public:
     int currentDamage;
     sf::RectangleShape detectionHitbox;
     sf::Clock shotClock;
+    int score = 0;
+
 
 
     Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer,
@@ -38,6 +41,11 @@ public:
 
     sf::Vector2f getPosition();
 
+    void setPosition(sf::Vector2f position);
+
+
+    void addToScore(int points);
+
     sf::RectangleShape getPlayerHitBox();
 
     void getDamage(int damage);
@@ -45,6 +53,7 @@ public:
     void saveToFile(std::ofstream &file);
 
     void loadFromFile(std::ifstream& file);
+
 
 private:
     PlayerState playerState;

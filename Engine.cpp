@@ -16,7 +16,12 @@
 
 Engine::Engine(MainWindow& windowRef)
     : gameState(GameState::MainMenu), gridSize(300.0f), view(windowRef.getWindow().getDefaultView()),
-      aliveEnemiesCount(0), enemiesCount(5), floorTile(sf::Texture(), {0,0}, sf::IntRect() ), playButton({0,0}, nullptr, nullptr), player({0,0}, nullptr, nullptr, &supportedKeys), map(gridSize, 400, 400), shouldTheGameSave(false) {
+      aliveEnemiesCount(0), enemiesCount(5), floorTile(sf::Texture(),
+          {0,0}, sf::IntRect() ),
+playButton({0,0}, nullptr, nullptr),
+player({0,0}, nullptr, nullptr, &supportedKeys),
+map(gridSize, 400, 400), shouldTheGameSave(false),
+playerHud(player.hitPoints, player.score){
     initKeys();
 
     textureLoader = std::make_shared<TextureLoader>();
@@ -80,8 +85,9 @@ void Engine::run(MainWindow& windowRef) {
                     }
                 }
 
-                playButton.update(1.0f/60.0f, gameState,player ,GameState::Running);
-                quitButton.update(1.0f/60.0f, gameState, player,GameState::Quitting, true);
+                playButton.update(1.0f/60.0f, gameState,GameState::Running);
+                quitButton.update(1.0f/60.0f, gameState, GameState::Quitting);
+                updateTheCamera(player, 1.0f/60.0f, renderWindow);
                 renderWindow.clear();
                 playButton.buttonDraw(renderWindow);
                 quitButton.buttonDraw(renderWindow);
@@ -101,7 +107,7 @@ void Engine::run(MainWindow& windowRef) {
 
             while (renderWindow.isOpen()) {
 
-                if (respawnEnemiesClock.getElapsedTime().asSeconds() > 5.0f) {
+                if (respawnEnemiesClock.getElapsedTime().asSeconds() > 1.0f) {
                     enemiesCount++;
 
                     if(aliveEnemiesCount == 0){
@@ -111,14 +117,6 @@ void Engine::run(MainWindow& windowRef) {
                         int temporaryEnemiesCount = enemiesCount - aliveEnemiesCount;
                         map.spawnEnemies(temporaryEnemiesCount, aliveEnemiesCount, &renderWindow, greenSlimes, textureLoader);
                     }
-
-
-
-                    // for (int i = 0; i < enemiesCount; ++i) {
-                    //     greenSlimes.push_back(GreenSlime (static_cast<sf::Vector2f>(randomSpawnPosition(renderWindow)), std::make_shared<std::vector<std::pair<int,
-                    //     sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
-                    // }
-
                     respawnEnemiesClock.restart();
 
                     shouldTheGameSave = true;
@@ -138,6 +136,8 @@ void Engine::run(MainWindow& windowRef) {
                 map.draw(renderWindow);
                 player.update(1.0f/ 60.0f, arrows);
                 updateTheCamera(player, 1.0f/60.0f, renderWindow);
+                playerHud.update(player);
+                playerHud.draw(renderWindow);
                 renderWindow.setView(view);
 
                 enemyCollisionHandler.checkGreenSlimesCollisions(greenSlimes);
@@ -149,6 +149,7 @@ void Engine::run(MainWindow& windowRef) {
                     if (!slime->isAlive) {
                         slime = greenSlimes.erase(slime);
                         aliveEnemiesCount--;
+                        player.addToScore(1);
                     } else {
                         ++slime;
                     }
@@ -169,10 +170,13 @@ void Engine::run(MainWindow& windowRef) {
                 if (player.hitPoints <= 0){
                     gameState = GameState::MainMenu;
                     aliveEnemiesCount = 0;
-                    enemiesCount = 0;
+                    enemiesCount = 5;
                     greenSlimes.clear();
                     shouldTheGameSave = false;
+                    isGameSaved = false;
                     player.hitPoints = 10;
+                    player.setPosition(sf::Vector2f(static_cast<float>(windowRef.getWindow().getSize().x / 2) - 64,
+                    static_cast<float>(windowRef.getWindow().getSize().y / 2) - 64));
                     map.removeTiles();
                     map = TileMap (gridSize, 400, 400);
                     RandomWalkDungeonGenerator generator(map, floorTile);

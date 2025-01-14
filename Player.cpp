@@ -147,6 +147,15 @@ sf::Vector2f Player::getPosition() {
     return position;
 }
 
+void Player::setPosition(sf::Vector2f position) {
+    this -> position = position;
+}
+
+void Player::addToScore(int points) {
+    score += points;
+}
+
+
 sf::RectangleShape Player::getPlayerHitBox() {
     return detectionHitbox;
 }
@@ -207,3 +216,4 @@ void Player::loadFromFile(std::ifstream &file) {
 
     file.read(reinterpret_cast<char *>(&currentDamage), sizeof(currentDamage));
 }
+
