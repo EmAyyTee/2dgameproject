@@ -13,7 +13,8 @@
 
 Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer,
     sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key>* supportedKeys)
-    : Character(position, renderTarget), playerTexturesPointer(std::move(playerTexturesPointer)), supportedKeys(supportedKeys), currentDamage(1){
+    : Character(position, renderTarget), playerTexturesPointer(std::move(playerTexturesPointer)),
+supportedKeys(supportedKeys), currentDamage(1), arrowsHp(1){
 
     hitPoints = 30;
     animation.calculateTheFrames(0, 0, 128, 74);
@@ -130,7 +131,7 @@ bool Player::canAnimationCanChange() {
         animation.setHoldTime(0.1f);
         animationClock.restart();
 
-        arrows->emplace_back(position, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget, currentDamage);
+        arrows->emplace_back(position, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget, currentDamage, arrowsHp);
         shotClock.restart();
 
         return false;
@@ -199,6 +200,8 @@ void Player::saveToFile(std::ofstream &file) {
     //Saving dmg
 
     file.write(reinterpret_cast<const char *>(&currentDamage), sizeof(currentDamage));
+    file.write(reinterpret_cast<const char *>(&score), sizeof(score));
+    file.write(reinterpret_cast<const char *>(&arrowsHp), sizeof(arrowsHp));
 }
 
 void Player::loadFromFile(std::ifstream &file) {
@@ -215,5 +218,7 @@ void Player::loadFromFile(std::ifstream &file) {
     //Loading dmg
 
     file.read(reinterpret_cast<char *>(&currentDamage), sizeof(currentDamage));
+    file.read(reinterpret_cast<char *>(&score), sizeof(score));
+    file.read(reinterpret_cast<char *>(&arrowsHp), sizeof(arrowsHp));
 }
 

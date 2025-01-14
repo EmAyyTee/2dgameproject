@@ -6,8 +6,8 @@
 #include "GameObject.h"
 
 PlayerArrow::PlayerArrow(sf::Vector2f position, sf::Vector2f target, std::vector<std::pair <int, sf::Texture>> *playerTexturesPointer,
-                         sf::RenderWindow *renderTarget, int damage)
-        :GameObject(position), renderTarget(renderTarget), arrowTextures(playerTexturesPointer), target(target), damage(damage) {
+                         sf::RenderWindow *renderTarget, int damage, int hp)
+        :GameObject(position), renderTarget(renderTarget), arrowTextures(playerTexturesPointer), target(target), damage(damage), hp(hp) {
 
 // Normalisation of a vector
 
@@ -67,7 +67,7 @@ void PlayerArrow::update(float deltaTime) {
 }
 
 bool PlayerArrow::checkArrowLifeTime() {
-    if (arrowClock.getElapsedTime().asSeconds() > maxLifetime) {
+    if (arrowClock.getElapsedTime().asSeconds() > maxLifetime || hp <=0)  {
         return true;
     }
     return false;

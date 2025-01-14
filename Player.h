@@ -25,6 +25,7 @@ public:
     sf::RectangleShape detectionHitbox;
     sf::Clock shotClock;
     int score = 0;
+    int arrowsHp;
 
 
 

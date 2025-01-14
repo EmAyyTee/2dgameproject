@@ -57,12 +57,9 @@ playerHud(player.hitPoints, player.score){
 
 void Engine::run(MainWindow& windowRef) {
 
-
     sf::Event event;
 
-
     sf::RenderWindow& renderWindow = windowRef.getWindow();
-
 
     while (!shouldTheGameClose){
 

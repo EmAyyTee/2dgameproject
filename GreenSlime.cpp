@@ -78,6 +78,7 @@ void GreenSlime::checkForTheDamage(Player &player) {
                 animationClock.start();
                 animationTime = 0.5f;
                 animation.setHoldTime(0.1f);
+                arrow.hp -= 1;
             }
         }
     }
@@ -111,7 +112,7 @@ void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
             chooseAnimation();
         }
 
-        if (!player.getHitBox().getGlobalBounds().intersects(attackHitbox.getGlobalBounds()) && !isAnimationPlaying) {
+        if (!player.getHitBox().getGlobalBounds().intersects(attackHitbox.getGlobalBounds()) && !isAnimationPlaying && atackCooldownClock.getElapsedTime().asSeconds() > 1.0f) {
             position += directionalVector * speed*slimeSpeedModifier * deltaTime;
         }
         else {
