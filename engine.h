@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include <fstream>
 
+#include "BigGreenSlime.h"
 #include "CollisionHandler.h"
 #include "GreenSlime.h"
 #include "PlayButton.h"
@@ -38,11 +39,17 @@ private:
     std::vector<PlayerArrow> arrows;
     std::vector<PlayerArrow> remainingArrows;
     std::vector<GreenSlime> greenSlimes;
+    std::vector<sf::Vector2f> greenSlimesFromBigSlimesPositions;
+    size_t greenSlimesFromBigSlimesSize;
     sf::Vector2u mousePosOnGrid;
     sf::View view;
     int enemiesCount = 0;
     int aliveEnemiesCount;
-    bool isGameSaved;
+    int spawningPoints;
+
+    size_t loadedGreenSlimeCount;
+    size_t loadedBigGreenSlimeCount;
+    bool isGameSaved = false;
     bool shouldTheGameSave;
     Floor floorTile;
     PlayButton playButton;
@@ -56,6 +63,8 @@ private:
     std::shared_ptr<TextureLoader> textureLoader;
 
     sf::Clock respawnEnemiesClock;
+    sf::Clock addSpawnPointsClock;
+    sf::Clock pauseClock;
 
 };
 

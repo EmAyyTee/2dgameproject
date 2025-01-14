@@ -1,4 +1,5 @@
 #pragma once
+#include "BigGreenSlime.h"
 #include "GreenSlime.h"
 #include "SFML/Graphics/Rect.hpp"
 
@@ -11,5 +12,9 @@ public:
 
     void checkGreenSlimesCollisions(std::vector<GreenSlime> &greenSlimes);
 
+    void checkGreenSlimesCollisions(std::vector<BigGreenSlime> &greenSlimes);
+
     void handleGreenSlimeCollision(GreenSlime &slime1, GreenSlime &slime2);
+
+    void handleGreenSlimeCollision(BigGreenSlime &slime1, BigGreenSlime &slime2);
 };

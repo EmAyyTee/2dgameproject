@@ -7,8 +7,6 @@
 
 #include "Floor.h"
 
-class TextureLoader;
-class GreenSlime;
 
 TileMap::TileMap(float gridSize, unsigned width, unsigned height)
     : gridSizeF(gridSize), maxSize(width, height) {
@@ -127,9 +125,9 @@ void TileMap::loadTileMap(std::ifstream &file) {
     }
 }
 
-void TileMap::spawnEnemies(int &enemiesCount, int &aliveEnemiesCount, sf::RenderWindow *renderWindow, std::vector<GreenSlime> &greenSlimes, std::shared_ptr<TextureLoader>
+void TileMap::spawnEnemies(int &enemiesCount, int &aliveEnemiesCount,int &spawnPoints, sf::RenderWindow *renderWindow, std::vector<GreenSlime> &greenSlimes, std::shared_ptr<TextureLoader>
                            textureLoader) {
-    for(int i = 0; i < enemiesCount;) {
+    for(auto i = 0; i < enemiesCount;) {
         static std::random_device rd;
         static std::mt19937 gen(rd());
         std::uniform_int_distribution<> distX(0, maxSize.x-1);
@@ -144,6 +142,9 @@ void TileMap::spawnEnemies(int &enemiesCount, int &aliveEnemiesCount, sf::Render
             aliveEnemiesCount++;
             i++;
             map[x][y][0]->canISpawnHere.restart();
+            if(spawnPoints <= 0) {
+                break;
+            }
         }
     }
 }

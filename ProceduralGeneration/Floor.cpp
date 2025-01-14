@@ -6,6 +6,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "../TextureLoader.h"
 #include "../GreenSlime.h"
+#include "../BigGreenSlime.h"
 
 
 Floor::Floor(const sf::Texture& texture, const sf::Vector2f& position, const sf::IntRect& textureRect)
@@ -81,19 +82,27 @@ void Floor::loadFromFile(std::ifstream &file) {
     setPosition(position);
 }
 
-void Floor::spawnAnEnemy(int enemiesCount, sf::RenderWindow *renderWindow, std::vector<GreenSlime> &greenSlimes, std::shared_ptr<TextureLoader>
+void Floor::spawnAnEnemy(int &spawnPoints, sf::RenderWindow *renderWindow, std::vector<GreenSlime> &greenSlimes, std::shared_ptr<TextureLoader>
                          textureLoader) {
     while (true) {
         static std::random_device rd;
         static std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dist(0, 0);
+        std::uniform_int_distribution<> dist(0, 1);
+        std::cout << "In class floor i rng'd a " << dist(gen) << "\n";
 
         switch (dist(gen)) {
             case 0 : {
                 greenSlimes.push_back(GreenSlime ({sprite.getPosition().x/2, sprite.getPosition().y/2}, std::make_shared<std::vector<std::pair<int,
                          sf::Texture>>>(textureLoader -> greenSlimeTextures), renderWindow));
-                enemiesCount -= 1;
                 std::cout << "I'm spawning the slime at pos: " << sprite.getPosition().x << " " << sprite.getPosition().y << "\n";
+                spawnPoints-= 1;
+                return;
+            }
+            case 1: {
+                greenSlimes.push_back(BigGreenSlime ({sprite.getPosition().x/2, sprite.getPosition().y/2}, std::make_shared<std::vector<std::pair<int,
+                         sf::Texture>>>(textureLoader -> greenSlimeTextures), renderWindow));
+                std::cout << "I'm spawning the big slime at pos: " << sprite.getPosition().x << " " << sprite.getPosition().y << "\n";
+                spawnPoints-= 5;
                 return;
             }
         }

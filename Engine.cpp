@@ -16,7 +16,7 @@
 
 Engine::Engine(MainWindow& windowRef)
     : gameState(GameState::MainMenu), gridSize(300.0f), view(windowRef.getWindow().getDefaultView()),
-      aliveEnemiesCount(0), enemiesCount(5), floorTile(sf::Texture(),
+      aliveEnemiesCount(0), enemiesCount(5),spawningPoints(5), floorTile(sf::Texture(),
           {0,0}, sf::IntRect() ),
 playButton({0,0}, nullptr, nullptr),
 player({0,0}, nullptr, nullptr, &supportedKeys),
@@ -67,7 +67,6 @@ void Engine::run(MainWindow& windowRef) {
     while (!shouldTheGameClose){
 
         if (gameState == GameState::MainMenu) {
-            player.shotClock.restart();
 
             PlayButton quitButton({static_cast<float>(windowRef.getWindow().getSize().x / 2 - 32),
         static_cast<float>(windowRef.getWindow().getSize().y / 2 + 64)},
@@ -84,9 +83,9 @@ void Engine::run(MainWindow& windowRef) {
                         shouldTheGameClose = true;
                     }
                 }
-
-                playButton.update(1.0f/60.0f, gameState,GameState::Running);
-                quitButton.update(1.0f/60.0f, gameState, GameState::Quitting);
+                player.shotClock.restart();
+                playButton.update(1.0f/60.0f, gameState, player,GameState::Running);
+                quitButton.update(1.0f/60.0f, gameState, player, GameState::Quitting, true);
                 updateTheCamera(player, 1.0f/60.0f, renderWindow);
                 renderWindow.clear();
                 playButton.buttonDraw(renderWindow);
@@ -106,16 +105,19 @@ void Engine::run(MainWindow& windowRef) {
             // std::cout << "After loading, slime array has size of: "<< greenSlimes.size() << "\n";
 
             while (renderWindow.isOpen()) {
+                if(addSpawnPointsClock.getElapsedTime().asSeconds()> 1.0f) {
+                    spawningPoints++;
+                    addSpawnPointsClock.restart();
+                }
 
-                if (respawnEnemiesClock.getElapsedTime().asSeconds() > 1.0f) {
-                    enemiesCount++;
-
+                if (respawnEnemiesClock.getElapsedTime().asSeconds() > 2.0f) {
+                        enemiesCount++;
                     if(aliveEnemiesCount == 0){
-                        map.spawnEnemies(enemiesCount, aliveEnemiesCount,&renderWindow, greenSlimes, textureLoader);
+                        map.spawnEnemies(enemiesCount, aliveEnemiesCount,spawningPoints, &renderWindow, greenSlimes, textureLoader);
                     }
-                    else {
+                    else if (spawningPoints > 0 ){
                         int temporaryEnemiesCount = enemiesCount - aliveEnemiesCount;
-                        map.spawnEnemies(temporaryEnemiesCount, aliveEnemiesCount, &renderWindow, greenSlimes, textureLoader);
+                        map.spawnEnemies(temporaryEnemiesCount, aliveEnemiesCount,spawningPoints, &renderWindow, greenSlimes, textureLoader);
                     }
                     respawnEnemiesClock.restart();
 
@@ -147,13 +149,35 @@ void Engine::run(MainWindow& windowRef) {
                     slime->draw(renderWindow);
 
                     if (!slime->isAlive) {
-                        slime = greenSlimes.erase(slime);
-                        aliveEnemiesCount--;
-                        player.addToScore(1);
+                        if(slime->slimeVariant == 0) {
+                            slime = greenSlimes.erase(slime);
+                            aliveEnemiesCount--;
+                            player.addToScore(1);
+                        } else if (slime->slimeVariant == 1) {
+                            aliveEnemiesCount--;
+                            player.addToScore(5);
+                            sf::Vector2f offset = {2.0f, 2.0f};
+                            for (size_t t = 0; t < 2; t++) {
+                                greenSlimesFromBigSlimesPositions.push_back(slime->getPosition() + offset);
+                                greenSlimesFromBigSlimesSize++;
+                                offset = {-2.0f, -2.0f};
+                            }
+                            slime = greenSlimes.erase(slime);
+                        }
+
                     } else {
                         ++slime;
                     }
                 }
+                if (greenSlimesFromBigSlimesPositions.size() > 0) {
+                    for (auto & position: greenSlimesFromBigSlimesPositions) {
+                        greenSlimes.push_back(GreenSlime ({position.x, position.y}, std::make_shared<std::vector<std::pair<int,
+                                    sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
+                        aliveEnemiesCount++;
+                    }
+                }
+                greenSlimesFromBigSlimesPositions.clear();
+
                 player.draw(renderWindow);
 
                 for (PlayerArrow &arrow : arrows) {
@@ -183,8 +207,9 @@ void Engine::run(MainWindow& windowRef) {
                     generator.runProceduralGeneration(map, floorTile);
 
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)&& pauseClock.getElapsedTime().asSeconds() > 0.1f) {
                         gameState = GameState::Paused;
+                    pauseClock.restart();
                 }
 
                 if (gameState != GameState::Running) {
@@ -222,6 +247,10 @@ void Engine::run(MainWindow& windowRef) {
                 quitButton.buttonDraw(renderWindow);
 
                 renderWindow.display();
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape )&& pauseClock.getElapsedTime().asSeconds() > 0.1f) {
+                    gameState = GameState::Running;
+                    pauseClock.restart();
+                }
                 if(gameState != GameState::Paused) {
                     break;
                 }
@@ -283,10 +312,12 @@ void Engine::saveGame(const std::string &fileName, Player &player) {
     player.saveToFile(file);
     std::cout << "I save the player!\n";
 
+
     for (const auto& slime : greenSlimes) {
         slime.saveToFile(file);
         std::cout << "I save a slime!\n";
     }
+
 
     map.saveTileMap(file);
 
@@ -310,6 +341,7 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
     std::cout << "Slime array has size of: " << greenSlimes.size() << "\n";
     std::cout << "Alive enemies count is: " << aliveEnemiesCount << "\n";
 
+
     for (int i = 0; i < aliveEnemiesCount; i++) {
         std::cout << "I try loading a slime!\n";
 
@@ -317,9 +349,19 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
                         sf::Texture>>>(textureLoader -> greenSlimeTextures), &window->getWindow());
         temporarySlime.loadFromFile(file);
 
+        // BigGreenSlime temporaryBigSlime (sf::Vector2f{0,0}, std::make_shared<std::vector<std::pair<int,
+        //                 sf::Texture>>>(textureLoader -> greenSlimeTextures), &window->getWindow());
+        // temporaryBigSlime.loadFromFile(file);
+
         std::cout << "Loaded slime has: " << temporarySlime.hitPoints << " \n";
         greenSlimes.push_back(temporarySlime);
+
+        // else if(temporaryBigSlime.slimeVariant == 1) {
+        //     std::cout << "Loaded slime has: " << temporaryBigSlime.hitPoints << " \n";
+        //     bigGreenSlimes.push_back(temporaryBigSlime);
+        // }
     }
+
     map.loadTileMap(file);
 
     file.close();
@@ -335,6 +377,7 @@ void Engine::saveEnemiesCountAndAlive(const std::string &fileName) {
 
     file.write(reinterpret_cast<const char*>(&aliveEnemiesCount), sizeof(aliveEnemiesCount));
     file.write(reinterpret_cast<const char*>(&enemiesCount), sizeof(enemiesCount));
+    file.close();
 }
 
 

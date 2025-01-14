@@ -58,6 +58,8 @@ add_executable(main main.cpp
         CollisionHandler.cpp
         PlayerHud.cpp
         PlayerHud.h
+        BigGreenSlime.h
+        BigGreenSlime.cpp
 )
 target_link_libraries(main
         fmt::fmt

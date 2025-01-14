@@ -21,8 +21,8 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::strin
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
 
-    Character::setHitbox(sf::Vector2f(40.0f, 70.0f), sf::Color::Transparent, position,hitBox);
-    Character::setHitbox(sf::Vector2f(128.0f, 128.0f), sf::Color::Transparent, position,detectionHitbox);
+    Character::setHitbox(sf::Vector2f(40.0f, 70.0f), sf::Color::Red, position,hitBox);
+    Character::setHitbox(sf::Vector2f(128.0f, 128.0f), sf::Color::Blue, position,detectionHitbox);
 }
 
 void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {

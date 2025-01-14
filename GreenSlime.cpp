@@ -12,11 +12,15 @@ GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector
     animation.setNumberOfFrames(6);
     direction = {0.0f, 0.0f};
     green_slime_animation = GreenSlimeAnimation::SlimeIdle;
+    slimeSpeedModifier = 0.85;
 
-    Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Transparent, position, hitBox);
-    Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Transparent, position, detectionHitBox);
-    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Transparent, position, attackHitbox);
+    Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Red, position, hitBox);
+    Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Yellow, position, detectionHitBox);
+    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Magenta, position, attackHitbox);
     sprite.setScale(1.5f,1.5f);
+    hitBox.setScale(1.2f,1.2f);
+    attackHitbox.setScale(1.2f,1.2f);
+    detectionHitBox.setScale(1.2f,1.2f);
 }
 
 
@@ -108,7 +112,7 @@ void GreenSlime::moveTowardsPlayer(Player &player, float deltaTime) {
         }
 
         if (!player.getHitBox().getGlobalBounds().intersects(attackHitbox.getGlobalBounds()) && !isAnimationPlaying) {
-            position += directionalVector * speed*0.75f * deltaTime;
+            position += directionalVector * speed*slimeSpeedModifier * deltaTime;
         }
         else {
             if(!isAnimationPlaying) {
@@ -183,6 +187,7 @@ void GreenSlime::saveToFile(std::ofstream &file) const{
     file.write(reinterpret_cast<const char*>(&position.x), sizeof(position.x));
     file.write(reinterpret_cast<const char*>(&position.y), sizeof(position.y));
     file.write(reinterpret_cast<const char*>(&hitPoints), sizeof(hitPoints));
+    file.write(reinterpret_cast<const char*>(&slimeVariant), sizeof(slimeVariant));
 
 }
 
@@ -191,5 +196,16 @@ void GreenSlime::loadFromFile(std::ifstream &file) {
     file.read(reinterpret_cast<char*>(&position.x), sizeof(position.x));
     file.read(reinterpret_cast<char*>(&position.y), sizeof(position.y));
     file.read(reinterpret_cast<char*>(&hitPoints), sizeof(hitPoints));
+    file.read(reinterpret_cast<char*>(&slimeVariant), sizeof(slimeVariant));
+
+    if(slimeVariant == 1) {
+        sprite.setScale(4.0f, 4.0f);
+        hitBox.setScale(4.0f, 4.0f);
+        slimeSpeedModifier = 0.65f;
+        hitBox.setScale(3.8f,3.8);
+        attackHitbox.setScale(1.2f,1.2);
+        detectionHitBox.setScale(2.0f,2.0f);
+        greenSlimeDamage = 5;
+    }
 
 }

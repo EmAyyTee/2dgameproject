@@ -6,6 +6,7 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "../TextureLoader.h"
 #include "../GreenSlime.h"
+#include "../BigGreenSlime.h"
 
 
 
@@ -39,7 +40,7 @@ public:
 
     void setPosition(sf::Vector2f position);
 
-    void spawnAnEnemy(int enemiesCount, sf::RenderWindow *renderWindow,
+    void spawnAnEnemy(int &spawnPoints, sf::RenderWindow *renderWindow,
                       std::vector<GreenSlime> &greenSlimes,
                       std::shared_ptr<TextureLoader> textureLoader);
 
