@@ -64,3 +64,16 @@ void Floor::setPosition(sf::Vector2f position) {
 void Floor::update(float deltaTime) {
 
 }
+
+void Floor::saveToFile(std::ofstream &file) const {
+    sf::Vector2f position = sprite.getPosition();
+    file.write(reinterpret_cast<const char*>(&position.x), sizeof(position.x));
+    file.write(reinterpret_cast<const char*>(&position.y), sizeof(position.y));
+}
+
+void Floor::loadFromFile(std::ifstream &file) {
+    sf::Vector2f position;
+    file.read(reinterpret_cast<char*>(&position.x), sizeof(position.x));
+    file.read(reinterpret_cast<char*>(&position.y), sizeof(position.y));
+    setPosition(position);
+}

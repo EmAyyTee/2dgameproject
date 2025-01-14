@@ -163,14 +163,10 @@ void Engine::run(MainWindow& windowRef) {
                     player.hitPoints = 10;
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                    if (pauseClock.getElapsedTime().asSeconds() > 0.2f) {
-                        pauseClock.restart();
                         gameState = GameState::Paused;
-                    }
                 }
 
                 if (gameState != GameState::Running) {
-
                     break;
                 }
             }
@@ -268,6 +264,8 @@ void Engine::saveGame(const std::string &fileName, Player &player) {
         std::cout << "I save a slime!\n";
     }
 
+    map.saveTileMap(file);
+
     file.close();
     isGameSaved = true;
 }
@@ -298,6 +296,7 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
         std::cout << "Loaded slime has: " << temporarySlime.hitPoints << " \n";
         greenSlimes.push_back(temporarySlime);
     }
+    map.loadTileMap(file);
 
     file.close();
     isGameSaved = false;
@@ -321,6 +320,12 @@ void Engine::loadEnemiesCountAndAlive(const std::string &filename) {
         std::cerr << "Can't load the game! Access denied\n";
         return;
     }
+
+    // For Uni proffessor: reinterpret_cast found here:
+    //https://en.cppreference.com/w/cpp/language/reinterpret_cast
+    // And this is where I found out it was what I needed:
+    //https://stackoverflow.com/questions/573294/when-to-use-reinterpret-cast
+
     file.read(reinterpret_cast<char*>(&aliveEnemiesCount), sizeof(aliveEnemiesCount));
     file.read(reinterpret_cast<char*>(&enemiesCount), sizeof(enemiesCount));
 

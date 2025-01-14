@@ -1,4 +1,6 @@
 #pragma once
+#include <fstream>
+
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 
@@ -30,4 +32,7 @@ public:
     void setPosition(sf::Vector2f position);
 
     void update(float deltaTime);
+
+    void saveToFile(std::ofstream& file) const;
+    void loadFromFile(std::ifstream& file);
 };

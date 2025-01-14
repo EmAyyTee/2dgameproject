@@ -23,5 +23,7 @@ public:
     void draw(sf::RenderTarget& renderTarget);
     void setTile(int gridX, int gridY, const Floor& tile);
     void removeTile();
+    void saveTileMap(std::ofstream &file);
+    void loadTileMap(std::ifstream &file);
 
 };

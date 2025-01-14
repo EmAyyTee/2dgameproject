@@ -57,3 +57,52 @@ sf::Vector2i TileMap::worldToCell(const sf::Vector2i &worldPosition) {
     int y = std::floor(worldPosition.y);
     return sf::Vector2i(x, y);
 }
+
+void TileMap::saveTileMap(std::ofstream &file) {
+    if (!file.is_open()) {
+        std::cerr << "Failed to open the file for saving TileMap!\n";
+        return;
+    }
+
+    file.write(reinterpret_cast<const char*>(&gridSizeF), sizeof(gridSizeF));
+    file.write(reinterpret_cast<const char*>(&maxSize.x), sizeof(maxSize.x));
+    file.write(reinterpret_cast<const char*>(&maxSize.y), sizeof(maxSize.y));
+
+    for (size_t x = 0; x < maxSize.x; ++x) {
+        for (size_t y = 0; y < maxSize.y; ++y) {
+            if (map[x][y][0] != nullptr) {
+                bool exists = true;
+                file.write(reinterpret_cast<const char*>(&exists), sizeof(exists));
+                map[x][y][0]->saveToFile(file);
+            } else {
+                bool exists = false;
+                file.write(reinterpret_cast<const char*>(&exists), sizeof(exists));
+            }
+        }
+    }
+}
+
+void TileMap::loadTileMap(std::ifstream &file) {
+    if (!file.is_open()) {
+        std::cerr << "Failed to open the file for loading TileMap!\n";
+        return;
+    }
+    file.read(reinterpret_cast<char*>(&gridSizeF), sizeof(gridSizeF));
+    file.read(reinterpret_cast<char*>(&maxSize.x), sizeof(maxSize.x));
+    file.read(reinterpret_cast<char*>(&maxSize.y), sizeof(maxSize.y));
+
+    map.clear();
+    map.resize(maxSize.x, std::vector(maxSize.y, std::vector<Floor*>(1, nullptr)));
+
+    for (size_t x = 0; x < maxSize.x; ++x) {
+        for (size_t y = 0; y < maxSize.y; ++y) {
+            bool exists;
+            file.read(reinterpret_cast<char*>(&exists), sizeof(exists));
+
+            if (exists) {
+                map[x][y][0] = new Floor(texture, {0, 0}, sf::IntRect(0, 0, gridSizeF, gridSizeF));
+                map[x][y][0]->loadFromFile(file);
+            }
+        }
+    }
+}

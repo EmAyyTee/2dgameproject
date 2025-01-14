@@ -42,7 +42,6 @@ private:
     int aliveEnemiesCount;
     bool isGameSaved;
     bool shouldTheGameSave;
-    sf::Clock pauseClock;
     Floor floorTile;
     PlayButton playButton;
 
