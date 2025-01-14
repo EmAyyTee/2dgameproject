@@ -15,14 +15,14 @@ Player::Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::strin
     sf::RenderWindow* renderTarget, std::map<std::string, sf::Keyboard::Key>* supportedKeys)
     : Character(position, renderTarget), playerTexturesPointer(std::move(playerTexturesPointer)), supportedKeys(supportedKeys), currentDamage(1){
 
-    hitPoints = 10;
+    hitPoints = 30;
     animation.calculateTheFrames(0, 0, 128, 74);
     animation.setNumberOfFrames(6);
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
 
-    Character::setHitbox(sf::Vector2f(40.0f, 70.0f), sf::Color::Red, position,hitBox);
-    Character::setHitbox(sf::Vector2f(128.0f, 128.0f), sf::Color::Blue, position,detectionHitbox);
+    Character::setHitbox(sf::Vector2f(40.0f, 70.0f), sf::Color::Transparent, position,hitBox);
+    Character::setHitbox(sf::Vector2f(128.0f, 128.0f), sf::Color::Transparent, position,detectionHitbox);
 }
 
 void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {

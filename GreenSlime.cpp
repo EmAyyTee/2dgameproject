@@ -14,9 +14,9 @@ GreenSlime::GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector
     green_slime_animation = GreenSlimeAnimation::SlimeIdle;
     slimeSpeedModifier = 0.85;
 
-    Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Red, position, hitBox);
-    Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Yellow, position, detectionHitBox);
-    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Magenta, position, attackHitbox);
+    Character::setHitbox(sf::Vector2f{17.0f,15.0f}, sf::Color::Transparent, position, hitBox);
+    Character::setHitbox(sf::Vector2f{664.0f,664.0f}, sf::Color::Transparent, position, detectionHitBox);
+    Character::setHitbox(sf::Vector2f{64.0f,64.0f}, sf::Color::Transparent, position, attackHitbox);
     sprite.setScale(1.5f,1.5f);
     hitBox.setScale(1.2f,1.2f);
     attackHitbox.setScale(1.2f,1.2f);
@@ -206,6 +206,14 @@ void GreenSlime::loadFromFile(std::ifstream &file) {
         attackHitbox.setScale(1.2f,1.2);
         detectionHitBox.setScale(2.0f,2.0f);
         greenSlimeDamage = 5;
+    } else if(slimeVariant == 2) {
+        sprite.setScale(0.75, 0.75f);
+        hitBox.setScale(0.75f, 0.75f);
+        slimeSpeedModifier = 1.2f;
+        hitBox.setScale(0.75f,0.75f);
+        attackHitbox.setScale(0.75f,0.75f);
+        detectionHitBox.setScale(2.0f,2.0f);
+        greenSlimeDamage = 1;
     }
 
 }

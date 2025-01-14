@@ -7,6 +7,7 @@
 #include "../TextureLoader.h"
 #include "../GreenSlime.h"
 #include "../BigGreenSlime.h"
+#include "../SmallGreenSlime.h"
 
 
 

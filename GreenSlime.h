@@ -14,7 +14,7 @@ protected:
     bool isDealingDamage = true;
     sf::Vector2f attackTargetPosition;
     sf::FloatRect targetBounds;
-    int greenSlimeDamage = 1;
+    int greenSlimeDamage = 3;
 
 
 public:

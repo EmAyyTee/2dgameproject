@@ -105,12 +105,12 @@ void Engine::run(MainWindow& windowRef) {
             // std::cout << "After loading, slime array has size of: "<< greenSlimes.size() << "\n";
 
             while (renderWindow.isOpen()) {
-                if(addSpawnPointsClock.getElapsedTime().asSeconds()> 1.0f) {
+                if(addSpawnPointsClock.getElapsedTime().asSeconds()> 2.0f) {
                     spawningPoints++;
                     addSpawnPointsClock.restart();
                 }
 
-                if (respawnEnemiesClock.getElapsedTime().asSeconds() > 2.0f) {
+                if (respawnEnemiesClock.getElapsedTime().asSeconds() > 4.0f) {
                         enemiesCount++;
                     if(aliveEnemiesCount == 0){
                         map.spawnEnemies(enemiesCount, aliveEnemiesCount,spawningPoints, &renderWindow, greenSlimes, textureLoader);
@@ -152,10 +152,10 @@ void Engine::run(MainWindow& windowRef) {
                         if(slime->slimeVariant == 0) {
                             slime = greenSlimes.erase(slime);
                             aliveEnemiesCount--;
-                            player.addToScore(1);
+                            player.addToScore(2);
                         } else if (slime->slimeVariant == 1) {
                             aliveEnemiesCount--;
-                            player.addToScore(5);
+                            player.addToScore(6);
                             sf::Vector2f offset = {2.0f, 2.0f};
                             for (size_t t = 0; t < 2; t++) {
                                 greenSlimesFromBigSlimesPositions.push_back(slime->getPosition() + offset);
@@ -163,6 +163,10 @@ void Engine::run(MainWindow& windowRef) {
                                 offset = {-2.0f, -2.0f};
                             }
                             slime = greenSlimes.erase(slime);
+                        }else if (slime->slimeVariant == 2) {
+                            slime = greenSlimes.erase(slime);
+                            aliveEnemiesCount--;
+                            player.addToScore(1);
                         }
 
                     } else {
@@ -283,6 +287,9 @@ void Engine::initKeys() {
 }
 
 sf::Vector2i randomSpawnPosition(sf::RenderWindow& renderWindow) {
+
+    //Used for testing, remember to delete later!!!
+
     static std::mt19937 rng(std::random_device{}());
 
     std::uniform_int_distribution<int> xDist(0, renderWindow.getSize().x);

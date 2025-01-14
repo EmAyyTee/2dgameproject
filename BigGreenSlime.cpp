@@ -7,12 +7,12 @@ BigGreenSlime::BigGreenSlime(const sf::Vector2f &position, std::shared_ptr<std::
 
     sprite.setScale(4.0f, 4.0f);
     hitBox.setScale(4.0f, 4.0f);
-    hitPoints = 20;
+    hitPoints = 40;
     slimeSpeedModifier = 0.65f;
     hitBox.setScale(3.8f,3.8);
     attackHitbox.setScale(1.2f,1.2);
     detectionHitBox.setScale(2.0f,2.0f);
-    greenSlimeDamage = 5;
+    greenSlimeDamage = 8;
     slimeVariant = 1;
 }
 

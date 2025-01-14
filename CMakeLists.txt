@@ -60,6 +60,8 @@ add_executable(main main.cpp
         PlayerHud.h
         BigGreenSlime.h
         BigGreenSlime.cpp
+        SmallGreenSlime.h
+        SmallGreenSlime.cpp
 )
 target_link_libraries(main
         fmt::fmt
