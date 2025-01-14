@@ -138,4 +138,15 @@ void TextureLoader::loadMainMenuTextures() {
     } else {
         std::cout << "TextureLoader::TextureLoader: Failed to load \"MainMenuTextures/png/Buttons/Rect-Medium/PlayText/Hover.png\" texture from file\n";
     }
+    if (textureLoader.loadFromFile("MainMenuTextures/png/Buttons/Square-Medium/Home/Default.png")){
+        mainMenuMenuQuitButtonTextures.emplace_back(1,textureLoader);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"MainMenuTextures/png/Icon/Home.png\" texture from file\n";
+    }
+//Loading it twice for now because I want the button to be hoverable in the end
+    if (textureLoader.loadFromFile("MainMenuTextures/png/Buttons/Square-Medium/Home/Hover.png")){
+        mainMenuMenuQuitButtonTextures.emplace_back(1,textureLoader);
+    } else {
+        std::cout << "TextureLoader::TextureLoader: Failed to load \"MainMenuTextures/png/Icon/Home.png\" texture from file\n";
+    }
 }

@@ -30,6 +30,8 @@ public:
 
     GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer, sf::RenderWindow* target);
 
+    GreenSlime() = default;
+
     void update(float deltaTime, Player &player);
 
     void normaliseVector(sf::Vector2f position);
@@ -45,6 +47,9 @@ public:
     void attack(Player &player);
 
     void draw(sf::RenderTarget &renderTarget) override;
+
+    void saveToFile(std::ofstream &file) const;
+    void loadFromFile(std::ifstream &file);
 
 private:
     GreenSlimeAnimation green_slime_animation;

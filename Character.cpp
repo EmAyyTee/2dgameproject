@@ -25,4 +25,7 @@ sf::RectangleShape Character::getHitBox() {
     return hitBox;
 }
 
+void Character::setHp(int hp) {
+    hitPoints = hp;
+}
 

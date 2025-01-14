@@ -24,7 +24,7 @@ FetchContent_Makeavailable(fmt SFML)
 add_executable(main main.cpp
         MainWindow.cpp
         Engine.cpp
-        Engine.h
+        engine.h
         MainWindow.h
         Character.h
         Character.cpp
@@ -46,6 +46,14 @@ add_executable(main main.cpp
         PlayerArrow.cpp
         BetterClock.h
         BetterClock.cpp
+        ProceduralGeneration/Direction2D.cpp
+        ProceduralGeneration/Direction2D.h
+        ProceduralGeneration/Floor.cpp
+        ProceduralGeneration/ProceduralGenerationAlgorithms.cpp
+        ProceduralGeneration/Random.h
+        ProceduralGeneration/RandomWalkDungeonGenerator.cpp
+        ProceduralGeneration/TileMap.cpp
+        ProceduralGeneration/TileMapVisualiser.cpp
 )
 target_link_libraries(main
         fmt::fmt

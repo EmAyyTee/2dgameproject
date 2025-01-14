@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include <cmath>
+#include <fstream>
 #include <iostream>
 
 #include "Animator.h"
@@ -166,11 +167,43 @@ void Player::getDamage(int damage) {
         animationClock.start();
         isHurt = true;
     }
-    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > animationTime) {
+    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > animationTime || hitPoints < 0) {
         isAnimationPlaying = false;
         animation.setHoldTime(0.1f);
         animationClock.restart();
         std::cout << "I took " << damage << " points of damage!" << "\n";
         isHurt = false;
     }
+}
+
+void Player::saveToFile(std::ofstream &file) {
+
+    //saving pos
+
+    file.write(reinterpret_cast<const char *>(&position.x), sizeof(position.x));
+    file.write(reinterpret_cast<const char *>(&position.y), sizeof(position.y));
+
+    //saving hp
+
+    file.write(reinterpret_cast<const char *>(&hitPoints), sizeof(hitPoints));
+
+    //Saving dmg
+
+    file.write(reinterpret_cast<const char *>(&currentDamage), sizeof(currentDamage));
+}
+
+void Player::loadFromFile(std::ifstream &file) {
+
+    //Loading pos
+
+    file.read(reinterpret_cast<char *>(&position.x), sizeof(position.x));
+    file.read(reinterpret_cast<char *>(&position.y), sizeof(position.y));
+
+    //Loading hp
+
+    file.read(reinterpret_cast<char *>(&hitPoints), sizeof(hitPoints));
+
+    //Loading dmg
+
+    file.read(reinterpret_cast<char *>(&currentDamage), sizeof(currentDamage));
 }

@@ -10,6 +10,7 @@ protected:
     sf::Vector2f position;
 
     GameObject(const sf::Vector2f& position);
+    GameObject() = default;
 
 public:
     virtual ~GameObject() = default;

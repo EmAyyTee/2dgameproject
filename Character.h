@@ -25,8 +25,12 @@ public:
 
     Character(const sf::Vector2f& position, sf::RenderWindow* target);
 
+    Character()= default;
+
     bool manageAnimationCooldown(float duration);
 
     virtual sf::RectangleShape getHitBox();
+
+    virtual void setHp(int hp);
 };
 
