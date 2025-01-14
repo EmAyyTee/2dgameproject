@@ -24,7 +24,7 @@ FetchContent_Makeavailable(fmt SFML)
 add_executable(main main.cpp
         MainWindow.cpp
         Engine.cpp
-        Engine.h
+        engine.h
         MainWindow.h
         Character.h
         Character.cpp

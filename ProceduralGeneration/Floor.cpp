@@ -1,8 +1,11 @@
 #include "Floor.h"
 
 #include <iostream>
+#include <memory>
 
 #include "SFML/Graphics/RenderTarget.hpp"
+#include "../TextureLoader.h"
+#include "../GreenSlime.h"
 
 
 Floor::Floor(const sf::Texture& texture, const sf::Vector2f& position, const sf::IntRect& textureRect)
@@ -76,4 +79,21 @@ void Floor::loadFromFile(std::ifstream &file) {
     file.read(reinterpret_cast<char*>(&position.x), sizeof(position.x));
     file.read(reinterpret_cast<char*>(&position.y), sizeof(position.y));
     setPosition(position);
+}
+
+void Floor::spawnAnEnemy(int enemiesCount, sf::RenderWindow *renderWindow, std::vector<GreenSlime> &greenSlimes, std::shared_ptr<TextureLoader>
+                         textureLoader) {
+    while (enemiesCount > 0) {
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist(0, 2);
+
+        switch (dist(gen)) {
+            case 0 : {
+                greenSlimes.push_back(GreenSlime ({rectangle.getPosition().x/2, rectangle.getPosition().y/2}, std::make_shared<std::vector<std::pair<int,
+                         sf::Texture>>>(textureLoader -> greenSlimeTextures), renderWindow));
+                enemiesCount -= 1;
+            }
+        }
+    }
 }

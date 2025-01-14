@@ -2,9 +2,13 @@
 
 #include <cmath>
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include "Floor.h"
+
+class TextureLoader;
+class GreenSlime;
 
 TileMap::TileMap(float gridSize, unsigned width, unsigned height)
     : gridSizeF(gridSize), maxSize(width, height) {
@@ -22,7 +26,7 @@ void TileMap::draw(sf::RenderTarget& target) {
         for (size_t y = 0; y < maxSize.y; ++y) {
             for (size_t z = 0; z < 1; ++z) {
                 if (map[x][y][z] != nullptr) {
-                    // std::cout << "Drawing tile at grid (" << x << ", " << y << ")" << std::endl;
+                     std::cout << "Drawing tile at grid (" << x << ", " << y << ")" << std::endl;
                     map[x][y][z]->draw(target);
                 }
             }
@@ -118,6 +122,19 @@ void TileMap::loadTileMap(std::ifstream &file) {
             if (exists) {
                 map[x][y][0] = new Floor(texture, {0, 0}, sf::IntRect(0, 0, gridSizeF, gridSizeF));
                 map[x][y][0]->loadFromFile(file);
+            }
+        }
+    }
+}
+
+void TileMap::spawnEnemies(int enemiesCount, sf::RenderWindow *renderWindow, std::vector<GreenSlime> &greenSlimes, std::shared_ptr<TextureLoader>
+                           textureLoader) {
+    for (size_t x = 0; x < maxSize.x; ++x) {
+        for (size_t y = 0; y < maxSize.y; ++y) {
+            for (size_t z = 0; z < map[x][y].size(); ++z) {
+                if (map[x][y][z] != nullptr) {
+                    map[x][y][z]->spawnAnEnemy(enemiesCount,renderWindow, greenSlimes, textureLoader);
+                }
             }
         }
     }

@@ -1,9 +1,13 @@
 #pragma once
+#include <memory>
 #include <vector>
 
 #include "Floor.h"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/System/Vector2.hpp"
+#include "../TextureLoader.h"
+#include "../GreenSlime.h"
+
 
 class TileMap {
     float gridSizeF;
@@ -23,7 +27,11 @@ public:
     void draw(sf::RenderTarget& renderTarget);
     void setTile(int gridX, int gridY, const Floor& tile);
     void removeTiles();
+    void spawnEnemies(int enemiesCount, sf::RenderWindow *renderWindow,
+                      std::vector<GreenSlime> &greenSlimes,
+                      std::shared_ptr<TextureLoader> textureLoader);
     void saveTileMap(std::ofstream &file);
     void loadTileMap(std::ifstream &file);
 
 };
+

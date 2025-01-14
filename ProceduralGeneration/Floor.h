@@ -1,8 +1,13 @@
 #pragma once
 #include <fstream>
-
+#include <memory>
+#include <random>
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include "../TextureLoader.h"
+#include "../GreenSlime.h"
+
+
 
 class Floor {
 protected:
@@ -30,6 +35,10 @@ public:
     void setTexture(sf::Texture& texture, sf::IntRect textureRect);
 
     void setPosition(sf::Vector2f position);
+
+    void spawnAnEnemy(int enemiesCount, sf::RenderWindow *renderWindow,
+                      std::vector<GreenSlime> &greenSlimes,
+                      std::shared_ptr<TextureLoader> textureLoader);
 
     void update(float deltaTime);
 

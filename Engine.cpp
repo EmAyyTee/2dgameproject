@@ -103,10 +103,13 @@ void Engine::run(MainWindow& windowRef) {
 
                 if (aliveEnemiesCount == 0) {
                     enemiesCount++;
-                    for (int i = 0; i < enemiesCount; ++i) {
-                        greenSlimes.push_back(GreenSlime (static_cast<sf::Vector2f>(randomSpawnPosition(renderWindow)), std::make_shared<std::vector<std::pair<int,
-                        sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
-                    }
+                    map.spawnEnemies(enemiesCount,&renderWindow, greenSlimes, textureLoader);
+
+                    // for (int i = 0; i < enemiesCount; ++i) {
+                    //     greenSlimes.push_back(GreenSlime (static_cast<sf::Vector2f>(randomSpawnPosition(renderWindow)), std::make_shared<std::vector<std::pair<int,
+                    //     sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
+                    // }
+
                     aliveEnemiesCount = enemiesCount;
 
                     shouldTheGameSave = true;
