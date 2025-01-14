@@ -16,7 +16,7 @@
 
 Engine::Engine(MainWindow& windowRef)
     : gameState(GameState::MainMenu), gridSize(300.0f), view(windowRef.getWindow().getDefaultView()),
-      aliveEnemiesCount(0), floorTile(sf::Texture(), {0,0}, sf::IntRect() ), playButton({0,0}, nullptr, nullptr), player({0,0}, nullptr, nullptr, &supportedKeys), map(gridSize, 400, 400), shouldTheGameSave(false) {
+      aliveEnemiesCount(0), enemiesCount(5), floorTile(sf::Texture(), {0,0}, sf::IntRect() ), playButton({0,0}, nullptr, nullptr), player({0,0}, nullptr, nullptr, &supportedKeys), map(gridSize, 400, 400), shouldTheGameSave(false) {
     initKeys();
 
     textureLoader = std::make_shared<TextureLoader>();
@@ -101,16 +101,25 @@ void Engine::run(MainWindow& windowRef) {
 
             while (renderWindow.isOpen()) {
 
-                if (aliveEnemiesCount == 0) {
+                if (respawnEnemiesClock.getElapsedTime().asSeconds() > 5.0f) {
                     enemiesCount++;
-                    map.spawnEnemies(enemiesCount,&renderWindow, greenSlimes, textureLoader);
+
+                    if(aliveEnemiesCount == 0){
+                        map.spawnEnemies(enemiesCount, aliveEnemiesCount,&renderWindow, greenSlimes, textureLoader);
+                    }
+                    else {
+                        int temporaryEnemiesCount = enemiesCount - aliveEnemiesCount;
+                        map.spawnEnemies(temporaryEnemiesCount, aliveEnemiesCount, &renderWindow, greenSlimes, textureLoader);
+                    }
+
+
 
                     // for (int i = 0; i < enemiesCount; ++i) {
                     //     greenSlimes.push_back(GreenSlime (static_cast<sf::Vector2f>(randomSpawnPosition(renderWindow)), std::make_shared<std::vector<std::pair<int,
                     //     sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
                     // }
 
-                    aliveEnemiesCount = enemiesCount;
+                    respawnEnemiesClock.restart();
 
                     shouldTheGameSave = true;
 
@@ -221,6 +230,9 @@ void Engine::run(MainWindow& windowRef) {
         }
         else if (gameState == GameState::Quitting) {
             renderWindow.close();
+            saveFlagForSaves("isTheGameSaved.dat");
+            enemiesCount = 0;
+            aliveEnemiesCount = 0;
             shouldTheGameClose = true;
         }
 

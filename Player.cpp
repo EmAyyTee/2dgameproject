@@ -167,7 +167,7 @@ void Player::getDamage(int damage) {
         animationClock.start();
         isHurt = true;
     }
-    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > animationTime) {
+    if (isAnimationPlaying && animationClock.getClockTime().asSeconds() > animationTime || hitPoints < 0) {
         isAnimationPlaying = false;
         animation.setHoldTime(0.1f);
         animationClock.restart();

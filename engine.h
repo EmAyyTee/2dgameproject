@@ -50,6 +50,8 @@ private:
     sf::Texture texture;
     std::shared_ptr<TextureLoader> textureLoader;
 
+    sf::Clock respawnEnemiesClock;
+
 };
 
 sf::Vector2i randomSpawnPosition(sf::RenderWindow& renderWindow);

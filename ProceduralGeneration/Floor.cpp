@@ -83,16 +83,18 @@ void Floor::loadFromFile(std::ifstream &file) {
 
 void Floor::spawnAnEnemy(int enemiesCount, sf::RenderWindow *renderWindow, std::vector<GreenSlime> &greenSlimes, std::shared_ptr<TextureLoader>
                          textureLoader) {
-    while (enemiesCount > 0) {
+    while (true) {
         static std::random_device rd;
         static std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dist(0, 2);
+        std::uniform_int_distribution<> dist(0, 0);
 
         switch (dist(gen)) {
             case 0 : {
-                greenSlimes.push_back(GreenSlime ({rectangle.getPosition().x/2, rectangle.getPosition().y/2}, std::make_shared<std::vector<std::pair<int,
+                greenSlimes.push_back(GreenSlime ({sprite.getPosition().x/2, sprite.getPosition().y/2}, std::make_shared<std::vector<std::pair<int,
                          sf::Texture>>>(textureLoader -> greenSlimeTextures), renderWindow));
                 enemiesCount -= 1;
+                std::cout << "I'm spawning the slime at pos: " << sprite.getPosition().x << " " << sprite.getPosition().y << "\n";
+                return;
             }
         }
     }

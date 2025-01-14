@@ -26,7 +26,7 @@ void TileMap::draw(sf::RenderTarget& target) {
         for (size_t y = 0; y < maxSize.y; ++y) {
             for (size_t z = 0; z < 1; ++z) {
                 if (map[x][y][z] != nullptr) {
-                     std::cout << "Drawing tile at grid (" << x << ", " << y << ")" << std::endl;
+                     // std::cout << "Drawing tile at grid (" << x << ", " << y << ")" << std::endl;
                     map[x][y][z]->draw(target);
                 }
             }
@@ -127,15 +127,22 @@ void TileMap::loadTileMap(std::ifstream &file) {
     }
 }
 
-void TileMap::spawnEnemies(int enemiesCount, sf::RenderWindow *renderWindow, std::vector<GreenSlime> &greenSlimes, std::shared_ptr<TextureLoader>
+void TileMap::spawnEnemies(int &enemiesCount, int &aliveEnemiesCount, sf::RenderWindow *renderWindow, std::vector<GreenSlime> &greenSlimes, std::shared_ptr<TextureLoader>
                            textureLoader) {
-    for (size_t x = 0; x < maxSize.x; ++x) {
-        for (size_t y = 0; y < maxSize.y; ++y) {
-            for (size_t z = 0; z < map[x][y].size(); ++z) {
-                if (map[x][y][z] != nullptr) {
-                    map[x][y][z]->spawnAnEnemy(enemiesCount,renderWindow, greenSlimes, textureLoader);
-                }
-            }
+    for(int i = 0; i < enemiesCount;) {
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        std::uniform_int_distribution<> distX(0, maxSize.x-1);
+        std::uniform_int_distribution<> distY(0, maxSize.y-1);
+
+        int x = distX(gen);
+        int y = distY(gen);
+
+        if (map[x][y][0] != nullptr && enemiesCount > 0) {
+            map[x][y][0]->spawnAnEnemy(enemiesCount,renderWindow, greenSlimes, textureLoader);
+            std::cout << "I'm spawning an enemy on the map!\n";
+            aliveEnemiesCount++;
+            i++;
         }
     }
 }
