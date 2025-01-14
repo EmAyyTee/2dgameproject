@@ -52,6 +52,22 @@ void TileMap::setTile(int gridX, int gridY, const Floor& tile) {
         }
 }
 
+void TileMap::removeTiles() {
+    for (size_t x = 0; x < maxSize.x; ++x) {
+        for (size_t y = 0; y < maxSize.y; ++y) {
+            for (size_t z = 0; z < map[x][y].size(); ++z) {
+                if (map[x][y][z] != nullptr) {
+                    delete map[x][y][z];
+                    map[x][y][z] = nullptr;
+                }
+            }
+        }
+    }
+    map.clear();
+    maxSize = {0, 0};
+}
+
+
 sf::Vector2i TileMap::worldToCell(const sf::Vector2i &worldPosition) {
     int x = std::floor(worldPosition.x);
     int y = std::floor(worldPosition.y);

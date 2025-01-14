@@ -21,8 +21,6 @@ Engine::Engine(MainWindow& windowRef)
 
     textureLoader = std::make_shared<TextureLoader>();
 
-    map = TileMap(gridSize, 400, 400);
-
     loadSaveFlagForSaves("isTheGameSaved.dat");
 
     if (!texture.loadFromFile("ProceduralGeneration/Textures/grass.png")) {
@@ -161,6 +159,11 @@ void Engine::run(MainWindow& windowRef) {
                     greenSlimes.clear();
                     shouldTheGameSave = false;
                     player.hitPoints = 10;
+                    map.removeTiles();
+                    map = TileMap (gridSize, 400, 400);
+                    RandomWalkDungeonGenerator generator(map, floorTile);
+                    generator.runProceduralGeneration(map, floorTile);
+
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                         gameState = GameState::Paused;
