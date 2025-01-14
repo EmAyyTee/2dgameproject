@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include <fstream>
 
+#include "CollisionHandler.h"
 #include "GreenSlime.h"
 #include "PlayButton.h"
 #include "PlayerArrow.h"
@@ -44,6 +45,8 @@ private:
     bool shouldTheGameSave;
     Floor floorTile;
     PlayButton playButton;
+
+    CollisionHandler enemyCollisionHandler;
 
     Player player;
     TileMap map;

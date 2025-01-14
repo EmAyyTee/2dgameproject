@@ -140,6 +140,8 @@ void Engine::run(MainWindow& windowRef) {
                 updateTheCamera(player, 1.0f/60.0f, renderWindow);
                 renderWindow.setView(view);
 
+                enemyCollisionHandler.checkGreenSlimesCollisions(greenSlimes);
+
                 for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ) {
                     slime->update(1.0f/60.0f, player);
                     slime->draw(renderWindow);

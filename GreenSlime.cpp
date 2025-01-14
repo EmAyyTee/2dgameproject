@@ -168,6 +168,16 @@ void GreenSlime::attack(Player &player) {
 
 }
 
+sf::Vector2f GreenSlime::getPosition() {
+    return position;
+}
+
+void GreenSlime::setPosition(sf::Vector2f position) {
+    this -> position = position;
+}
+
+
+
 void GreenSlime::saveToFile(std::ofstream &file) const{
 
     file.write(reinterpret_cast<const char*>(&position.x), sizeof(position.x));

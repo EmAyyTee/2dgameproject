@@ -51,6 +51,9 @@ public:
     void saveToFile(std::ofstream &file) const;
     void loadFromFile(std::ifstream &file);
 
+    sf::Vector2f getPosition();
+    void setPosition(sf::Vector2f position);
+
 private:
     GreenSlimeAnimation green_slime_animation;
     GreenSlimeDetection green_slime_detection;
