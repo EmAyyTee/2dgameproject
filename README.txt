@@ -1,0 +1,1 @@
+Do poprawnego działania projektu wymagany jest git, kompilator mingw i skonfigurowane ścieżki systemowe, aby działał cmake.

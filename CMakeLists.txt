@@ -18,7 +18,7 @@ FetchContent_Declare(
         GIT_TAG         2.6.1
 )
 
-FetchContent_Makeavailable(fmt SFML)
+FetchContent_MakeAvailable(fmt SFML)
 
 
 add_executable(main main.cpp

@@ -216,7 +216,7 @@ void Player::getDamage(int damage) {
 
 bool Player::canThePlayerLevelUp() {
 
-    int a = 2, b = 2, next = 0;
+    int a = 5, b = 5, next = 0;
 
     for (int i = 0; i < playerLevel; i++) {
         next = a+b;
