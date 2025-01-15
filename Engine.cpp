@@ -17,12 +17,12 @@
 
 
 Engine::Engine(MainWindow& windowRef)
-    : gameState(GameState::MainMenu), gridSize(300.0f), view(windowRef.getWindow().getDefaultView()),
-      aliveEnemiesCount(0), enemiesCount(5),spawningPoints(5), floorTile(sf::Texture(),
-          {0,0}, sf::IntRect() ),
+    : gameState(GameState::MainMenu), gridSize(50.0f), view(windowRef.getWindow().getDefaultView()),
+      aliveEnemiesCount(0), enemiesCount(5),spawningPoints(5), floorTile(texture,{0,0}, sf::IntRect() ),
+wallTile(textureWall,{0,0}, sf::IntRect() ),
 playButton({0,0}, nullptr, nullptr),
 player({0,0}, nullptr, nullptr, &supportedKeys),
-map(gridSize, 400, 400), shouldTheGameSave(false),
+shouldTheGameSave(false),
 playerHud(player.hitPoints, player.score){
     initKeys();
 
@@ -30,12 +30,19 @@ playerHud(player.hitPoints, player.score){
 
     loadSaveFlagForSaves("SaveData\\/isTheGameSaved.dat");
 
-    if (!texture.loadFromFile("ProceduralGeneration/Textures/grass.png")) {
+    if (!texture.loadFromFile("ProceduralGeneration/Textures/grass2.png")) {
         std::cerr << "Failed to load texture!" << std::endl;
         return;
     }
-
+    if (!textureWall.loadFromFile("ProceduralGeneration/Textures/water.png")) {
+        std::cerr << "Failed to load texture!" << std::endl;
+        return;
+    }
+    map = TileMap(gridSize, 400, 400, texture);
+    wallMap = TileMap(gridSize, 400, 400, textureWall);
     floorTile = Floor(texture, {0, 0}, sf::IntRect(0, 0, gridSize, gridSize));
+    wallTile = Floor(textureWall, {0, 0}, sf::IntRect(0, 0, gridSize, gridSize));
+
 
     playButton = PlayButton({static_cast<float>(windowRef.getWindow().getSize().x / 2) - 64,
         static_cast<float>(windowRef.getWindow().getSize().y / 2) - 64},
@@ -51,8 +58,8 @@ playerHud(player.hitPoints, player.score){
         textureLoader->allPlayerTextures),
         &windowRef.getWindow(), &supportedKeys);
 
-    RandomWalkDungeonGenerator generator(map, floorTile);
-    generator.runProceduralGeneration(map, floorTile);
+    RandomWalkDungeonGenerator generator(map,wallMap, floorTile, wallTile);
+    generator.runProceduralGeneration(map,wallMap, floorTile, wallTile);
 
     run(windowRef);
 }
@@ -98,7 +105,6 @@ void Engine::run(MainWindow& windowRef) {
         } else if (gameState == GameState::Running) {
             if (isGameSaved) {
                 loadGame("SaveData\\/saveFile.dat", player);
-                std::cout << "Im loading the game and changing is game saved to false!\n";
                 isGameSaved = false;
             }
 
@@ -220,9 +226,11 @@ void Engine::run(MainWindow& windowRef) {
                     //Player reset
 
                     map.removeTiles();
-                    map = TileMap (gridSize, 400, 400);
-                    RandomWalkDungeonGenerator generator(map, floorTile);
-                    generator.runProceduralGeneration(map, floorTile);
+                    wallMap.removeTiles();
+                    map = TileMap (gridSize, 400, 400, texture);
+                    wallMap = TileMap (gridSize, 400, 400, textureWall);
+                    RandomWalkDungeonGenerator generator(map, wallMap, floorTile, wallTile);
+                    generator.runProceduralGeneration(map,wallMap, floorTile, wallTile);
 
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)&& pauseClock.getElapsedTime().asSeconds() > 0.1f) {
@@ -233,7 +241,6 @@ void Engine::run(MainWindow& windowRef) {
                 if (player.canThePlayerLevelUp()) {
                     gameState = GameState::LevelUpScreen;
 
-                    std::cout << "Current Player Level: " << player.playerLevel << "\n";
                 }
 
                 if (gameState != GameState::Running) {
@@ -380,16 +387,15 @@ void Engine::saveGame(const std::string &fileName, Player &player) {
     }
 
     player.saveToFile(file);
-    std::cout << "I save the player!\n";
 
 
     for (const auto& slime : greenSlimes) {
         slime.saveToFile(file);
-        std::cout << "I save a slime!\n";
     }
 
 
     map.saveTileMap(file);
+    wallMap.saveTileMap(file);
 
     file.close();
     isGameSaved = true;
@@ -403,17 +409,12 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
     }
     loadEnemiesCountAndAlive("SaveData\\enemisCountAndAlive.dat");
     player.loadFromFile(file);
-    std::cout << "I load the player!\n";
 
-    std::cout << "After loading enemies count is: " << aliveEnemiesCount;
 
     greenSlimes.clear();
-    std::cout << "Slime array has size of: " << greenSlimes.size() << "\n";
-    std::cout << "Alive enemies count is: " << aliveEnemiesCount << "\n";
-
 
     for (int i = 0; i < aliveEnemiesCount; i++) {
-        std::cout << "I try loading a slime!\n";
+
 
         GreenSlime temporarySlime (sf::Vector2f{0,0}, std::make_shared<std::vector<std::pair<int,
                         sf::Texture>>>(textureLoader -> greenSlimeTextures), &window->getWindow());
@@ -423,7 +424,6 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
         //                 sf::Texture>>>(textureLoader -> greenSlimeTextures), &window->getWindow());
         // temporaryBigSlime.loadFromFile(file);
 
-        std::cout << "Loaded slime has: " << temporarySlime.hitPoints << " \n";
         greenSlimes.push_back(temporarySlime);
 
         // else if(temporaryBigSlime.slimeVariant == 1) {
@@ -433,6 +433,7 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
     }
 
     map.loadTileMap(file);
+    wallMap.loadTileMap(file);
 
     file.close();
     isGameSaved = false;

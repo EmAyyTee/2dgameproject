@@ -73,6 +73,8 @@ add_executable(main main.cpp
         PlayerUpgrades/HealthUpgrade.cpp
         PlayerUpgrades/DashUpgrade.h
         PlayerUpgrades/DashUpgrade.cpp
+        ProceduralGeneration/WallGenerator.cpp
+        ProceduralGeneration/WallGenerator.h
 )
 target_link_libraries(main
         fmt::fmt

@@ -20,6 +20,7 @@ protected:
 
 public:
     sf::Clock canISpawnHere;
+    sf::Texture texture;
 
     Floor(const sf::Texture& texture, const sf::Vector2f& position, const sf::IntRect& textureRect);
 
@@ -49,4 +50,6 @@ public:
 
     void saveToFile(std::ofstream& file) const;
     void loadFromFile(std::ifstream& file);
+
+    sf::Texture& getTexture();
 };

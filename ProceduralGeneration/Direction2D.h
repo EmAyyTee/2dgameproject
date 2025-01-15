@@ -7,5 +7,7 @@
 class Direction2D {
 public:
     static sf::Vector2i getRandomCardinalDirection();
+
+    static std::vector<sf::Vector2i> getCardinalDirections();
 };
 

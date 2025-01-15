@@ -17,9 +17,9 @@ class RandomWalkDungeonGenerator {
 
 
 public:
-    RandomWalkDungeonGenerator(TileMap &tilemap, Floor &tile);
+    RandomWalkDungeonGenerator(TileMap &tilemap,TileMap& wallTileMap, Floor &tile,Floor &wallTile);
 
-    void runProceduralGeneration(TileMap &map, Floor& floorTile);
+    void runProceduralGeneration(TileMap &tilemap,TileMap& wallTileMap, Floor &tile,Floor &wallTile);
 
     std::unordered_set<sf::Vector2i> runRandomWalk();
 

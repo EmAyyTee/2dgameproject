@@ -17,3 +17,13 @@ sf::Vector2i Direction2D::getRandomCardinalDirection() {
 
     return cardinalDirections[dist(rng)];
 }
+
+std::vector<sf::Vector2i> Direction2D::getCardinalDirections() {
+    static std::vector<sf::Vector2i> cardinalDirections = {
+        {0, 1},   // Up
+        {1, 0},   // Right
+        {0, -1},  // Down
+        {-1, 0}   // Left
+    };
+    return cardinalDirections;
+}

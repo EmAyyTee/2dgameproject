@@ -49,6 +49,8 @@ public:
     bool upgradeSelected = false;
     //The end of a long list of upgrades
 
+    TileMap map, wallMap;
+
 private:
     GameState gameState;
     float gridSize;
@@ -69,15 +71,15 @@ private:
     size_t loadedBigGreenSlimeCount;
     bool isGameSaved = false;
     bool shouldTheGameSave;
-    Floor floorTile;
+    Floor floorTile, wallTile;
     PlayButton playButton;
 
     CollisionHandler enemyCollisionHandler;
 
     Player player;
     PlayerHud playerHud;
-    TileMap map;
-    sf::Texture texture;
+
+    sf::Texture texture, textureWall;
     std::shared_ptr<TextureLoader> textureLoader;
 
     sf::Clock respawnEnemiesClock;
