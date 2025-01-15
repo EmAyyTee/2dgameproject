@@ -69,9 +69,10 @@ void GreenSlime::checkForThePlayer(Player &player) {
 
 void GreenSlime::checkForTheDamage(Player &player) {
     for (PlayerArrow &arrow : *player.arrows) {
-        if (arrow.getArrowHitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
+        if (arrow.getArrowHitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds()) && getDamageClock.getElapsedTime().asSeconds() > 0.25f) {
             green_slime_detection = GreenSlimeDetection::PlayerDetected;
             hitPoints -= player.currentDamage;
+            getDamageClock.restart();
             if (green_slime_animation != GreenSlimeAnimation::SlimeHurt) {
                 green_slime_animation = GreenSlimeAnimation::SlimeHurt;
                 isAnimationPlaying = true;

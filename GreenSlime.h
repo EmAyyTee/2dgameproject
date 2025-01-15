@@ -17,6 +17,7 @@ protected:
     int greenSlimeDamage = 3;
 
 
+
 public:
     enum class GreenSlimeAnimation{
         SlimeIdle = 0,
@@ -67,6 +68,7 @@ protected:
     BetterClock damageClock;
     sf::Clock atackCooldownClock;
     sf::Clock attentionClock;
+    sf::Clock getDamageClock;
     float cooldownForDealingDamage = 0.5f;
     float cooldownForBeingAbleToAttack = 2.0f;
     float slimeSpeedModifier;

@@ -28,7 +28,7 @@ playerHud(player.hitPoints, player.score){
 
     textureLoader = std::make_shared<TextureLoader>();
 
-    loadSaveFlagForSaves("isTheGameSaved.dat");
+    loadSaveFlagForSaves("SaveData\\/isTheGameSaved.dat");
 
     if (!texture.loadFromFile("ProceduralGeneration/Textures/grass.png")) {
         std::cerr << "Failed to load texture!" << std::endl;
@@ -97,10 +97,11 @@ void Engine::run(MainWindow& windowRef) {
 
         } else if (gameState == GameState::Running) {
             if (isGameSaved) {
-                loadGame("saveFile.dat", player);
+                loadGame("SaveData\\/saveFile.dat", player);
                 std::cout << "Im loading the game and changing is game saved to false!\n";
                 isGameSaved = false;
             }
+
             // std::cout << "After loading, slime array has size of: "<< greenSlimes.size() << "\n";
 
             while (renderWindow.isOpen()) {
@@ -126,9 +127,9 @@ void Engine::run(MainWindow& windowRef) {
                 while (renderWindow.pollEvent(event)) {
                     if(event.type == sf::Event::Closed) {
                         renderWindow.close();
-                        saveGame("saveFile.dat", player);
-                        saveFlagForSaves("isTheGameSaved.dat");
-                        saveEnemiesCountAndAlive("enemisCountAndAlive.dat");
+                        saveGame("SaveData\\/saveFile.dat", player);
+                        saveFlagForSaves("SaveData\\/isTheGameSaved.dat");
+                        saveEnemiesCountAndAlive("SaveData\\/enemisCountAndAlive.dat");
                         shouldTheGameClose = true;
                     }
                 }
@@ -172,7 +173,7 @@ void Engine::run(MainWindow& windowRef) {
                         ++slime;
                     }
                 }
-                if (greenSlimesFromBigSlimesPositions.size() > 0) {
+                if (!greenSlimesFromBigSlimesPositions.empty()) {
                     for (auto & position: greenSlimesFromBigSlimesPositions) {
                         greenSlimes.push_back(GreenSlime ({position.x, position.y}, std::make_shared<std::vector<std::pair<int,
                                     sf::Texture>>>(textureLoader -> greenSlimeTextures), &renderWindow));
@@ -201,9 +202,23 @@ void Engine::run(MainWindow& windowRef) {
                     greenSlimes.clear();
                     shouldTheGameSave = false;
                     isGameSaved = false;
-                    player.hitPoints = 10;
+
+                    //Player reset
+                    player.hitPoints = 30;
                     player.setPosition(sf::Vector2f(static_cast<float>(windowRef.getWindow().getSize().x / 2) - 64,
                     static_cast<float>(windowRef.getWindow().getSize().y / 2) - 64));
+
+                    player.score = 0;
+                    player.playerLevel = 1;
+                    player.playerDamageLevel = 1;
+                    player.playerPiercingLevel = 1;
+                    player.playerSpeedLevel = 1;
+                    player.currentDamage = 1;
+                    player.playerHealthLevel = 1;
+                    player.arrowsHp = 1;
+                    player.upgradesCount = 1;
+                    //Player reset
+
                     map.removeTiles();
                     map = TileMap (gridSize, 400, 400);
                     RandomWalkDungeonGenerator generator(map, floorTile);
@@ -217,6 +232,7 @@ void Engine::run(MainWindow& windowRef) {
 
                 if (player.canThePlayerLevelUp()) {
                     gameState = GameState::LevelUpScreen;
+
                     std::cout << "Current Player Level: " << player.playerLevel << "\n";
                 }
 
@@ -265,19 +281,23 @@ void Engine::run(MainWindow& windowRef) {
             }
         } else if (gameState == GameState::Quitting && shouldTheGameSave) {
             renderWindow.close();
-            saveGame("saveFile.dat", player);
-            saveFlagForSaves("isTheGameSaved.dat");
-            saveEnemiesCountAndAlive("enemisCountAndAlive.dat");
+            saveGame("SaveData\\/saveFile.dat", player);
+            saveFlagForSaves("SaveData\\/isTheGameSaved.dat");
+            saveEnemiesCountAndAlive("SaveData\\/enemisCountAndAlive.dat");
             shouldTheGameClose = true;
         } else if (gameState == GameState::Quitting) {
             renderWindow.close();
-            saveFlagForSaves("isTheGameSaved.dat");
+            saveFlagForSaves("SaveData\\/isTheGameSaved.dat");
             enemiesCount = 0;
             aliveEnemiesCount = 0;
             shouldTheGameClose = true;
         } else if (gameState == GameState::LevelUpScreen) {
 
-            piercing_upgrade.update(player, renderWindow, gameState);
+            piercing_upgrade.update(player, renderWindow, gameState, upgradeSelected, player.upgradesCount);
+            damage_upgrade.update(player,renderWindow,gameState,upgradeSelected, player.upgradesCount);
+            speed_upgrade.update(player,renderWindow,gameState,upgradeSelected, player.upgradesCount);
+            health_upgrade.update(player,renderWindow,gameState,upgradeSelected, player.upgradesCount);
+            dash_upgrade.update(player,renderWindow,gameState,upgradeSelected, player.upgradesCount);
 
             while (renderWindow.isOpen()) {
                 while (renderWindow.pollEvent(event)) {
@@ -297,6 +317,11 @@ void Engine::run(MainWindow& windowRef) {
                     slime->draw(renderWindow);
                 }
                 piercing_upgrade.draw(renderWindow);
+                damage_upgrade.draw(renderWindow);
+                speed_upgrade.draw(renderWindow);
+                health_upgrade.draw(renderWindow);
+                dash_upgrade.draw(renderWindow);
+
                 renderWindow.display();
 
         // PURELY FOR DEBUG PURPOUSES, PLEASE JUST REMEMBER TO DELETE THAT LATER!!!
@@ -319,7 +344,8 @@ void Engine::initKeys() {
      supportedKeys.emplace("walkRight", sf::Keyboard::D);
      supportedKeys.emplace("walkUp", sf::Keyboard::W);
      supportedKeys.emplace("walkDown", sf::Keyboard::S);
-    supportedKeys.emplace("exit", sf::Keyboard::Escape);
+     supportedKeys.emplace("exit", sf::Keyboard::Escape);
+    supportedKeys.emplace("dash", sf::Keyboard::Space);
 }
 
 sf::Vector2i randomSpawnPosition(sf::RenderWindow& renderWindow) {
@@ -375,7 +401,7 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
         std::cerr << "Can't load the game! Access denied\n";
         return;
     }
-    loadEnemiesCountAndAlive("enemisCountAndAlive.dat");
+    loadEnemiesCountAndAlive("SaveData\\enemisCountAndAlive.dat");
     player.loadFromFile(file);
     std::cout << "I load the player!\n";
 

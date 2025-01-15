@@ -21,8 +21,9 @@ supportedKeys(supportedKeys), currentDamage(1), arrowsHp(1){
     animation.setNumberOfFrames(6);
     direction = {0.0f, 0.0f};
     playerState = PlayerState::PlayerIdle;
+    positionOffset = {0.0f, 20.0f};
 
-    Character::setHitbox(sf::Vector2f(40.0f, 70.0f), sf::Color::Transparent, position,hitBox);
+    Character::setHitbox(sf::Vector2f(40.0f, 38.0f), sf::Color::Transparent, position,hitBox);
     Character::setHitbox(sf::Vector2f(128.0f, 128.0f), sf::Color::Transparent, position,detectionHitbox);
 }
 
@@ -36,7 +37,7 @@ void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {
 
 void Player::playerGetInput() {
 
-    direction = {0.0f, 0.0f};
+    direction = (sf::Vector2f{0.0f, 0.0f} + tempDirection);
 
     if(canAnimationCanChange()) {
         playerState = PlayerState::PlayerIdle;
@@ -46,7 +47,7 @@ void Player::playerGetInput() {
         if (sf::Keyboard::isKeyPressed(supportedKeys->at("walkUp"))) {
 
             if(canAnimationCanChange()) {
-                direction.y -= 1.0f;
+                direction.y -= 1.0f * speedModifier ;
                 playerState = PlayerState::PlayerWalkingRight;
                 animation.calculateTheFrames(0, 0, 128, 74);
             }
@@ -54,7 +55,7 @@ void Player::playerGetInput() {
         if (sf::Keyboard::isKeyPressed(supportedKeys->at("walkDown"))) {
 
             if(canAnimationCanChange()) {
-                direction.y += 1.0f;
+                direction.y += 1.0f * speedModifier ;
                 playerState = PlayerState::PlayerWalkingRight;
                 animation.calculateTheFrames(0, 0, 128, 74);
             }
@@ -62,27 +63,30 @@ void Player::playerGetInput() {
         if (sf::Keyboard::isKeyPressed(supportedKeys->at("walkLeft"))) {
 
             if(canAnimationCanChange()) {
-                direction.x -= 1.0f;
+                direction.x -= 1.0f * speedModifier ;
                 playerState = PlayerState::PlayerWalkingLeft;
                 animation.calculateTheFrames(0, 0, 128, 74);
             }
         }
         if (sf::Keyboard::isKeyPressed(supportedKeys->at("walkRight"))) {
             if(canAnimationCanChange()) {
-                direction.x += 1.0f;
+                direction.x += 1.0f * speedModifier ;
                 playerState = PlayerState::PlayerWalkingRight;
                 animation.calculateTheFrames(0, 0, 128, 74);
             }
         }
+
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left ) && shotClock.getElapsedTime().asSeconds() > cooldownTimeForShootingAnArrow) {
             directionalVector = mousePosition - position;
             magnitude = sqrt(directionalVector.x * directionalVector.x + directionalVector.y * directionalVector.y);
             directionalVector = directionalVector /magnitude;
 
             mousePosition = renderTarget->mapPixelToCoords(sf::Mouse::getPosition(*renderTarget));
+            isShooting = true;
 
             if(canAnimationCanChange()) {
-                if (playerState != PlayerState::PlayerShootingLeft || playerState != PlayerState::PlayerShootingRight) {
+                if (playerState != PlayerState::PlayerShootingLeft
+                    || playerState != PlayerState::PlayerShootingRight) {
                     //Logic for when I have sprites for up and down
 
                     if (fabs(directionalVector.x) > fabs(directionalVector.y)) {
@@ -120,9 +124,28 @@ void Player::playerGetInput() {
                     animation.setHoldTime(0.05f);
                     animationTime = 0.75f;
                     animationClock.start();
+
                 }
             }
-    }
+        }else if (playerDashAbility >= 2) {
+            if (sf::Keyboard::isKeyPressed(supportedKeys->at("dash"))
+                && dashClock.getElapsedTime().asSeconds() > cooldownTimeForDashing) {
+                dashClock.restart();
+                if(canAnimationCanChange()) {
+                    tempDirection += direction * 2.0f;
+                    if (playerState == PlayerState::PlayerWalkingRight) {
+                        playerState = PlayerState::PlayerDashingRight;
+                    } else if (playerState == PlayerState::PlayerWalkingLeft) {
+                        playerState = PlayerState::PlayerDashingLeft;
+                    }
+                    animation.calculateTheFrames(0, 0, 128, 74);
+                    isAnimationPlaying = true;
+                    animation.setHoldTime(0.15f);
+                    animationTime = 0.5f;
+                    animationClock.start();
+                }
+            }
+        }
 }
 
 bool Player::canAnimationCanChange() {
@@ -131,8 +154,13 @@ bool Player::canAnimationCanChange() {
         animation.setHoldTime(0.1f);
         animationClock.restart();
 
-        arrows->emplace_back(position, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget, currentDamage, arrowsHp);
-        shotClock.restart();
+        if (isShooting) {
+            arrows->emplace_back(position, mousePosition, &playerTexturesPointer->at("arrowTextures"), renderTarget, currentDamage, arrowsHp);
+            shotClock.restart();
+            isShooting = false;
+        } else if (tempDirection != sf::Vector2f{0.0f, 0.0f}) {
+            tempDirection = sf::Vector2f{0.0f, 0.0f};
+        }
 
         return false;
 
@@ -172,7 +200,7 @@ void Player::getDamage(int damage) {
         playerState = PlayerState::PlayerHurt;
         animation.calculateTheFrames(0,0,128,74);
         isAnimationPlaying = true;
-        animation.setHoldTime(0.4f);
+        animation.setHoldTime(0.1f);
         animationTime = 0.25f;
         animationClock.start();
         isHurt = true;
@@ -188,7 +216,7 @@ void Player::getDamage(int damage) {
 
 bool Player::canThePlayerLevelUp() {
 
-    int a = 0, b = 1, next = 0;
+    int a = 2, b = 2, next = 0;
 
     for (int i = 0; i < playerLevel; i++) {
         next = a+b;
@@ -214,11 +242,17 @@ void Player::saveToFile(std::ofstream &file) {
     //saving hp
 
     file.write(reinterpret_cast<const char *>(&hitPoints), sizeof(hitPoints));
+    file.write(reinterpret_cast<const char *>(&playerHealthLevel), sizeof(playerHealthLevel));
 
     //Saving dmg
 
     file.write(reinterpret_cast<const char *>(&currentDamage), sizeof(currentDamage));
     file.write(reinterpret_cast<const char *>(&playerLevel), sizeof(playerLevel));
+    file.write(reinterpret_cast<const char *>(&playerPiercingLevel), sizeof(playerPiercingLevel));
+    file.write(reinterpret_cast<const char *>(&playerDamageLevel), sizeof(playerDamageLevel));
+    file.write(reinterpret_cast<const char *>(&playerSpeedLevel), sizeof(playerSpeedLevel));
+    file.write(reinterpret_cast<const char *>(&speedModifier), sizeof(speedModifier));
+    file.write(reinterpret_cast<const char *>(&playerDashAbility), sizeof(playerDashAbility));
     file.write(reinterpret_cast<const char *>(&score), sizeof(score));
     file.write(reinterpret_cast<const char *>(&arrowsHp), sizeof(arrowsHp));
 }
@@ -233,11 +267,17 @@ void Player::loadFromFile(std::ifstream &file) {
     //Loading hp
 
     file.read(reinterpret_cast<char *>(&hitPoints), sizeof(hitPoints));
+    file.read(reinterpret_cast<char *>(&playerHealthLevel), sizeof(playerHealthLevel));
 
     //Loading dmg
 
     file.read(reinterpret_cast<char *>(&currentDamage), sizeof(currentDamage));
     file.read(reinterpret_cast<char *>(&playerLevel), sizeof(playerLevel));
+    file.read(reinterpret_cast<char *>(&playerPiercingLevel), sizeof(playerPiercingLevel));
+    file.read(reinterpret_cast<char *>(&playerDamageLevel), sizeof(playerDamageLevel));
+    file.read(reinterpret_cast<char *>(&playerSpeedLevel), sizeof(playerSpeedLevel));
+    file.read(reinterpret_cast<char *>(&speedModifier), sizeof(speedModifier));
+    file.read(reinterpret_cast<char *>(&playerDashAbility), sizeof(playerDashAbility));
     file.read(reinterpret_cast<char *>(&score), sizeof(score));
     file.read(reinterpret_cast<char *>(&arrowsHp), sizeof(arrowsHp));
 }

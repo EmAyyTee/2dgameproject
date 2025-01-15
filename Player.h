@@ -16,20 +16,31 @@ public:
         PlayerWalkingRight = 1,
         PlayerWalkingLeft = 2,
         PlayerHurt = 3,
-        PlayerShootingRight = 4,
-        PlayerShootingLeft = 5
+        PlayerDashingRight = 4,
+        PlayerDashingLeft = 5,
+        PlayerShootingRight = 6,
+        PlayerShootingLeft = 7
     };
     sf::Vector2f mousePosition;
     std::vector<PlayerArrow> *arrows;
     int currentDamage;
+    float speedModifier = 1.0f;
+    sf::Vector2f tempDirection = {0.0f,0.0f};
     sf::RectangleShape detectionHitbox;
     sf::Clock shotClock;
+    sf::Clock dashClock;
     int score = 0;
     int arrowsHp;
+    bool isShooting = false;
 
     //Level logic
     int playerLevel = 1;
+    int upgradesCount = 1;
     int playerPiercingLevel = 1;
+    int playerDamageLevel = 1;
+    int playerSpeedLevel = 1;
+    int playerHealthLevel = 1;
+    int playerDashAbility = 1;
     bool canThePlayerLevelUp();
 
     //Level logic
@@ -67,5 +78,7 @@ private:
     std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer;
     std::map<std::string, sf::Keyboard::Key>* supportedKeys;
     bool isHurt = false;
+
     float cooldownTimeForShootingAnArrow = 0.5f;
+    float cooldownTimeForDashing = 5.0f;
 };

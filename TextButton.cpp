@@ -14,8 +14,9 @@ TextButton::TextButton() {
     text.setFillColor(sf::Color::Yellow);
 }
 
-void TextButton::update(Player &player, sf::RenderWindow &window, GameState &game_state) {
+void TextButton::update(Player &player, sf::RenderWindow &window, GameState &game_state, bool &upgradeSelected, int &upgradesCount) {
     text.setPosition({player.getPosition().x, player.getPosition().y});
+    upgradeSelected = false;
     checkIfMouseIsHovered(window);
     getInput(game_state);
 }
@@ -40,10 +41,11 @@ void TextButton::checkIfMouseIsHovered(sf::RenderWindow &window) {
 
 void TextButton::getInput(GameState &game_state) {
     if (buttonState == ButtonState::Hovered) {
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && clickClock.getElapsedTime().asSeconds() > 0.4f) {
             game_state = GameState::Running;
             clicked = true;
             std::cout << "Bool for piercing upgrade is set to true!\n";
+            clickClock.restart();
         }
     }
 }

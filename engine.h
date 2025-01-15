@@ -10,7 +10,11 @@
 #include "PlayerArrow.h"
 #include "PlayerHud.h"
 #include "TextButton.h"
+#include "PlayerUpgrades/DamageUpgrade.h"
+#include "PlayerUpgrades/DashUpgrade.h"
+#include "PlayerUpgrades/HealthUpgrade.h"
 #include "PlayerUpgrades/PiercingUpgrade.h"
+#include "PlayerUpgrades/SpeedUpgrade.h"
 #include "ProceduralGeneration/Floor.h"
 #include "ProceduralGeneration/TileMap.h"
 
@@ -37,6 +41,12 @@ public:
 
     //Long list of upgrades
     PiercingUpgrade piercing_upgrade;
+    DamageUpgrade damage_upgrade;
+    SpeedUpgrade speed_upgrade;
+    HealthUpgrade health_upgrade;
+    DashUpgrade dash_upgrade;
+
+    bool upgradeSelected = false;
     //The end of a long list of upgrades
 
 private:

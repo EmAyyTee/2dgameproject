@@ -66,6 +66,13 @@ add_executable(main main.cpp
         TextButton.cpp
         PlayerUpgrades/PiercingUpgrade.h
         PlayerUpgrades/PiercingUpgrade.cpp
+        PlayerUpgrades/DamageUpgrade.h
+        PlayerUpgrades/DamageUpgrade.cpp
+        PlayerUpgrades/SpeedUpgrade.h
+        PlayerUpgrades/SpeedUpgrade.cpp
+        PlayerUpgrades/HealthUpgrade.cpp
+        PlayerUpgrades/DashUpgrade.h
+        PlayerUpgrades/DashUpgrade.cpp
 )
 target_link_libraries(main
         fmt::fmt
