@@ -7,6 +7,8 @@
 #include "SFML/System/Vector2.hpp"
 #include "../TextureLoader.h"
 #include "../GreenSlime.h"
+#include "../BigGreenSlime.h"
+
 
 
 class TileMap {
@@ -27,7 +29,7 @@ public:
     void draw(sf::RenderTarget& renderTarget);
     void setTile(int gridX, int gridY, const Floor& tile);
     void removeTiles();
-    void spawnEnemies(int &enemiesCount, int &aliveEnemiesCount, sf::RenderWindow *renderWindow,
+    void spawnEnemies(int &enemiesCount, int &aliveEnemiesCount,int &spawnPoints, sf::RenderWindow *renderWindow,
                       std::vector<GreenSlime> &greenSlimes,
                       std::shared_ptr<TextureLoader> textureLoader);
     void saveTileMap(std::ofstream &file);

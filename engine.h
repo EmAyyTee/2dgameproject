@@ -3,9 +3,18 @@
 #include "GameState.h"
 #include <fstream>
 
+#include "BigGreenSlime.h"
+#include "CollisionHandler.h"
 #include "GreenSlime.h"
 #include "PlayButton.h"
 #include "PlayerArrow.h"
+#include "PlayerHud.h"
+#include "TextButton.h"
+#include "PlayerUpgrades/DamageUpgrade.h"
+#include "PlayerUpgrades/DashUpgrade.h"
+#include "PlayerUpgrades/HealthUpgrade.h"
+#include "PlayerUpgrades/PiercingUpgrade.h"
+#include "PlayerUpgrades/SpeedUpgrade.h"
 #include "ProceduralGeneration/Floor.h"
 #include "ProceduralGeneration/TileMap.h"
 
@@ -29,6 +38,17 @@ public:
     void saveEnemiesCountAndAlive(const std::string &fileName);
     void loadEnemiesCountAndAlive(const std::string &fileName);
 
+
+    //Long list of upgrades
+    PiercingUpgrade piercing_upgrade;
+    DamageUpgrade damage_upgrade;
+    SpeedUpgrade speed_upgrade;
+    HealthUpgrade health_upgrade;
+    DashUpgrade dash_upgrade;
+
+    bool upgradeSelected = false;
+    //The end of a long list of upgrades
+
 private:
     GameState gameState;
     float gridSize;
@@ -36,21 +56,33 @@ private:
     std::vector<PlayerArrow> arrows;
     std::vector<PlayerArrow> remainingArrows;
     std::vector<GreenSlime> greenSlimes;
+    std::vector<sf::Vector2f> greenSlimesFromBigSlimesPositions;
+    size_t greenSlimesFromBigSlimesSize;
     sf::Vector2u mousePosOnGrid;
     sf::View view;
     int enemiesCount = 0;
     int aliveEnemiesCount;
-    bool isGameSaved;
+    int spawningPoints;
+    std::vector<TextButton> allUpgrades;
+
+    size_t loadedGreenSlimeCount;
+    size_t loadedBigGreenSlimeCount;
+    bool isGameSaved = false;
     bool shouldTheGameSave;
     Floor floorTile;
     PlayButton playButton;
 
+    CollisionHandler enemyCollisionHandler;
+
     Player player;
+    PlayerHud playerHud;
     TileMap map;
     sf::Texture texture;
     std::shared_ptr<TextureLoader> textureLoader;
 
     sf::Clock respawnEnemiesClock;
+    sf::Clock addSpawnPointsClock;
+    sf::Clock pauseClock;
 
 };
 

@@ -22,8 +22,10 @@ public:
         Right = 3
     };
 
+    int hp;
+
     PlayerArrow(sf::Vector2f position, sf::Vector2f target, std::vector<std::pair <int, sf::Texture>> *playerTexturesPointer,
-        sf::RenderWindow* renderTarget, int damage);
+        sf::RenderWindow* renderTarget, int damage, int hp);
 
     void chooseAnimation();
 
@@ -31,12 +33,14 @@ public:
 
     bool checkArrowLifeTime();
 
+
     sf::RectangleShape& getArrowHitBox();
 
     Animator animator;
 private:
     float maxLifetime = 5.0f;
     int damage;
+
     ArrowDirection directionAnimation;
     sf::Vector2f target;
     sf::Vector2f hitBoxPosition;

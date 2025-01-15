@@ -6,6 +6,8 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "../TextureLoader.h"
 #include "../GreenSlime.h"
+#include "../BigGreenSlime.h"
+#include "../SmallGreenSlime.h"
 
 
 
@@ -15,7 +17,10 @@ protected:
     sf::Sprite sprite;
     bool isBlocked;
     bool isVisible;
+
 public:
+    sf::Clock canISpawnHere;
+
     Floor(const sf::Texture& texture, const sf::Vector2f& position, const sf::IntRect& textureRect);
 
     Floor(const Floor& other);
@@ -36,7 +41,7 @@ public:
 
     void setPosition(sf::Vector2f position);
 
-    void spawnAnEnemy(int enemiesCount, sf::RenderWindow *renderWindow,
+    void spawnAnEnemy(int &spawnPoints, sf::RenderWindow *renderWindow,
                       std::vector<GreenSlime> &greenSlimes,
                       std::shared_ptr<TextureLoader> textureLoader);
 

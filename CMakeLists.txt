@@ -54,6 +54,25 @@ add_executable(main main.cpp
         ProceduralGeneration/RandomWalkDungeonGenerator.cpp
         ProceduralGeneration/TileMap.cpp
         ProceduralGeneration/TileMapVisualiser.cpp
+        CollisionHandler.h
+        CollisionHandler.cpp
+        PlayerHud.cpp
+        PlayerHud.h
+        BigGreenSlime.h
+        BigGreenSlime.cpp
+        SmallGreenSlime.h
+        SmallGreenSlime.cpp
+        TextButton.h
+        TextButton.cpp
+        PlayerUpgrades/PiercingUpgrade.h
+        PlayerUpgrades/PiercingUpgrade.cpp
+        PlayerUpgrades/DamageUpgrade.h
+        PlayerUpgrades/DamageUpgrade.cpp
+        PlayerUpgrades/SpeedUpgrade.h
+        PlayerUpgrades/SpeedUpgrade.cpp
+        PlayerUpgrades/HealthUpgrade.cpp
+        PlayerUpgrades/DashUpgrade.h
+        PlayerUpgrades/DashUpgrade.cpp
 )
 target_link_libraries(main
         fmt::fmt

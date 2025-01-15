@@ -37,5 +37,5 @@ void GameObject::update(float deltaTime) {
 }
 
 void GameObject::updateHitBox(sf::RectangleShape &hitBox) {
-    hitBox.setPosition(position.x + sprite.getGlobalBounds().width / 2.0f, position.y + sprite.getGlobalBounds().height / 2.0f);
+    hitBox.setPosition(position.x + positionOffset.x + sprite.getGlobalBounds().width / 2.0f, position.y + positionOffset.y + sprite.getGlobalBounds().height / 2.0f);
 }

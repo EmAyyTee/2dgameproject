@@ -6,6 +6,7 @@
 
 
 class GreenSlime : public Character{
+protected:
 
     sf::RectangleShape detectionHitBox;
     sf::RectangleShape attackHitbox;
@@ -13,7 +14,9 @@ class GreenSlime : public Character{
     bool isDealingDamage = true;
     sf::Vector2f attackTargetPosition;
     sf::FloatRect targetBounds;
-    int greenSlimeDamage = 1;
+    int greenSlimeDamage = 3;
+
+
 
 public:
     enum class GreenSlimeAnimation{
@@ -27,37 +30,47 @@ public:
         PlayerDetected = 1
     };
 
+    int slimeVariant = 0;
+
 
     GreenSlime(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer, sf::RenderWindow* target);
 
     GreenSlime() = default;
 
-    void update(float deltaTime, Player &player);
+    ~GreenSlime() = default;
 
-    void normaliseVector(sf::Vector2f position);
+    virtual void update(float deltaTime, Player &player);
 
-    void moveTowardsPlayer(Player &player, float deltaTime);
+    virtual void normaliseVector(sf::Vector2f position);
 
-    void chooseAnimation();
+    virtual void moveTowardsPlayer(Player &player, float deltaTime);
 
-    void checkForThePlayer(Player &player);
+    virtual void chooseAnimation();
 
-    void checkForTheDamage(Player &player);
+    virtual void checkForThePlayer(Player &player);
 
-    void attack(Player &player);
+    virtual void checkForTheDamage(Player &player);
+
+    virtual void attack(Player &player);
 
     void draw(sf::RenderTarget &renderTarget) override;
 
-    void saveToFile(std::ofstream &file) const;
-    void loadFromFile(std::ifstream &file);
+    virtual void saveToFile(std::ofstream &file) const;
+    virtual void loadFromFile(std::ifstream &file);
 
-private:
+    virtual sf::Vector2f getPosition();
+    virtual void setPosition(sf::Vector2f position);
+
+protected:
     GreenSlimeAnimation green_slime_animation;
     GreenSlimeDetection green_slime_detection;
     std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> greenSlimeTexturesPointer;
     BetterClock damageClock;
     sf::Clock atackCooldownClock;
+    sf::Clock attentionClock;
+    sf::Clock getDamageClock;
     float cooldownForDealingDamage = 0.5f;
     float cooldownForBeingAbleToAttack = 2.0f;
+    float slimeSpeedModifier;
 };
 

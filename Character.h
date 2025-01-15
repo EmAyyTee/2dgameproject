@@ -23,6 +23,8 @@ public:
 
     bool isAlive;
 
+
+
     Character(const sf::Vector2f& position, sf::RenderWindow* target);
 
     Character()= default;
