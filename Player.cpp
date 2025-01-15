@@ -186,6 +186,24 @@ void Player::getDamage(int damage) {
     }
 }
 
+bool Player::canThePlayerLevelUp() {
+
+    int a = 0, b = 1, next = 0;
+
+    for (int i = 0; i < playerLevel; i++) {
+        next = a+b;
+        a = b;
+        b = next;
+    }
+
+    if (score >= next) {
+        playerLevel++;
+        return true;
+    }
+    return false;
+}
+
+
 void Player::saveToFile(std::ofstream &file) {
 
     //saving pos
@@ -200,6 +218,7 @@ void Player::saveToFile(std::ofstream &file) {
     //Saving dmg
 
     file.write(reinterpret_cast<const char *>(&currentDamage), sizeof(currentDamage));
+    file.write(reinterpret_cast<const char *>(&playerLevel), sizeof(playerLevel));
     file.write(reinterpret_cast<const char *>(&score), sizeof(score));
     file.write(reinterpret_cast<const char *>(&arrowsHp), sizeof(arrowsHp));
 }
@@ -218,6 +237,7 @@ void Player::loadFromFile(std::ifstream &file) {
     //Loading dmg
 
     file.read(reinterpret_cast<char *>(&currentDamage), sizeof(currentDamage));
+    file.read(reinterpret_cast<char *>(&playerLevel), sizeof(playerLevel));
     file.read(reinterpret_cast<char *>(&score), sizeof(score));
     file.read(reinterpret_cast<char *>(&arrowsHp), sizeof(arrowsHp));
 }

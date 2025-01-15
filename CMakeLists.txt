@@ -62,6 +62,10 @@ add_executable(main main.cpp
         BigGreenSlime.cpp
         SmallGreenSlime.h
         SmallGreenSlime.cpp
+        TextButton.h
+        TextButton.cpp
+        PlayerUpgrades/PiercingUpgrade.h
+        PlayerUpgrades/PiercingUpgrade.cpp
 )
 target_link_libraries(main
         fmt::fmt

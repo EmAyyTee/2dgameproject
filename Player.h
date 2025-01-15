@@ -27,6 +27,12 @@ public:
     int score = 0;
     int arrowsHp;
 
+    //Level logic
+    int playerLevel = 1;
+    int playerPiercingLevel = 1;
+    bool canThePlayerLevelUp();
+
+    //Level logic
 
 
     Player(const sf::Vector2f& position, std::shared_ptr<std::map<std::string, std::vector<std::pair <int, sf::Texture>>>> playerTexturesPointer,

@@ -8,6 +8,8 @@
 #include "TextureLoader.h"
 #include "GreenSlime.h"
 #include "PlayButton.h"
+#include "TextButton.h"
+#include "PlayerUpgrades/PiercingUpgrade.h"
 #include "ProceduralGeneration/RandomWalkDungeonGenerator.h"
 #include "ProceduralGeneration/TileMap.h"
 #include "SFML/Window/Event.hpp"
@@ -213,6 +215,11 @@ void Engine::run(MainWindow& windowRef) {
                     pauseClock.restart();
                 }
 
+                if (player.canThePlayerLevelUp()) {
+                    gameState = GameState::LevelUpScreen;
+                    std::cout << "Current Player Level: " << player.playerLevel << "\n";
+                }
+
                 if (gameState != GameState::Running) {
                     break;
                 }
@@ -256,20 +263,52 @@ void Engine::run(MainWindow& windowRef) {
                     break;
                 }
             }
-        }
-        if (gameState == GameState::Quitting && shouldTheGameSave) {
+        } else if (gameState == GameState::Quitting && shouldTheGameSave) {
             renderWindow.close();
             saveGame("saveFile.dat", player);
             saveFlagForSaves("isTheGameSaved.dat");
             saveEnemiesCountAndAlive("enemisCountAndAlive.dat");
             shouldTheGameClose = true;
-        }
-        else if (gameState == GameState::Quitting) {
+        } else if (gameState == GameState::Quitting) {
             renderWindow.close();
             saveFlagForSaves("isTheGameSaved.dat");
             enemiesCount = 0;
             aliveEnemiesCount = 0;
             shouldTheGameClose = true;
+        } else if (gameState == GameState::LevelUpScreen) {
+
+            piercing_upgrade.update(player, renderWindow, gameState);
+
+            while (renderWindow.isOpen()) {
+                while (renderWindow.pollEvent(event)) {
+                    if(event.type == sf::Event::Closed) {
+                        renderWindow.close();
+                        shouldTheGameClose = true;
+                    }
+                }
+
+                player.shotClock.restart();
+                renderWindow.clear();
+                map.draw(renderWindow);
+
+                player.draw(renderWindow);
+
+                for (auto slime = greenSlimes.begin(); slime != greenSlimes.end(); ++slime) {
+                    slime->draw(renderWindow);
+                }
+                piercing_upgrade.draw(renderWindow);
+                renderWindow.display();
+
+        // PURELY FOR DEBUG PURPOUSES, PLEASE JUST REMEMBER TO DELETE THAT LATER!!!
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape )&& pauseClock.getElapsedTime().asSeconds() > 0.1f) {
+                    gameState = GameState::Running;
+                    pauseClock.restart();
+                }
+                if(gameState != GameState::Paused) {
+                    break;
+                }
+            }
         }
 
     }
@@ -305,6 +344,7 @@ void Engine::updateTheCamera(Player &player, float deltaTime, sf::RenderTarget &
 
     target.setView(view);
 }
+
 
 void Engine::saveGame(const std::string &fileName, Player &player) {
     std::ofstream file(fileName, std::ios::binary);
@@ -371,6 +411,7 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
     file.close();
     isGameSaved = false;
 }
+
 
 void Engine::saveEnemiesCountAndAlive(const std::string &fileName) {
     std::ofstream file(fileName, std::ios::binary);

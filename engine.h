@@ -9,6 +9,8 @@
 #include "PlayButton.h"
 #include "PlayerArrow.h"
 #include "PlayerHud.h"
+#include "TextButton.h"
+#include "PlayerUpgrades/PiercingUpgrade.h"
 #include "ProceduralGeneration/Floor.h"
 #include "ProceduralGeneration/TileMap.h"
 
@@ -32,6 +34,11 @@ public:
     void saveEnemiesCountAndAlive(const std::string &fileName);
     void loadEnemiesCountAndAlive(const std::string &fileName);
 
+
+    //Long list of upgrades
+    PiercingUpgrade piercing_upgrade;
+    //The end of a long list of upgrades
+
 private:
     GameState gameState;
     float gridSize;
@@ -46,6 +53,7 @@ private:
     int enemiesCount = 0;
     int aliveEnemiesCount;
     int spawningPoints;
+    std::vector<TextButton> allUpgrades;
 
     size_t loadedGreenSlimeCount;
     size_t loadedBigGreenSlimeCount;
