@@ -63,6 +63,8 @@ void PlayerHud::update(Player &player) {
             dashCooldown.setString("Dash Ready!");
         }
         dashCooldown.setPosition(player.getPosition().x - 380,player.getPosition().y + 400.0f);
+    } else {
+        dashCooldown.setString("");
     }
 
 }

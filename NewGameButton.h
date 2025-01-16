@@ -3,15 +3,19 @@
 
 class NewGameButton : TextButton{
 public:
-    NewGameButton(std::string label);
+    bool iClicked = false;
 
-    void update(Player &player, sf::RenderWindow &window, GameState &game_state, bool &newGameChosen);
+    NewGameButton();
 
-    void update(Player &player, sf::RenderWindow &window, GameState &game_state, bool &isGameSaved, bool &shouldTheGameSave);
+    void update(Player &player, sf::RenderWindow &window, GameState &game_state, GameState toChangeGamestate);
 
     void draw(sf::RenderWindow &window) override;
 
     void checkIfMouseIsHovered(sf::RenderWindow &renderTarget) override;
 
-    void getInput(GameState &game_state);
+    void getInput(GameState &game_state, GameState toChangeGamestate);
+
+    void setIClicked(bool clicked);
+
+    void resetTheClickClock();
 };

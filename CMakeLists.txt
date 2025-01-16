@@ -38,8 +38,6 @@ add_executable(main main.cpp
         GreenSlime.cpp
         Button.h
         Button.cpp
-        PlayButton.h
-        PlayButton.cpp
         GameObject.h
         GameObject.cpp
         PlayerArrow.h
@@ -75,6 +73,12 @@ add_executable(main main.cpp
         PlayerUpgrades/DashUpgrade.cpp
         NewGameButton.h
         NewGameButton.cpp
+        Buttons/PlayButton.h
+        Buttons/PlayButton.cpp
+        Buttons/QuitButtonNew.h
+        Buttons/QuitButtonNew.cpp
+        Buttons/ContinueTheGameButton.h
+        Buttons/ContinueTheGameButton.cpp
 )
 target_link_libraries(main
         fmt::fmt

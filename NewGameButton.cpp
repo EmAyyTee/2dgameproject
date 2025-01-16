@@ -5,30 +5,21 @@
 
 #include "SFML/Window/Mouse.hpp"
 
-NewGameButton::NewGameButton(std::string label) {
-    text.setString(label);
+NewGameButton::NewGameButton() {
+    text.setString("New Game");
 }
 
-void NewGameButton::update(Player &player, sf::RenderWindow &window, GameState &game_state, bool &newGameChosen) {
+void NewGameButton::update(Player &player, sf::RenderWindow &window, GameState &game_state, GameState toChangeGamestate) {
     text.setPosition({player.getPosition().x-50, player.getPosition().y});
     checkIfMouseIsHovered(window);
-    getInput(game_state);
-    newGameChosen = true;
+    getInput(game_state, toChangeGamestate);
 }
 
-void NewGameButton::update(Player &player, sf::RenderWindow &window, GameState &game_state, bool &isGameSaved, bool &shouldTheGameSave) {
-    text.setPosition({player.getPosition().x-50, player.getPosition().y-100});
-    checkIfMouseIsHovered(window);
-    TextButton::getInput(game_state);
-    isGameSaved = false;
-    shouldTheGameSave = true;
-}
-
-void NewGameButton::getInput(GameState &game_state) {
+void NewGameButton::getInput(GameState &game_state, GameState toChangeGamestate) {
     if (buttonState == ButtonState::Hovered) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && clickClock.getElapsedTime().asSeconds() > 0.4f) {
-            std::cout<< "I got this far...\n";
-            game_state = GameState::Running;
+            iClicked = true;
+            game_state = toChangeGamestate;
             clickClock.restart();
         }
     }
@@ -54,4 +45,12 @@ void NewGameButton::checkIfMouseIsHovered(sf::RenderWindow &window) {
         buttonState = ButtonState::NotHovered;
         text.setFillColor(sf::Color::Red);
     }
+}
+
+void NewGameButton::setIClicked(bool clicked) {
+    iClicked = clicked;
+}
+
+void NewGameButton::resetTheClickClock() {
+    clickClock.restart();
 }

@@ -29,7 +29,7 @@ supportedKeys(supportedKeys), currentDamage(1), arrowsHp(1){
 
 void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {
     if(loadingTheGameSafety.getElapsedTime().asSeconds() > 15) {
-        if (damageOutside.getElapsedTime().asSeconds() > 4.0f) {
+        if (damageOutside.getElapsedTime().asSeconds() > 2.0f) {
             if(controlDamageOutside.getElapsedTime().asSeconds() > 0.2f) {
                 hitPoints -= 1;
                 controlDamageOutside.restart();
