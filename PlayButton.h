@@ -17,6 +17,7 @@ class PlayButton : public Button{
 
     ButtonState buttonState;
     std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playButtonTexturesPointer;
+    sf::Clock clickClock;
 
 
     PlayButton(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer,

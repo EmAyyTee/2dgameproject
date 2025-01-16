@@ -5,5 +5,6 @@ enum class GameState{
     Running = 1,
     Paused = 2,
     Quitting = 3,
-    LevelUpScreen = 4
+    LevelUpScreen = 4,
+    GameSelectionScreen = 5
 };

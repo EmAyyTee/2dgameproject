@@ -148,3 +148,16 @@ void TileMap::spawnEnemies(int &enemiesCount, int &aliveEnemiesCount,int &spawnP
         }
     }
 }
+
+void TileMap::checkIfPlayerIsOnMap(Player &player) {
+    for (size_t x = 0; x < maxSize.x; ++x) {
+        for (size_t y = 0; y < maxSize.y; ++y) {
+            if (map[x][y][0] != nullptr) {
+                if(map[x][y][0]->sprite.getGlobalBounds().contains(player.getPosition())) {
+                    player.damageOutside.restart();
+                }
+            }
+        }
+    }
+}
+

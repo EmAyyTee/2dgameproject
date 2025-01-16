@@ -23,11 +23,20 @@ supportedKeys(supportedKeys), currentDamage(1), arrowsHp(1){
     playerState = PlayerState::PlayerIdle;
     positionOffset = {0.0f, 20.0f};
 
-    Character::setHitbox(sf::Vector2f(40.0f, 38.0f), sf::Color::Transparent, position,hitBox);
+    Character::setHitbox(sf::Vector2f(40.0f, 38.0f), sf::Color::Blue, position,hitBox);
     Character::setHitbox(sf::Vector2f(128.0f, 128.0f), sf::Color::Transparent, position,detectionHitbox);
 }
 
 void Player::update(float deltaTime, std::vector<PlayerArrow> &arrows) {
+    if(loadingTheGameSafety.getElapsedTime().asSeconds() > 15) {
+        if (damageOutside.getElapsedTime().asSeconds() > 4.0f) {
+            if(controlDamageOutside.getElapsedTime().asSeconds() > 0.2f) {
+                hitPoints -= 1;
+                controlDamageOutside.restart();
+            }
+        }
+    }
+
     this -> arrows = &arrows;
     playerGetInput();
     GameObject::updateHitBox(detectionHitbox);

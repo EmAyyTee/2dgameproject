@@ -44,7 +44,6 @@ void TextButton::getInput(GameState &game_state) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && clickClock.getElapsedTime().asSeconds() > 0.4f) {
             game_state = GameState::Running;
             clicked = true;
-            std::cout << "Bool for piercing upgrade is set to true!\n";
             clickClock.restart();
         }
     }

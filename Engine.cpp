@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "TextureLoader.h"
 #include "GreenSlime.h"
+#include "NewGameButton.h"
 #include "PlayButton.h"
 #include "TextButton.h"
 #include "PlayerUpgrades/PiercingUpgrade.h"
@@ -22,15 +23,15 @@ Engine::Engine(MainWindow& windowRef)
           {0,0}, sf::IntRect() ),
 playButton({0,0}, nullptr, nullptr),
 player({0,0}, nullptr, nullptr, &supportedKeys),
-map(gridSize, 400, 400), shouldTheGameSave(false),
-playerHud(player.hitPoints, player.score){
+map(gridSize, 400, 400), shouldTheGameSave(true),
+playerHud(player){
     initKeys();
 
     textureLoader = std::make_shared<TextureLoader>();
 
     loadSaveFlagForSaves("SaveData\\/isTheGameSaved.dat");
 
-    if (!texture.loadFromFile("ProceduralGeneration/Textures/grass.png")) {
+    if (!texture.loadFromFile("ProceduralGeneration/Textures/grass2.png")) {
         std::cerr << "Failed to load texture!" << std::endl;
         return;
     }
@@ -64,8 +65,14 @@ void Engine::run(MainWindow& windowRef) {
     sf::RenderWindow& renderWindow = windowRef.getWindow();
 
     while (!shouldTheGameClose){
+        if (gameState == GameState::MainMenu && shouldTheGameSave) {
 
-        if (gameState == GameState::MainMenu) {
+            saveGame("SaveData\\/saveFile.dat", player);
+            saveFlagForSaves("SaveData\\/isTheGameSaved.dat");
+            saveEnemiesCountAndAlive("SaveData\\/enemisCountAndAlive.dat");
+
+        }
+       else if (gameState == GameState::MainMenu) {
 
             PlayButton quitButton({static_cast<float>(windowRef.getWindow().getSize().x / 2 - 32),
         static_cast<float>(windowRef.getWindow().getSize().y / 2 + 64)},
@@ -83,7 +90,7 @@ void Engine::run(MainWindow& windowRef) {
                     }
                 }
                 player.shotClock.restart();
-                playButton.update(1.0f/60.0f, gameState, player,GameState::Running);
+                playButton.update(1.0f/60.0f, gameState, player,GameState::GameSelectionScreen);
                 quitButton.update(1.0f/60.0f, gameState, player, GameState::Quitting, true);
                 updateTheCamera(player, 1.0f/60.0f, renderWindow);
                 renderWindow.clear();
@@ -95,7 +102,35 @@ void Engine::run(MainWindow& windowRef) {
                 }
             }
 
-        } else if (gameState == GameState::Running) {
+        } else if(gameState == GameState::GameSelectionScreen) {
+            NewGameButton newGameButton("New Game");
+            NewGameButton continueTheGameButton("Continue");
+
+            while (renderWindow.isOpen()) {
+                while (renderWindow.pollEvent(event)) {
+                    if(event.type == sf::Event::Closed) {
+                        renderWindow.close();
+                        shouldTheGameClose = true;
+                    }
+                }
+                continueTheGameButton.update(player, renderWindow, gameState, isGameSaved, shouldTheGameSave);
+                newGameButton.update(player, renderWindow, gameState, isGameSaved);
+
+                renderWindow.clear();
+                newGameButton.draw(renderWindow);
+
+                if (isGameSaved) {
+                    continueTheGameButton.draw(renderWindow);
+                }
+
+                renderWindow.display();
+
+                if (gameState!=GameState::GameSelectionScreen) {
+                    break;
+                }
+            }
+
+        }else if (gameState == GameState::Running) {
             if (isGameSaved) {
                 loadGame("SaveData\\/saveFile.dat", player);
                 std::cout << "Im loading the game and changing is game saved to false!\n";
@@ -121,7 +156,6 @@ void Engine::run(MainWindow& windowRef) {
                     }
                     respawnEnemiesClock.restart();
 
-                    shouldTheGameSave = true;
 
                 }
                 while (renderWindow.pollEvent(event)) {
@@ -137,6 +171,7 @@ void Engine::run(MainWindow& windowRef) {
                 renderWindow.clear();
                 map.draw(renderWindow);
                 player.update(1.0f/ 60.0f, arrows);
+                map.checkIfPlayerIsOnMap(player);
                 updateTheCamera(player, 1.0f/60.0f, renderWindow);
                 playerHud.update(player);
                 playerHud.draw(renderWindow);
@@ -207,6 +242,7 @@ void Engine::run(MainWindow& windowRef) {
                     player.hitPoints = 30;
                     player.setPosition(sf::Vector2f(static_cast<float>(windowRef.getWindow().getSize().x / 2) - 64,
                     static_cast<float>(windowRef.getWindow().getSize().y / 2) - 64));
+                    player.loadingTheGameSafety.restart();
 
                     player.score = 0;
                     player.playerLevel = 1;
@@ -215,6 +251,7 @@ void Engine::run(MainWindow& windowRef) {
                     player.playerSpeedLevel = 1;
                     player.currentDamage = 1;
                     player.playerHealthLevel = 1;
+                    player.playerDashAbility = 1;
                     player.arrowsHp = 1;
                     player.upgradesCount = 1;
                     //Player reset
@@ -232,8 +269,6 @@ void Engine::run(MainWindow& windowRef) {
 
                 if (player.canThePlayerLevelUp()) {
                     gameState = GameState::LevelUpScreen;
-
-                    std::cout << "Current Player Level: " << player.playerLevel << "\n";
                 }
 
                 if (gameState != GameState::Running) {
@@ -256,8 +291,9 @@ void Engine::run(MainWindow& windowRef) {
                     }
                 }
                 playButton.update(1.0f/60.0f, gameState, player, GameState::Running);
-                quitButton.update(1.0f/60.0f, gameState, player, GameState::Quitting, true);
+                quitButton.update(1.0f/60.0f, gameState, player, GameState::MainMenu, true);
                 player.shotClock.restart();
+                map.checkIfPlayerIsOnMap(player);
                 renderWindow.clear();
                 map.draw(renderWindow);
 
@@ -291,7 +327,7 @@ void Engine::run(MainWindow& windowRef) {
             enemiesCount = 0;
             aliveEnemiesCount = 0;
             shouldTheGameClose = true;
-        } else if (gameState == GameState::LevelUpScreen) {
+        }else if (gameState == GameState::LevelUpScreen) {
 
             piercing_upgrade.update(player, renderWindow, gameState, upgradeSelected, player.upgradesCount);
             damage_upgrade.update(player,renderWindow,gameState,upgradeSelected, player.upgradesCount);
@@ -308,6 +344,7 @@ void Engine::run(MainWindow& windowRef) {
                 }
 
                 player.shotClock.restart();
+                map.checkIfPlayerIsOnMap(player);
                 renderWindow.clear();
                 map.draw(renderWindow);
 
@@ -326,16 +363,15 @@ void Engine::run(MainWindow& windowRef) {
 
         // PURELY FOR DEBUG PURPOUSES, PLEASE JUST REMEMBER TO DELETE THAT LATER!!!
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape )&& pauseClock.getElapsedTime().asSeconds() > 0.1f) {
-                    gameState = GameState::Running;
-                    pauseClock.restart();
-                }
-                if(gameState != GameState::Paused) {
+                // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape )&& pauseClock.getElapsedTime().asSeconds() > 0.1f) {
+                //     gameState = GameState::Running;
+                //     pauseClock.restart();
+                // }
+                if(gameState != GameState::LevelUpScreen) {
                     break;
                 }
             }
         }
-
     }
 }
 void Engine::initKeys() {
@@ -380,12 +416,10 @@ void Engine::saveGame(const std::string &fileName, Player &player) {
     }
 
     player.saveToFile(file);
-    std::cout << "I save the player!\n";
 
 
     for (const auto& slime : greenSlimes) {
         slime.saveToFile(file);
-        std::cout << "I save a slime!\n";
     }
 
 
@@ -393,6 +427,8 @@ void Engine::saveGame(const std::string &fileName, Player &player) {
 
     file.close();
     isGameSaved = true;
+    shouldTheGameSave = false;
+    std::cout << "I saved the game!\n";
 }
 
 void Engine::loadGame(const std::string &fileName, Player &player) {
@@ -403,17 +439,11 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
     }
     loadEnemiesCountAndAlive("SaveData\\enemisCountAndAlive.dat");
     player.loadFromFile(file);
-    std::cout << "I load the player!\n";
-
-    std::cout << "After loading enemies count is: " << aliveEnemiesCount;
 
     greenSlimes.clear();
-    std::cout << "Slime array has size of: " << greenSlimes.size() << "\n";
-    std::cout << "Alive enemies count is: " << aliveEnemiesCount << "\n";
-
 
     for (int i = 0; i < aliveEnemiesCount; i++) {
-        std::cout << "I try loading a slime!\n";
+
 
         GreenSlime temporarySlime (sf::Vector2f{0,0}, std::make_shared<std::vector<std::pair<int,
                         sf::Texture>>>(textureLoader -> greenSlimeTextures), &window->getWindow());
@@ -423,7 +453,6 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
         //                 sf::Texture>>>(textureLoader -> greenSlimeTextures), &window->getWindow());
         // temporaryBigSlime.loadFromFile(file);
 
-        std::cout << "Loaded slime has: " << temporarySlime.hitPoints << " \n";
         greenSlimes.push_back(temporarySlime);
 
         // else if(temporaryBigSlime.slimeVariant == 1) {
@@ -436,6 +465,7 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
 
     file.close();
     isGameSaved = false;
+    shouldTheGameSave = true;
 }
 
 

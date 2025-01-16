@@ -49,6 +49,9 @@ public:
     bool upgradeSelected = false;
     //The end of a long list of upgrades
 
+    bool isGameSaved = false;
+    bool isNewGameChosen = false;
+
 private:
     GameState gameState;
     float gridSize;
@@ -67,7 +70,7 @@ private:
 
     size_t loadedGreenSlimeCount;
     size_t loadedBigGreenSlimeCount;
-    bool isGameSaved = false;
+
     bool shouldTheGameSave;
     Floor floorTile;
     PlayButton playButton;

@@ -22,6 +22,9 @@ public:
         PlayerShootingLeft = 7
     };
     sf::Vector2f mousePosition;
+    sf::Clock damageOutside;
+    sf::Clock controlDamageOutside;
+    sf::Clock loadingTheGameSafety;
     std::vector<PlayerArrow> *arrows;
     int currentDamage;
     float speedModifier = 1.0f;

@@ -73,6 +73,8 @@ add_executable(main main.cpp
         PlayerUpgrades/HealthUpgrade.cpp
         PlayerUpgrades/DashUpgrade.h
         PlayerUpgrades/DashUpgrade.cpp
+        NewGameButton.h
+        NewGameButton.cpp
 )
 target_link_libraries(main
         fmt::fmt

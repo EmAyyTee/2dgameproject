@@ -32,6 +32,7 @@ public:
     void spawnEnemies(int &enemiesCount, int &aliveEnemiesCount,int &spawnPoints, sf::RenderWindow *renderWindow,
                       std::vector<GreenSlime> &greenSlimes,
                       std::shared_ptr<TextureLoader> textureLoader);
+    void checkIfPlayerIsOnMap(Player &player);
     void saveTileMap(std::ofstream &file);
     void loadTileMap(std::ifstream &file);
 

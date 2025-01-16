@@ -38,8 +38,8 @@ void PlayButton::update(float deltaTime, GameState &game_state, Player &player, 
     }
     else {
         sf::FloatRect bounds = sprite.getGlobalBounds();
-        position.x = player.getPosition().x - bounds.width /3 + 33;
-        position.y = player.getPosition().y - bounds.height/3 + 146;
+        position.x = player.getPosition().x - bounds.width /3 + 20;
+        position.y = player.getPosition().y - bounds.height/3 + 133;
         update(deltaTime, game_state, toChangeGameState);
     }
 }
@@ -58,7 +58,7 @@ void PlayButton::checkIfMouseIsHovered() {
 
 void PlayButton::getInput(GameState &game_state, GameState toChangeGameState) {
     if (buttonState == ButtonState::Hovered) {
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && clickClock.getElapsedTime().asSeconds() > 0.4f) {
             game_state = toChangeGameState;
             std::cout << "I change the game state to: " << static_cast<int>(toChangeGameState) << "\n";
         }
