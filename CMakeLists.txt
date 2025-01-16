@@ -18,7 +18,7 @@ FetchContent_Declare(
         GIT_TAG         2.6.1
 )
 
-FetchContent_Makeavailable(fmt SFML)
+FetchContent_MakeAvailable(fmt SFML)
 
 
 add_executable(main main.cpp
@@ -38,8 +38,6 @@ add_executable(main main.cpp
         GreenSlime.cpp
         Button.h
         Button.cpp
-        PlayButton.h
-        PlayButton.cpp
         GameObject.h
         GameObject.cpp
         PlayerArrow.h
@@ -73,6 +71,14 @@ add_executable(main main.cpp
         PlayerUpgrades/HealthUpgrade.cpp
         PlayerUpgrades/DashUpgrade.h
         PlayerUpgrades/DashUpgrade.cpp
+        NewGameButton.h
+        NewGameButton.cpp
+        Buttons/PlayButton.h
+        Buttons/PlayButton.cpp
+        Buttons/QuitButtonNew.h
+        Buttons/QuitButtonNew.cpp
+        Buttons/ContinueTheGameButton.h
+        Buttons/ContinueTheGameButton.cpp
 )
 target_link_libraries(main
         fmt::fmt

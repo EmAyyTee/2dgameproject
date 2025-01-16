@@ -17,7 +17,7 @@ void SpeedUpgrade::update(Player &player, sf::RenderWindow &window, GameState &g
         if (upgradesCount < player.playerLevel) {
             game_state= GameState::LevelUpScreen;
         }
-    } else if (clicked && player.playerDamageLevel <=1) {
+    } else if (clicked && player.playerSpeedLevel <=1) {
         player.playerSpeedLevel++;
         player.speedModifier = 1.2f;
         std::cout << "Speed is : " << player.speedModifier << "\n";

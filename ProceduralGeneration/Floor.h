@@ -13,17 +13,19 @@
 
 class Floor {
 protected:
-    sf::RectangleShape rectangle;
-    sf::Sprite sprite;
     bool isBlocked;
     bool isVisible;
 
 public:
+    sf::RectangleShape rectangle;
+    sf::Sprite sprite;
     sf::Clock canISpawnHere;
 
     Floor(const sf::Texture& texture, const sf::Vector2f& position, const sf::IntRect& textureRect);
 
     Floor(const Floor& other);
+
+
 
     void update();
 

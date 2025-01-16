@@ -17,9 +17,9 @@ void HealthUpgrade::update(Player &player, sf::RenderWindow &window, GameState &
         if (upgradesCount < player.playerLevel) {
             game_state= GameState::LevelUpScreen;
         }
-    } else if (clicked && player.playerPiercingLevel <=1000) {
+    } else if (clicked && player.playerHealthLevel <=1000) {
         player.playerHealthLevel++;
-        player.hitPoints ++;
+        player.hitPoints += 2;
         std::cout << "Health is : " << player.playerHealthLevel << "\n";
         clicked=false;
         upgradeSelected = true;
