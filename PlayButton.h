@@ -18,6 +18,7 @@ class PlayButton : public Button{
     ButtonState buttonState;
     std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playButtonTexturesPointer;
     sf::Clock clickClock;
+    bool iGotInput = false;
 
 
     PlayButton(const sf::Vector2f& position, std::shared_ptr<std::vector<std::pair <int, sf::Texture>>> playerTexturesPointer,
@@ -26,9 +27,15 @@ class PlayButton : public Button{
 
     virtual void update(float deltaTime,GameState &game_state, GameState toChangeGameState);
 
-    virtual void update(float deltaTime,GameState &game_state, Player &player, GameState toChangeGameState);
+    virtual void update(float deltaTime,GameState &game_state,Player &player, GameState toChangeGameState);
 
-    virtual void update(float deltaTime,GameState &game_state, Player &player, GameState toChangeGameState, bool isThatTheQuitButton);
+
+    virtual void update(float deltaTime,GameState &game_state, Player &player, GameState toChangeGameState, bool &shouldTheGameSave);
+
+    virtual void update(float deltaTime,GameState &game_state, Player &player, GameState toChangeGameState,bool &shouldTheGameSave, bool isThatTheQuitButton);
+
+    virtual void update(float deltaTime,GameState &game_state, Player &player, GameState toChangeGameState,bool &shouldTheGameSave, bool isThatTheQuitButton, bool isThatDuringTheGame);
+
 
 
     virtual void checkIfMouseIsHovered();

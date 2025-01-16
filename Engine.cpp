@@ -23,7 +23,7 @@ Engine::Engine(MainWindow& windowRef)
           {0,0}, sf::IntRect() ),
 playButton({0,0}, nullptr, nullptr),
 player({0,0}, nullptr, nullptr, &supportedKeys),
-map(gridSize, 400, 400), shouldTheGameSave(true),
+map(gridSize, 400, 400), shouldTheGameSave(false),
 playerHud(player){
     initKeys();
 
@@ -65,14 +65,10 @@ void Engine::run(MainWindow& windowRef) {
     sf::RenderWindow& renderWindow = windowRef.getWindow();
 
     while (!shouldTheGameClose){
-        if (gameState == GameState::MainMenu && shouldTheGameSave) {
-
-            saveGame("SaveData\\/saveFile.dat", player);
-            saveFlagForSaves("SaveData\\/isTheGameSaved.dat");
-            saveEnemiesCountAndAlive("SaveData\\/enemisCountAndAlive.dat");
-
-        }
-       else if (gameState == GameState::MainMenu) {
+         if (gameState == GameState::MainMenu) {
+             if (shouldTheGameSave) {
+                 saveGame("SaveData\\/saveFile.dat", player);
+             }
 
             PlayButton quitButton({static_cast<float>(windowRef.getWindow().getSize().x / 2 - 32),
         static_cast<float>(windowRef.getWindow().getSize().y / 2 + 64)},
@@ -91,7 +87,7 @@ void Engine::run(MainWindow& windowRef) {
                 }
                 player.shotClock.restart();
                 playButton.update(1.0f/60.0f, gameState, player,GameState::GameSelectionScreen);
-                quitButton.update(1.0f/60.0f, gameState, player, GameState::Quitting, true);
+                quitButton.update(1.0f/60.0f, gameState, player, GameState::Quitting, shouldTheGameSave, true);
                 updateTheCamera(player, 1.0f/60.0f, renderWindow);
                 renderWindow.clear();
                 playButton.buttonDraw(renderWindow);
@@ -103,6 +99,7 @@ void Engine::run(MainWindow& windowRef) {
             }
 
         } else if(gameState == GameState::GameSelectionScreen) {
+
             NewGameButton newGameButton("New Game");
             NewGameButton continueTheGameButton("Continue");
 
@@ -113,8 +110,14 @@ void Engine::run(MainWindow& windowRef) {
                         shouldTheGameClose = true;
                     }
                 }
+
+                std::cout << "Is the game saved in selection: " << isGameSaved << "\n";
                 continueTheGameButton.update(player, renderWindow, gameState, isGameSaved, shouldTheGameSave);
-                newGameButton.update(player, renderWindow, gameState, isGameSaved);
+                if (newGameButton.update(player, renderWindow, gameState)) {
+                    resetThePlayer(renderWindow);
+                }
+
+                std::cout << "Is the game saved in selection after the updates: " << isGameSaved << "\n";
 
                 renderWindow.clear();
                 newGameButton.draw(renderWindow);
@@ -232,34 +235,7 @@ void Engine::run(MainWindow& windowRef) {
 
                 if (player.hitPoints <= 0){
                     gameState = GameState::MainMenu;
-                    aliveEnemiesCount = 0;
-                    enemiesCount = 5;
-                    greenSlimes.clear();
-                    shouldTheGameSave = false;
-                    isGameSaved = false;
-
-                    //Player reset
-                    player.hitPoints = 30;
-                    player.setPosition(sf::Vector2f(static_cast<float>(windowRef.getWindow().getSize().x / 2) - 64,
-                    static_cast<float>(windowRef.getWindow().getSize().y / 2) - 64));
-                    player.loadingTheGameSafety.restart();
-
-                    player.score = 0;
-                    player.playerLevel = 1;
-                    player.playerDamageLevel = 1;
-                    player.playerPiercingLevel = 1;
-                    player.playerSpeedLevel = 1;
-                    player.currentDamage = 1;
-                    player.playerHealthLevel = 1;
-                    player.playerDashAbility = 1;
-                    player.arrowsHp = 1;
-                    player.upgradesCount = 1;
-                    //Player reset
-
-                    map.removeTiles();
-                    map = TileMap (gridSize, 400, 400);
-                    RandomWalkDungeonGenerator generator(map, floorTile);
-                    generator.runProceduralGeneration(map, floorTile);
+                    resetThePlayer(renderWindow);
 
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)&& pauseClock.getElapsedTime().asSeconds() > 0.1f) {
@@ -291,7 +267,7 @@ void Engine::run(MainWindow& windowRef) {
                     }
                 }
                 playButton.update(1.0f/60.0f, gameState, player, GameState::Running);
-                quitButton.update(1.0f/60.0f, gameState, player, GameState::MainMenu, true);
+                quitButton.update(1.0f/60.0f, gameState, player, GameState::MainMenu, shouldTheGameSave,true, true);
                 player.shotClock.restart();
                 map.checkIfPlayerIsOnMap(player);
                 renderWindow.clear();
@@ -465,7 +441,6 @@ void Engine::loadGame(const std::string &fileName, Player &player) {
 
     file.close();
     isGameSaved = false;
-    shouldTheGameSave = true;
 }
 
 
@@ -525,4 +500,35 @@ void Engine::loadSaveFlagForSaves(const std::string &fileName) {
     }
     file.read(reinterpret_cast<char*>(&isGameSaved), sizeof(isGameSaved));
     file.close();
+}
+
+void Engine::resetThePlayer(sf::RenderWindow & render_window) {
+    aliveEnemiesCount = 0;
+    enemiesCount = 5;
+    greenSlimes.clear();
+    shouldTheGameSave = false;
+    isGameSaved = false;
+
+    //Player reset
+    player.hitPoints = 30;
+    player.setPosition(sf::Vector2f(static_cast<float>(render_window.getSize().x / 2) - 64,
+    static_cast<float>(render_window.getSize().y / 2) - 64));
+    player.loadingTheGameSafety.restart();
+
+    player.score = 0;
+    player.playerLevel = 1;
+    player.playerDamageLevel = 1;
+    player.playerPiercingLevel = 1;
+    player.playerSpeedLevel = 1;
+    player.currentDamage = 1;
+    player.playerHealthLevel = 1;
+    player.playerDashAbility = 1;
+    player.arrowsHp = 1;
+    player.upgradesCount = 1;
+    //Player reset
+
+    map.removeTiles();
+    map = TileMap (gridSize, 400, 400);
+    RandomWalkDungeonGenerator generator(map, floorTile);
+    generator.runProceduralGeneration(map, floorTile);
 }

@@ -37,6 +37,7 @@ public:
     void loadSaveFlagForSaves(const std::string &fileName);
     void saveEnemiesCountAndAlive(const std::string &fileName);
     void loadEnemiesCountAndAlive(const std::string &fileName);
+    void resetThePlayer(sf::RenderWindow & render_window);
 
 
     //Long list of upgrades

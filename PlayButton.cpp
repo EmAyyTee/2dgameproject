@@ -17,19 +17,34 @@ void PlayButton::update(float deltaTime,GameState &game_state, GameState toChang
     Button::update();
     checkIfMouseIsHovered();
     getInput(game_state, toChangeGameState);
+    iGotInput = false;
 
     animator.Update(deltaTime, static_cast<int>(buttonState), sprite, playButtonTexturesPointer.get());
 }
 
 void PlayButton::update(float deltaTime, GameState &game_state, Player &player, GameState toChangeGameState) {
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+    position.x = player.getPosition().x - bounds.width /3;
+    position.y = player.getPosition().y - bounds.height/3;
+    update(deltaTime, game_state, toChangeGameState);
+    iGotInput = false;
+
+    animator.Update(deltaTime, static_cast<int>(buttonState), sprite, playButtonTexturesPointer.get());
+}
+
+
+void PlayButton::update(float deltaTime, GameState &game_state, Player &player, GameState toChangeGameState, bool& shouldTheGameSave) {
 
     sf::FloatRect bounds = sprite.getGlobalBounds();
     position.x = player.getPosition().x - bounds.width /3;
     position.y = player.getPosition().y - bounds.height/3;
     update(deltaTime, game_state, toChangeGameState);
+    shouldTheGameSave = iGotInput;
+    iGotInput = false;
+
 }
 
-void PlayButton::update(float deltaTime, GameState &game_state, Player &player, GameState toChangeGameState, bool isThatTheQuitButton) {
+void PlayButton::update(float deltaTime, GameState &game_state, Player &player, GameState toChangeGameState, bool& shouldTheGameSave, bool isThatTheQuitButton) {
     if(!isThatTheQuitButton) {
         sf::FloatRect bounds = sprite.getGlobalBounds();
         position.x = player.getPosition().x - bounds.width /3;
@@ -42,7 +57,19 @@ void PlayButton::update(float deltaTime, GameState &game_state, Player &player, 
         position.y = player.getPosition().y - bounds.height/3 + 133;
         update(deltaTime, game_state, toChangeGameState);
     }
+    shouldTheGameSave = true;
+    iGotInput = false;
 }
+
+void PlayButton::update(float deltaTime, GameState &game_state, Player &player, GameState toChangeGameState, bool &shouldTheGameSave, bool isThatTheQuitButton, bool isThatDuringTheGame) {
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+    position.x = player.getPosition().x - bounds.width /3 + 20;
+    position.y = player.getPosition().y - bounds.height/3 + 133;
+    update(deltaTime, game_state, toChangeGameState);
+    shouldTheGameSave = iGotInput;
+    iGotInput = false;
+}
+
 
 void PlayButton::checkIfMouseIsHovered() {
     sf::Vector2i mousePosition = sf::Mouse::getPosition(*renderTarget);
@@ -61,6 +88,7 @@ void PlayButton::getInput(GameState &game_state, GameState toChangeGameState) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && clickClock.getElapsedTime().asSeconds() > 0.4f) {
             game_state = toChangeGameState;
             std::cout << "I change the game state to: " << static_cast<int>(toChangeGameState) << "\n";
+            iGotInput = true;
         }
     }
 }
